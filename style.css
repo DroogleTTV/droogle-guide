@@ -136,3 +136,26 @@ details.cx .cxb li{margin:0 0 2px}
 details.cx .cxb table{margin:3px 0 6px}
 details.cx .cxb th,details.cx .cxb td{padding:3px 7px}
 .cxall{display:none}
+
+/* ---------- Games Completed (played) ---------- */
+.gcs{display:grid;grid-template-columns:1fr 1fr 1fr 1.7fr;gap:10px;margin:10px 0 10px}
+.gcs .card{padding:8px 12px;display:flex;flex-direction:column;justify-content:center}
+.gcs .card b{font-family:Anton;font-weight:400;font-size:21pt;line-height:1;color:#fff;letter-spacing:.01em}
+.gcs .card span{font-size:8.6pt;color:var(--muted)}
+.gcleg .bar{height:12px;border-radius:99px}
+.gcleg .lab{display:flex;justify-content:space-between;font-size:8.4pt;color:var(--muted);margin-top:4px}
+.gcf{display:none}
+.gcl{display:grid;grid-template-columns:1fr 1fr;grid-auto-flow:column;gap:6px 14px}
+.gc{display:flex;align-items:center;gap:10px;height:58px;padding:0 8px 0 6px;border-radius:9px;border:1px solid var(--line);
+  background:linear-gradient(90deg,var(--panel) 55%,var(--c2));break-inside:avoid}
+.gc[hidden]{display:none}
+.gc .gcn{font-family:Pixel;font-weight:600;font-size:10pt;color:var(--muted);width:22px;text-align:right;flex:none}
+.gc img,.gc .gcph{width:42px;height:56px;border-radius:4px;flex:none;object-fit:cover;box-shadow:0 0 0 1px #ffffff26,0 2px 6px #0008}
+.gc .gcph{display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--ffa),var(--ffb));font-family:Anton;font-size:18pt;color:#fff}
+.gc .gct{flex:1;font-weight:600;font-size:9.8pt;line-height:1.2;color:#fff}
+.gc .gcr{position:relative;width:42px;height:42px;flex:none}
+.gc .gcr svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
+.gc .gcr circle{fill:none;stroke-width:4.2}
+.gc .gcr .t{stroke:#ffffff1c;fill:#0a1020}
+.gc .gcr .v{stroke:var(--c);stroke-linecap:round}
+.gc .gcr b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Anton;font-weight:400;font-size:12.5pt;color:var(--c);letter-spacing:.01em}

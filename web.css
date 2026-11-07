@@ -102,3 +102,22 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
 .cxall{display:inline-block;margin:4px 0 12px;padding:6px 14px;font:600 10pt Outfit,sans-serif;color:var(--teal);background:#0f1a2e;border:1px solid #2f4a78;border-radius:8px;cursor:pointer}
 .cxall:hover{background:#16233d}
 @media (prefers-reduced-motion:reduce){details.cx>summary::after{transition:none}}
+
+/* ---------- Games Completed (website: search, score filter, sort) ---------- */
+.pdfonly{display:none}
+.gcf{display:flex;flex-wrap:wrap;align-items:center;gap:8px 10px;margin:4px 0 12px}
+.gcq{flex:1 1 220px;min-width:0;font:inherit;font-size:11pt;color:var(--text);background:#0a1830;border:1px solid #2a4c7a;border-radius:8px;padding:8px 12px}
+.gcq::placeholder{color:#7d8db0}
+.gcq:focus,.gco:focus,.gcb button:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+.gcq::-webkit-search-cancel-button{-webkit-appearance:none;appearance:none}
+.gcb{display:flex;flex-wrap:wrap;gap:6px}
+.gcb button{font:inherit;font-family:Pixel;font-weight:600;font-size:10.5pt;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:3px 12px 3px 10px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.gcb button[style]::before{content:"";width:9px;height:9px;border-radius:50%;background:var(--c)}
+.gcb button.on{background:var(--teal);border-color:var(--teal);color:#081320}
+.gco{font:inherit;font-size:10pt;color:var(--text);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:6px 8px}
+.gcc{font-size:9.4pt;color:var(--muted);margin-left:auto}
+.gcl{grid-template-columns:repeat(auto-fill,minmax(290px,1fr));grid-auto-flow:row}
+.gc{height:70px}
+.gc img,.gc .gcph{width:45px;height:60px}
+.gc .gct{font-size:10.6pt}
+@media (max-width:760px){.gcs{grid-template-columns:1fr 1fr 1fr}.gcs .gcleg{grid-column:1/-1}.gcc{margin-left:0;width:100%}}
