@@ -120,4 +120,5 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
 .gc{height:70px}
 .gc img,.gc .gcph{width:45px;height:60px}
 .gc .gct{font-size:10.6pt}
+.gc .gct small{font-size:8.8pt}
 @media (max-width:760px){.gcs{grid-template-columns:1fr 1fr 1fr}.gcs .gcleg{grid-column:1/-1}.gcc{margin-left:0;width:100%}}

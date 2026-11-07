@@ -153,6 +153,7 @@ details.cx .cxb th,details.cx .cxb td{padding:3px 7px}
 .gc img,.gc .gcph{width:42px;height:56px;border-radius:4px;flex:none;object-fit:cover;box-shadow:0 0 0 1px #ffffff26,0 2px 6px #0008}
 .gc .gcph{display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,var(--ffa),var(--ffb));font-family:Anton;font-size:18pt;color:#fff}
 .gc .gct{flex:1;font-weight:600;font-size:9.8pt;line-height:1.2;color:#fff}
+.gc .gct small{display:block;font-weight:400;font-size:8pt;color:var(--muted);margin-top:2px}
 .gc .gcr{position:relative;width:42px;height:42px;flex:none}
 .gc .gcr svg{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg)}
 .gc .gcr circle{fill:none;stroke-width:4.2}
