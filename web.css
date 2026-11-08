@@ -134,3 +134,10 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
   .thanks > img{max-width:150px;height:auto}
   .cp,.money{white-space:nowrap}
 }
+/* Phone: the stream timer bar sits to the left of the timer text (Andrew 2026-11-07) and stays in view while it scrolls. */
+@media (max-width:760px){
+  #stream .row.tbrow{flex-wrap:nowrap!important;gap:12px;align-items:flex-start}
+  #stream .row.tbrow > div{flex:1 1 auto!important;min-width:0}
+  #stream .row.tbrow > img{order:-1;flex:0 0 auto!important;width:24px;height:auto!important;max-width:none;margin:4px 0 0!important;position:sticky;top:76px}
+  #stream .row.tbrow table{max-width:none!important}
+}
