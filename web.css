@@ -142,7 +142,7 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
   #stream .row.tbrow table{max-width:none!important}
 }
 /* Games Completed: 30 shown until "Show all" (Andrew 2026-11-08); full grid width, styled like a game tile */
-.gcmore{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:70px;margin:6px 0 0;box-sizing:border-box;
+.gcmore{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:36px;margin:6px 0 0;box-sizing:border-box;
   font:inherit;font-weight:600;font-size:10.6pt;color:#fff;cursor:pointer;
   border:1px solid var(--line);border-radius:9px;background:linear-gradient(90deg,var(--panel) 55%,rgba(37,214,200,.16))}
 .gcmore::after{content:"\25BE";color:var(--teal);font-size:13pt}
