@@ -149,3 +149,6 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
 .gcmore.open::after{content:"\25B4"}
 .gcmore:hover{border-color:var(--teal)}
 .gcmore[hidden]{display:none}
+.webonly{display:block}
+.chosprite.webonly{width:300px;height:300px;margin-right:8px}
+@media (max-width:760px){ .chohero{flex-direction:column;align-items:flex-start} .chosprite.webonly{width:150px;height:150px;align-self:center} }

@@ -160,3 +160,9 @@ details.cx .cxb th,details.cx .cxb td{padding:3px 7px}
 .gc .gcr .t{stroke:#ffffff1c;fill:#0a1020}
 .gc .gcr .v{stroke:var(--c);stroke-linecap:round}
 .gc .gcr b{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:Anton;font-weight:400;font-size:12.5pt;color:var(--c);letter-spacing:.01em}
+/* Chocobo Stables hero: walking chocobo (pixel art, 30x30 native; PDF 3x still, website 10x two-frame GIF) */
+.chohero{display:flex;align-items:center;gap:18px}
+.chohero .chotext{flex:1;min-width:0}
+.chosprite{flex:none;image-rendering:pixelated}
+.chosprite.pdfonly{width:90px;height:90px}
+.webonly{display:none}
