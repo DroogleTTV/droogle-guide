@@ -152,3 +152,5 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
 .webonly{display:block}
 .chosprite.webonly{width:210px;height:210px;margin-right:24px}
 @media (max-width:760px){ .chohero{flex-direction:column;align-items:flex-start} .chosprite.webonly{align-self:center} }
+/* Desktop: a taller stream timer bar beside the timer text (Andrew 2026-11-08) */
+@media (min-width:761px){ #stream .row.tbrow > img{height:436px!important;align-self:center} }
