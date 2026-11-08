@@ -1,0 +1,702 @@
+{
+ "Journey": {
+  "d": "2015-07-22",
+  "est": false
+ },
+ "Everybody's Gone to the Rapture": {
+  "d": "2015-08-11",
+  "est": false
+ },
+ "Tomb Raider": {
+  "d": "2015-08-12",
+  "est": false
+ },
+ "Metal Gear Solid V: Ground Zeroes": {
+  "d": "2015-08-30",
+  "est": false
+ },
+ "The Vanishing of Ethan Carter": {
+  "d": "2015-08-31",
+  "est": false
+ },
+ "Metal Gear Solid V: The Phantom Pain": {
+  "d": "2015-10-08",
+  "est": false
+ },
+ "Tales from the Borderlands": {
+  "d": "2015-10-27",
+  "est": false
+ },
+ "Batman: Arkham Knight": {
+  "d": "2016-07-13",
+  "est": false
+ },
+ "Beyond: Two Souls": {
+  "d": "2015-11-30",
+  "est": false
+ },
+ "Rocket League": {
+  "d": "2018-09-18",
+  "est": false
+ },
+ "Life Is Strange": {
+  "d": "2017-04-12",
+  "est": false
+ },
+ "Firewatch": {
+  "d": "2016-02-11",
+  "est": false
+ },
+ "inFAMOUS: First Light": {
+  "d": "2016-02-17",
+  "est": false
+ },
+ "Dead Nation": {
+  "d": "2016-02-18",
+  "est": false
+ },
+ "Ratchet & Clank (2016)": {
+  "d": "2016-09-15",
+  "est": false
+ },
+ "Uncharted 4: A Thief's End": {
+  "d": "2016-05-23",
+  "est": false
+ },
+ "Alienation": {
+  "d": "2016-05-27",
+  "est": false
+ },
+ "Inside": {
+  "d": "2017-01-04",
+  "est": false
+ },
+ "ABZÛ": {
+  "d": "2016-08-06",
+  "est": false
+ },
+ "No Man's Sky": {
+  "d": "2018-08-02",
+  "est": false
+ },
+ "BioShock: The Collection": {
+  "d": "2016-09-18",
+  "est": false
+ },
+ "Resident Evil": {
+  "d": "2016-10-08",
+  "est": false
+ },
+ "Resident Evil 7: Biohazard": {
+  "d": "2018-02-06",
+  "est": false
+ },
+ "The Witness": {
+  "d": "2017-04-22",
+  "est": false
+ },
+ "What Remains of Edith Finch": {
+  "d": "2017-05-06",
+  "est": false
+ },
+ "Horizon Zero Dawn": {
+  "d": "2017-05-24",
+  "est": false
+ },
+ "RiME": {
+  "d": "2017-05-31",
+  "est": false
+ },
+ "The Evil Within": {
+  "d": "2017-07-05",
+  "est": false
+ },
+ "Ori and the Blind Forest": {
+  "d": "2018-03-15",
+  "est": false
+ },
+ "Rayman Origins": {
+  "d": "2017-07-19",
+  "est": false
+ },
+ "World of Final Fantasy": {
+  "d": "2017-07-25",
+  "est": false
+ },
+ "Rayman Legends": {
+  "d": "2017-08-02",
+  "est": false
+ },
+ "Hellblade: Senua's Sacrifice": {
+  "d": "2017-08-22",
+  "est": false
+ },
+ "Uncharted: The Lost Legacy": {
+  "d": "2017-09-07",
+  "est": false
+ },
+ "Alien: Isolation": {
+  "d": "2017-10-12",
+  "est": false
+ },
+ "Super Mario World": {
+  "d": "2017-10-24",
+  "est": false
+ },
+ "The Evil Within 2": {
+  "d": "2017-11-10",
+  "est": false
+ },
+ "Super Mario Odyssey": {
+  "d": "2018-08-21",
+  "est": false
+ },
+ "Persona 5": {
+  "d": "2018-01-29",
+  "est": false
+ },
+ "Cuphead": {
+  "d": "2022-07-01",
+  "est": false
+ },
+ "They Are Billions": {
+  "d": "2021-04-14",
+  "est": false
+ },
+ "Shadow of the Colossus": {
+  "d": "2018-02-19",
+  "est": false
+ },
+ "Emily Is Away Too": {
+  "d": "2018-03-06",
+  "est": false
+ },
+ "Ni no Kuni II: Revenant Kingdom": {
+  "d": "2018-07-11",
+  "est": false
+ },
+ "God of War (2018)": {
+  "d": "2018-05-23",
+  "est": false
+ },
+ "Dark Souls": {
+  "d": "2018-05-31",
+  "est": false
+ },
+ "Detroit: Become Human": {
+  "d": "2018-06-06",
+  "est": false
+ },
+ "The Awesome Adventures of Captain Spirit": {
+  "d": "2018-06-27",
+  "est": false
+ },
+ "Nioh": {
+  "d": "2018-06-29",
+  "est": false
+ },
+ "Octopath Traveler": {
+  "d": "2018-08-01",
+  "est": false
+ },
+ "Subnautica": {
+  "d": "2019-01-04",
+  "est": false
+ },
+ "Two Point Hospital": {
+  "d": "2018-09-05",
+  "est": false
+ },
+ "Marvel's Spider-Man": {
+  "d": "2018-09-27",
+  "est": false
+ },
+ "Little Nightmares": {
+  "d": "2018-10-10",
+  "est": false
+ },
+ "Visage": {
+  "d": "2019-10-07",
+  "est": false
+ },
+ "Jurassic World Evolution": {
+  "d": "2019-01-02",
+  "est": false
+ },
+ "UNDERTALE": {
+  "d": "2019-01-21",
+  "est": false
+ },
+ "DOOM (2016)": {
+  "d": "2019-01-21",
+  "est": false
+ },
+ "The Lion King (SNES)": {
+  "d": "2019-01-25",
+  "est": true
+ },
+ "Resident Evil 2 Remake": {
+  "d": "2019-02-06",
+  "est": false
+ },
+ "Hollow Knight": {
+  "d": "2022-07-01",
+  "est": false
+ },
+ "Titanfall 2 (Story)": {
+  "d": "2019-02-15",
+  "est": false
+ },
+ "Kingdom Hearts III": {
+  "d": "2019-02-19",
+  "est": false
+ },
+ "Wolfenstein: The New Order": {
+  "d": "2019-02-27",
+  "est": false
+ },
+ "Aladdin (SNES)": {
+  "d": "2019-03-01",
+  "est": true
+ },
+ "South Park: The Fractured But Whole": {
+  "d": "2019-03-18",
+  "est": false
+ },
+ "Sekiro: Shadows Die Twice": {
+  "d": "2019-04-15",
+  "est": false
+ },
+ "The Last Guardian": {
+  "d": "2017-01-10",
+  "est": false
+ },
+ "Bioshock": {
+  "d": "2019-04-18",
+  "est": false
+ },
+ "The Witcher 3: Wild Hunt": {
+  "d": "2025-07-25",
+  "est": false
+ },
+ "Dreams": {
+  "d": "2020-03-08",
+  "est": false
+ },
+ "A Plague Tale: Innocence": {
+  "d": "2019-05-24",
+  "est": false
+ },
+ "The Legend of Zelda: Breath of the Wild": {
+  "d": "2019-06-21",
+  "est": false
+ },
+ "The Witcher 3: Hearts of Stone": {
+  "d": "2019-08-05",
+  "est": false
+ },
+ "The Witcher 3: Blood and Wine": {
+  "d": "2019-08-05",
+  "est": false
+ },
+ "The Sims 4": {
+  "d": "2019-08-13",
+  "est": false
+ },
+ "Dead Cells": {
+  "d": "2021-03-17",
+  "est": false
+ },
+ "Outlast": {
+  "d": "2019-10-07",
+  "est": false
+ },
+ "The Last Of Us Remastered": {
+  "d": "2019-10-10",
+  "est": false
+ },
+ "Blair Witch": {
+  "d": "2019-10-11",
+  "est": false
+ },
+ "Until Dawn": {
+  "d": "2019-10-16",
+  "est": false
+ },
+ "Bloodborne": {
+  "d": "2019-10-23",
+  "est": false
+ },
+ "Celeste": {
+  "d": "2018-03-22",
+  "est": false
+ },
+ "Gris": {
+  "d": "2018-12-26",
+  "est": false
+ },
+ "Dark Souls III": {
+  "d": "2019-11-07",
+  "est": false
+ },
+ "Star Wars Jedi: Fallen Order": {
+  "d": "2020-01-22",
+  "est": false
+ },
+ "Outer Wilds": {
+  "d": "2020-01-29",
+  "est": false
+ },
+ "Final Fantasy VII Remake": {
+  "d": "2024-02-26",
+  "est": false
+ },
+ "Resident Evil 4": {
+  "d": "2023-10-22",
+  "est": false
+ },
+ "Dead Space 2": {
+  "d": "2020-11-04",
+  "est": false
+ },
+ "Hades": {
+  "d": "2021-01-27",
+  "est": false
+ },
+ "Astro's Playroom": {
+  "d": "2020-11-18",
+  "est": false
+ },
+ "Spider-Man: Miles Morales": {
+  "d": "2020-11-29",
+  "est": false
+ },
+ "Demon's Souls": {
+  "d": "2020-12-16",
+  "est": false
+ },
+ "Death Stranding": {
+  "d": "2021-01-24",
+  "est": false
+ },
+ "Control": {
+  "d": "2021-02-14",
+  "est": false
+ },
+ "Little Nightmares II": {
+  "d": "2021-02-24",
+  "est": false
+ },
+ "Mortal Kombat 11": {
+  "d": "2021-03-03",
+  "est": false
+ },
+ "Animal Crossing: New Horizons": {
+  "d": "2021-03-28",
+  "est": false
+ },
+ "It Takes Two": {
+  "d": "2023-09-28",
+  "est": false
+ },
+ "Returnal": {
+  "d": "2021-05-19",
+  "est": false
+ },
+ "Mass Effect": {
+  "d": "2021-06-02",
+  "est": false
+ },
+ "Bugsnax": {
+  "d": "2021-09-19",
+  "est": false
+ },
+ "Ratchet & Clank: Rift Apart": {
+  "d": "2021-08-18",
+  "est": false
+ },
+ "Mass Effect 2": {
+  "d": "2021-09-19",
+  "est": false
+ },
+ "Kena: Bridge of Spirits": {
+  "d": "2021-10-06",
+  "est": false
+ },
+ "Village: Resident Evil": {
+  "d": "2021-10-20",
+  "est": false
+ },
+ "Gone Home": {
+  "d": "2022-10-19",
+  "est": false
+ },
+ "Guardians of the Galaxy": {
+  "d": "2021-11-14",
+  "est": false
+ },
+ "Mass Effect 3": {
+  "d": "2022-02-23",
+  "est": false
+ },
+ "Elden Ring": {
+  "d": "2022-07-01",
+  "est": false
+ },
+ "Stray": {
+  "d": "2022-07-31",
+  "est": false
+ },
+ "The Mortuary Assistant": {
+  "d": "2022-10-17",
+  "est": false
+ },
+ "God Of War Ragnarok": {
+  "d": "2023-01-29",
+  "est": false
+ },
+ "Persona 5 Royal": {
+  "d": "2023-01-27",
+  "est": false
+ },
+ "Theatrhythm Final Bar Line": {
+  "d": "2023-03-14",
+  "est": false
+ },
+ "Red Dead Redemption 2": {
+  "d": "2023-04-24",
+  "est": false
+ },
+ "The Last Of Us Remake": {
+  "d": "2022-10-14",
+  "est": false
+ },
+ "The Last Of Us Part II": {
+  "d": "2023-03-01",
+  "est": false
+ },
+ "Final Fantasy I PR": {
+  "d": "2023-05-16",
+  "est": false
+ },
+ "Final Fantasy II PR": {
+  "d": "2023-06-09",
+  "est": false
+ },
+ "Final Fantasy III PR": {
+  "d": "2023-06-21",
+  "est": false
+ },
+ "Final Fantasy IV PR": {
+  "d": "2023-07-17",
+  "est": false
+ },
+ "Final Fantasy XVI": {
+  "d": "2023-08-13",
+  "est": false
+ },
+ "Final Fantasy V PR": {
+  "d": "2023-08-21",
+  "est": false
+ },
+ "Final Fantasy VI PR": {
+  "d": "2023-10-06",
+  "est": false
+ },
+ "The Quarry": {
+  "d": "2023-11-05",
+  "est": false
+ },
+ "Final Fantasy Echo-S VII": {
+  "d": "2023-12-27",
+  "est": false
+ },
+ "Final Fantasy VIII": {
+  "d": "2024-02-25",
+  "est": false
+ },
+ "Final Fantasy IX": {
+  "d": "2023-12-04",
+  "est": false
+ },
+ "Final Fantasy X": {
+  "d": "2025-08-18",
+  "est": false
+ },
+ "Final Fantasy XII: Zodiac Age": {
+  "d": "2019-07-24",
+  "est": false
+ },
+ "Marvel's Spider-Man 2": {
+  "d": "2023-12-27",
+  "est": false
+ },
+ "Final Fantasy VII Rebirth": {
+  "d": "2026-05-31",
+  "est": false
+ },
+ "Crisis Core: FFVII Reunion": {
+  "d": "2023-01-06",
+  "est": false
+ },
+ "Neva": {
+  "d": "2024-11-06",
+  "est": false
+ },
+ "Dead Space Remake": {
+  "d": "2023-10-23",
+  "est": false
+ },
+ "Resident Evil 4 Remake": {
+  "d": "2023-10-22",
+  "est": false
+ },
+ "Silent Hill 2 Remake": {
+  "d": "2024-11-29",
+  "est": false
+ },
+ "Astro Bot": {
+  "d": "2025-07-11",
+  "est": false
+ },
+ "Kingdom Hearts": {
+  "d": "2024-06-24",
+  "est": true
+ },
+ "Kingdom Hearts: CoM": {
+  "d": "2024-07-29",
+  "est": true
+ },
+ "Kingdom Hearts II": {
+  "d": "2024-10-11",
+  "est": true
+ },
+ "Kingdom Hearts: Birth By Sleep": {
+  "d": "2024-11-11",
+  "est": true
+ },
+ "The Legend of Zelda": {
+  "d": "2024-07-07",
+  "est": true
+ },
+ "Zelda II - Adventure of Link": {
+  "d": "2024-07-21",
+  "est": true
+ },
+ "TLoZ: A Link to the Past": {
+  "d": "2024-08-18",
+  "est": false
+ },
+ "TLoZ: Link's Awakening (2019)": {
+  "d": "2024-08-18",
+  "est": false
+ },
+ "TLoZ: Ocarina of Time": {
+  "d": "2024-09-25",
+  "est": false
+ },
+ "TLoZ: Majora's Mask": {
+  "d": "2024-10-20",
+  "est": false
+ },
+ "TLoZ: Oracle of Seasons": {
+  "d": "2024-12-01",
+  "est": true
+ },
+ "TLoZ: Oracle of Ages": {
+  "d": "2025-01-01",
+  "est": true
+ },
+ "TLoZ: Minish Cap": {
+  "d": "2025-01-27",
+  "est": true
+ },
+ "Metaphor: ReFantazio": {
+  "d": "2025-02-19",
+  "est": false
+ },
+ "TLoZ: Wind Waker": {
+  "d": "2025-03-16",
+  "est": true
+ },
+ "TLoZ: Twilight Princess": {
+  "d": "2025-03-17",
+  "est": false
+ },
+ "TLoZ: Skyward Sword": {
+  "d": "2025-03-30",
+  "est": false
+ },
+ "Chrono Trigger": {
+  "d": "2025-04-18",
+  "est": false
+ },
+ "Clair Obscur: Expedition 33": {
+  "d": "2025-05-30",
+  "est": false
+ },
+ "Chrono Cross": {
+  "d": "2025-06-16",
+  "est": true
+ },
+ "Uncharted: Drake's Fortune": {
+  "d": "2025-06-27",
+  "est": false
+ },
+ "Uncharted 2: Among Thieves": {
+  "d": "2025-07-04",
+  "est": false
+ },
+ "Uncharted 3: Drake's Deception": {
+  "d": "2025-07-18",
+  "est": false
+ },
+ "Metal Gear Solid Delta: Snake Eater": {
+  "d": "2025-09-19",
+  "est": false
+ },
+ "Silent Hill f": {
+  "d": "2025-10-29",
+  "est": false
+ },
+ "Hollow Knight: Silksong": {
+  "d": "2025-10-10",
+  "est": false
+ },
+ "Final Fantasy Tactics": {
+  "d": "2025-11-17",
+  "est": false
+ },
+ "Final Fantasy X-2": {
+  "d": "2025-11-24",
+  "est": false
+ },
+ "Dispatch": {
+  "d": "2025-12-07",
+  "est": false
+ },
+ "Dragon Quest I HD-2D": {
+  "d": "2026-05-18",
+  "est": false
+ },
+ "Pragmata": {
+  "d": "2026-06-29",
+  "est": false
+ },
+ "007: First Light": {
+  "d": "2026-09-07",
+  "est": false
+ },
+ "Final Fantasy XV": {
+  "d": "2026-09-09",
+  "est": false
+ },
+ "Super Mario RPG": {
+  "d": "2026-09-28",
+  "est": true
+ },
+ "Resident Evil: Requiem": {
+  "d": "2026-10-18",
+  "est": false
+ }
+}
