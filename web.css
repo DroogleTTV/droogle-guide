@@ -122,3 +122,15 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
 .gc .gct{font-size:10.6pt}
 .gc .gct small{font-size:8.8pt}
 @media (max-width:760px){.gcs{grid-template-columns:1fr 1fr 1fr}.gcs .gcleg{grid-column:1/-1}.gcc{margin-left:0;width:100%}}
+
+/* Phone: a .row that pairs text with a fixed-width side box (e.g. Limit Break's "Example split") stacks instead of
+   squeezing the text into a thin column (Andrew 2026-11-07). */
+@media (max-width:760px){
+  .row:has(> div[style*="flex:none"]){flex-wrap:wrap}
+  .row:has(> div[style*="flex:none"]) > div{flex:1 1 100%!important;width:auto!important;min-width:0}
+}
+@media (max-width:760px){
+  .thanks{flex-direction:column;align-items:flex-start;gap:10px}
+  .thanks > img{max-width:150px;height:auto}
+  .cp,.money{white-space:nowrap}
+}
