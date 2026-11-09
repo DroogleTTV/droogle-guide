@@ -87,12 +87,12 @@ footer{color:var(--muted);font-size:13px;padding:0 0 30px}
 <div class="bar"><div class="in">
  <label class="search"><span class="sr">Search SFX commands</span>
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
-  <input id="q" type="search" placeholder="Search 1,356 commands, quotes or sources" autocomplete="off" autocapitalize="off" spellcheck="false">
+  <input id="q" type="search" placeholder="Search 1,501 commands, quotes or sources" autocomplete="off" autocapitalize="off" spellcheck="false">
   <button class="x" id="qx" type="button" aria-label="Clear search">&times;</button></label>
  <div class="seg" role="group" aria-label="Show">
   <button type="button" data-f="all" aria-pressed="true">All</button><button type="button" data-f="new" aria-pressed="false">Newest</button><button type="button" data-f="rand" aria-pressed="false">Random</button>
  </div>
- <label class="tog"><input type="checkbox" id="mat"> Show mature (145)</label>
+ <label class="tog"><input type="checkbox" id="mat" checked> Show mature (145)</label>
  <span class="count" id="count" aria-live="polite"></span>
 </div></div>
 <ul class="list" id="list"></ul>
@@ -191,7 +191,7 @@ list.addEventListener('click', function (e) {
 var timer = 0;
 q.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(apply, 80); });
 qx.addEventListener('click', function () { q.value = ''; apply(); q.focus(); });
-mat.addEventListener('change', function () { try { localStorage.setItem('sfxMature', mat.checked ? '1' : '0'); } catch (e) {} apply(); });
+mat.addEventListener('change', function () { try { localStorage.setItem('sfxMature2', mat.checked ? '1' : '0'); } catch (e) {} apply(); });
 document.querySelectorAll('.seg button').forEach(function (b) {
   b.addEventListener('click', function () {
     FILTER = b.dataset.f; document.querySelectorAll('.seg button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); }); apply();
@@ -201,7 +201,7 @@ document.addEventListener('keydown', function (e) {
   if (e.key === '/' && document.activeElement !== q) { e.preventDefault(); q.focus(); }
   if (e.key === 'Escape') { if (cur) stop(); else if (document.activeElement === q && q.value) { q.value = ''; apply(); } }
 });
-try { mat.checked = localStorage.getItem('sfxMature') === '1'; } catch (e) {}
+try { mat.checked = localStorage.getItem('sfxMature2') !== '0'; } catch (e) {}
 try { var p0 = new URL(location.href).searchParams.get('q'); if (p0) q.value = p0; } catch (e) {}
 apply();
 </script>
