@@ -68,7 +68,7 @@ li.playing .play .st{display:block}
 .meta{font-size:12.5px;color:var(--muted);margin-top:3px;display:flex;flex-wrap:wrap;gap:2px 10px}
 .tag{font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;border-radius:99px;padding:1px 7px}
 .t-r{background:#2a1550;color:#d9c8ff}.t-m{background:#4a1230;color:#ffb3d6}.t-e{background:#0f3d3a;color:#8ff5ea}.t-v{background:#3a2a06;color:var(--gold)}
-.from{color:#b9c5dd}.from i{font-style:normal;color:#dfe6f3}
+.from{color:#b9c5dd}.from[hidden]{display:none}.from i{font-style:normal;color:#dfe6f3}
 .from mark{background:rgba(249,199,79,.28);color:#fff3cf;border-radius:3px;padding:0 1px}
 .quote{font-size:13px;color:#c9d3e6;margin-top:3px;line-height:1.35;overflow-wrap:anywhere}
 .quote mark{background:rgba(249,199,79,.28);color:#fff3cf;border-radius:3px;padding:0 1px}
@@ -130,8 +130,8 @@ D.forEach(function (r, i) {
   li.innerHTML = (can ? '<button class="play" type="button" aria-label="Play ' + esc(r.c) + '">' + PL + '</button>'
                       : '<button class="play" type="button" disabled aria-label="No preview for ' + esc(r.c) + '" style="opacity:.35;cursor:default">' + PL + '</button>') +
     '<div class="body"><button class="cmd" type="button" title="Copy ' + esc(r.c) + '">' + esc(r.c) + '</button>' +
-    '<div class="meta">' + dur + '<span>' + cd(r.cd) + '</span>' + tags + (can ? '' : '<span>no preview yet</span>') + (r.s ? '<span class="from">From <i>' + esc(r.s) + '</i></span>' : '') + '</div><div class="quote" hidden></div></div><div class="prog"></div>';
-  r.qe = li.querySelector('.quote'); r.se = li.querySelector('.from i');
+    '<div class="meta">' + dur + '<span>' + cd(r.cd) + '</span>' + tags + (can ? '' : '<span>no preview yet</span>') + (r.s ? '<span class="from" hidden>From <i>' + esc(r.s) + '</i></span>' : '') + '</div><div class="quote" hidden></div></div><div class="prog"></div>';
+  r.qe = li.querySelector('.quote'); r.se = li.querySelector('.from i'); r.fe = li.querySelector('.from');
   r.el = li; frag.appendChild(li);
 });
 var empty = document.createElement('li'); empty.className = 'empty'; empty.hidden = true; empty.textContent = 'No SFX match that search.'; frag.appendChild(empty);
@@ -146,6 +146,7 @@ function apply() {
     var byName = !s || r.k.indexOf(s) !== -1, byQuote = !byName && sn.length > 1 && r.x && (' ' + r.x).indexOf(' ' + sn) !== -1;
     var bySrc = !byName && sn.length > 1 && r.y && (' ' + r.y).indexOf(' ' + sn) !== -1;
     var show = (!r.m || m) && (byName || byQuote || bySrc) && (FILTER !== 'rand' || r.r !== undefined);
+    if (r.fe) r.fe.hidden = !s;
     if (r.se) { if (bySrc && show) { r.se.innerHTML = snip(r.s, sn); r.hl = 1; } else if (r.hl) { r.se.textContent = r.s; r.hl = 0; } }
     r.el.hidden = !show; if (show) n++;
     if (byQuote && show) { r.qe.innerHTML = '&ldquo;' + snip(r.q, sn) + '&rdquo;'; r.qe.hidden = false; } else if (!r.qe.hidden) { r.qe.hidden = true; }
