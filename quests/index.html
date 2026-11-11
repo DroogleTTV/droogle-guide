@@ -31,6 +31,8 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
 .preview{display:none;margin:0 0 14px;padding:10px 14px;border-left:4px solid var(--gold);background:rgba(249,199,79,.10);border-radius:0 10px 10px 0;
   color:#f3e6c2;font-size:14px}
 .preview.on{display:block}
+.layout>section>h1{margin-top:-.052em}   /* cap tops line up with the quest log box */
+.layout{margin-top:14px}
 .layout{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:18px;align-items:start;margin-bottom:28px}
 .weekbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 10px;font-size:14px;color:var(--muted)}
 .weekbar b{color:var(--text);font-weight:600}
@@ -150,11 +152,11 @@ footer{color:var(--muted);font-size:13px;padding:0 0 30px}
 </svg>
 <div class="wrap">
 <header><a href="../"><img src="../img/logo_nav.png" alt="Droogle Channel Guide"></a><a class="back" href="../">Back to the guide</a></header>
+<div class="layout">
+ <section aria-label="World map">
 <h1>Droo's Weekly Quests</h1>
 <p class="lead">Every Monday at 8&nbsp;AM&nbsp;ET, Droo pins a new set of quests on the world map. They're all <b>community</b> goals: when chat clears one together, <b>everyone in chat</b> earns its EXP as nuts. Select a marker to see the quest and how close chat is to clearing it.</p>
 <p class="preview" id="preview"></p>
-<div class="layout">
- <section aria-label="World map">
   <div class="weekbar" id="weekbar"></div>
   <div class="mapbox" id="mapbox"><img class="map" id="mapimg" alt="" src="map_a.webp">
    <div class="tip" id="tip" role="tooltip"></div>
