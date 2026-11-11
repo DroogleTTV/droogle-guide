@@ -124,6 +124,9 @@ svg .ic{color:#0b1424}
 .reward .rx{font-size:13.5px;color:#c9d3e6;line-height:1.3}
 .note{font-size:13px;color:#c9d3e6;margin:2px 0 0}
 .note b{color:#fff}
+img.emo{height:1.5em;width:auto;vertical-align:-.4em;margin:0 1px}
+.emonote img.emo{height:42px;vertical-align:middle;margin-right:4px}
+.prog img.emo{height:30px;vertical-align:-7px}
 button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 footer{color:var(--muted);font-size:13px;padding:0 0 30px}
@@ -186,7 +189,7 @@ var DEMO={week:LAUNCH,stream:2,live:false,now:0,demo:true,quests:[
  {id:'hunt_bomb',type:'hunt_c',name:'Bomb',lvl:1,exp:250,status:'',desc:'defeat the Bomb with !hunt when it appears',prog:'not spotted yet',pct:0},
  {id:'hunt_ultros',type:'hunt_b',name:'Ultros',lvl:2,exp:450,status:'',desc:'defeat Ultros with !hunt when it appears',prog:'not spotted yet',pct:0},
  {id:'kalm_inn',type:'side',name:'Kalm Inn Gossip',lvl:3,exp:250,status:'done',desc:'50 different SFX commands in one stream',prog:'tonight 50/50',pct:1},
- {id:'costa_wave',type:'side',name:'Costa del Sol Wave',lvl:3,exp:250,status:'open',desc:'20 messages in a row with the emote of the week',prog:'best wave 12/20 drooHype',pct:0.6,emote:'drooHype'},
+ {id:'costa_wave',type:'side',name:'Costa del Sol Wave',lvl:3,exp:250,status:'open',desc:'20 messages in a row with the emote of the week',prog:'best wave 12/20 drooRave',pct:0.6,emote:'drooRave'},
  {id:'rally_ho',type:'side',name:'Rally-ho!',lvl:3,exp:250,status:'open',desc:'greet 20 newcomers with "Rally-ho!" within 10 s of their first message',prog:'7/20',pct:0.35},
  {id:'wheel_of_fate',type:'gold',name:'Wheel of Fate',lvl:3,exp:375,status:'open',desc:'Goal Wheel payouts add up to 5,000 nuts this week',prog:'2,750/5,000 nuts',pct:0.55},
  {id:'gold_chocobo',type:'chocobo',name:'Gold Chocobo',lvl:3,exp:375,status:'done',desc:'one rider wins 3 duels in a row',prog:'best streak 3/3',pct:1},
@@ -198,6 +201,10 @@ var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){re
 var fmt=function(n){return Number(n||0).toLocaleString('en-US')};
 var cap=function(s){s=String(s||'');return s.charAt(0).toUpperCase()+s.slice(1)};
 function T(q){return TYPES[q.type]||TYPES.side}
+var EMOTES={"drooAdam":"drooAdam.png","drooBanger":"drooBanger.gif","drooBatmog":"drooBatmog.png","drooBlush":"drooBlush.png","drooCited":"drooCited.gif","drooCon":"drooCon.png","drooCozy":"drooCozy.png","drooCrush":"drooCrush.png","drooCursed":"drooCursed.png","drooDance":"drooDance.gif","drooDead":"drooDead.png","drooDerp":"drooDerp.png","drooDrewgasm":"drooDrewgasm.png","drooDrewriel":"drooDrewriel.png","drooDroo":"drooDroo.png","drooFine":"drooFine.png","drooGeek":"drooGeek.png","drooGeralt":"drooGeralt.png","drooGryffindor":"drooGryffindor.png","drooHello":"drooHello.png","drooHufflepuff":"drooHufflepuff.png","drooHuh":"drooHuh.gif","drooLaraMog":"drooLaraMog.png","drooLessThan2":"drooLessThan2.png","drooLurk":"drooLurk.gif","drooLvlup":"drooLvlup.png","drooMogPog":"drooMogPog.png","drooMogRoss":"drooMogRoss.png","drooMogdalf":"drooMogdalf.png","drooMoney":"drooMoney.png","drooNervous":"drooNervous.png","drooNoted":"drooNoted.png","drooNut":"drooNut.png","drooOhmy":"drooOhmy.png","drooPeaked":"drooPeaked.png","drooPopcorneo":"drooPopcorneo.png","drooRage":"drooRage.png","drooRaid":"drooRaid.png","drooRave":"drooRave.gif","drooRavenclaw":"drooRavenclaw.png","drooShrek":"drooShrek.png","drooSlytherin":"drooSlytherin.png","drooSmug":"drooSmug.png","drooSnake":"drooSnake.png","drooSnifff":"drooSnifff.gif","drooSoraWhat":"drooSoraWhat.png","drooSuffer":"drooSuffer.png","drooTea":"drooTea.png","drooTifaheart":"drooTifaheart.png","drooUglydrew":"drooUglydrew.png","drooUhoh":"drooUhoh.png","drooWhoa":"drooWhoa.gif"};   // Droogle's channel emotes (Twitch CDN copies in emotes/, 2026-11-11)
+function emo(h){return String(h).replace(/\b(droo[A-Za-z0-9]+)\b/g,function(m){return EMOTES[m]?'<img class="emo" src="emotes/'+EMOTES[m]+'" alt="'+m+'" title="'+m+'">':m})}
+function descH(q){return emo(esc(cap(q.desc)))+(q.emote&&String(q.desc).indexOf(q.emote)<0?' '+emo(esc(q.emote)):'')}
+
 
 /* ---------- time (Eastern) ---------- */
 var dtf=new Intl.DateTimeFormat('en-US',{timeZone:TZ,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
@@ -312,7 +319,7 @@ var tip=$('tip');
 function showTip(btn){
   var q=find(btn.dataset.id);if(!q)return;var t=T(q);
   tip.style.setProperty('--c',t.c);
-  tip.innerHTML='<div class="tt">'+t.label+' &middot; Lv '+(q.lvl||1)+'</div><div class="tn">'+esc(q.name)+'</div><div class="td">'+esc(cap(q.desc))+'</div><div class="tc">'+stText(q)+(q.status==='done'?'':' &middot; '+Math.round(pct(q)*100)+'%')+' &middot; '+fmt(q.exp)+' EXP</div>';
+  tip.innerHTML='<div class="tt">'+t.label+' &middot; Lv '+(q.lvl||1)+'</div><div class="tn">'+esc(q.name)+'</div><div class="td">'+descH(q)+'</div><div class="tc">'+stText(q)+(q.status==='done'?'':' &middot; '+Math.round(pct(q)*100)+'%')+' &middot; '+fmt(q.exp)+' EXP</div>';
   var box=$('mapbox').getBoundingClientRect(),r=btn.getBoundingClientRect();
   tip.classList.add('on');
   var tw=tip.offsetWidth,th=tip.offsetHeight,cx=r.left+r.width/2-box.left;
@@ -334,16 +341,16 @@ function detail(id,quiet){
    '<div class="dtype" style="--c:'+t.c+'">'+pinSvg(q,1)+t.label+'</div>'+
    '<div class="dname">'+esc(q.name)+'</div>'+
    '<div class="lvl"><span class="pips">'+[1,2,3,4,5].map(function(i){return '<i class="'+(i<=(q.lvl||1)?'f':'')+'"></i>'}).join('')+'</span>Level '+(q.lvl||1)+' of 5</div>'+
-   '<p class="ddesc">'+esc(cap(q.desc))+'.</p>'+
+   '<p class="ddesc">'+emo(esc(cap(q.desc)))+'.</p>'+
    '<div class="box '+(q.status==='done'?'done':q.status==='fail'?'fail':'')+'" style="--c:'+(q.status==='done'?'#5ee08a':q.status==='fail'?'#ff6b7d':t.c)+'">'+
    '<div class="k"><span>'+(q.status==='done'?'Cleared':q.status==='fail'?'Failed this week':'Progress')+'</span><span>'+Math.round(p*100)+'%</span></div>'+
    '<div class="big"><i style="width:'+(p*100).toFixed(1)+'%"></i></div>'+
-   (prog&&q.status!=='done'?'<div class="pl">'+lab+'</div><div class="prog">'+esc(prog)+'</div>':'')+'</div>';
+   (prog&&q.status!=='done'?'<div class="pl">'+lab+'</div><div class="prog">'+emo(esc(prog))+'</div>':'')+'</div>';
   if(q.stages){
     h+='<div class="box" style="--c:'+t.c+'"><div class="k"><span>Three streams this week</span></div><div class="stages">'+
      q.stages.map(function(s,i){var now=S.live&&(S.stream||1)===i+1&&!s;return '<div class="stg '+(s||'')+(now?' now':'')+'"><b>'+(s==='done'?'Cleared':s==='fail'?'Missed':now?'Tonight':'To do')+'</b>Stream '+(i+1)+'</div>'}).join('')+'</div></div>';
   }
-  if(q.emote)h+='<p class="note">Emote of the week: <b>'+esc(q.emote)+'</b></p>';
+  if(q.emote)h+='<p class="note emonote">Emote of the week: '+emo(esc(q.emote))+' <b>'+esc(q.emote)+'</b></p>';
   if(q.paid)h+='<p class="note">Progress on this one comes from <b>Bits, subs or tips</b>.</p>';
   h+='<div class="box"><div class="reward"><span class="exp">'+fmt(q.exp)+'</span><span class="rx"><b style="color:#fff">EXP reward.</b> When chat clears this quest, everyone in chat gets '+fmt(q.exp)+' nuts.</span></div></div>';
   $('dv').innerHTML=h;$('dv').hidden=false;$('lv').hidden=true;
