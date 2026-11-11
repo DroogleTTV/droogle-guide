@@ -19,7 +19,7 @@ body{background:#0b1322 url(img/pagebg.jpg) center top/cover fixed;min-height:10
 main{max-width:980px;margin:0 auto;padding:0 20px 30px}
 .sec{position:relative;padding:34px 0 26px;border-top:1px solid var(--line)}
 .sec:first-child{border-top:0}
-.tw{width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.tw{width:100%;overflow-x:auto;overflow-y:hidden;padding-bottom:4px;-webkit-overflow-scrolling:touch}
 .tw table{min-width:0}
 .grid2>*,.grid3>*,.row>*{min-width:0}
 img{max-width:100%;height:auto}
