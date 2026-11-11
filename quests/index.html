@@ -1,0 +1,374 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mog's Weekly Quests</title>
+<meta name="description" content="This week's community quests on the Droogle stream, pinned on the world map.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Mog's Weekly Quests"><meta property="og:description" content="This week's community quests on the Droogle stream, pinned on the world map.">
+<meta property="og:image" content="https://drooglettv.github.io/droogle-guide/img/og.png"><meta name="theme-color" content="#0b1322">
+<link rel="icon" type="image/png" href="../img/favicon.png"><link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<link rel="preload" as="image" href="map_a.webp">
+<style>
+@font-face{font-family:Outfit;font-weight:400;src:url(../outfit-latin-400-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:600;src:url(../outfit-latin-600-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:700;src:url(../outfit-latin-700-normal.woff2)}
+@font-face{font-family:Anton;src:url(../anton-latin-400-normal.woff2)}
+@font-face{font-family:Pixel;src:url(../jersey-15-latin-400-normal.woff2);size-adjust:122%}
+:root{--bg:#0b1322;--panel:#121d33;--line:#24345a;--text:#e9eef8;--muted:#9aa8c4;--teal:#25d6c8;--teal2:#0f8f93;--purple:#8f5cf7;
+  --pink:#ee4f9e;--gold:#f9c74f;--ok:#5ee08a;--bad:#ff6b7d}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) url(../img/pagebg.jpg) center top/cover fixed;color:var(--text);font:15px/1.45 Outfit,system-ui,sans-serif}
+a{color:var(--teal)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+header{padding:18px 0 6px;display:flex;align-items:center;gap:14px}
+header img{height:34px;display:block}
+header .back{margin-left:auto;font-family:Anton;letter-spacing:.06em;text-transform:uppercase;font-size:14px;color:#8ea0c2;text-decoration:none;
+  padding:7px 12px 6px;border:1px solid var(--line);border-radius:8px}
+header .back:hover,header .back:focus-visible{color:#081320;background:var(--teal);border-color:var(--teal)}
+h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-height:1;margin:14px 0 8px;letter-spacing:.01em;text-transform:uppercase}
+.lead{margin:0 0 14px;color:#c9d3e6;max-width:72ch}
+.lead b{color:#fff}
+.preview{display:none;margin:0 0 14px;padding:10px 14px;border-left:4px solid var(--gold);background:rgba(249,199,79,.10);border-radius:0 10px 10px 0;
+  color:#f3e6c2;font-size:14px}
+.preview.on{display:block}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 370px;gap:18px;align-items:start;margin-bottom:28px}
+.weekbar{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;margin:0 0 10px;font-size:14px;color:var(--muted)}
+.weekbar b{color:var(--text);font-weight:600}
+.live{display:inline-flex;align-items:center;gap:7px;font-weight:700;color:#ff8fa3}
+.live i{width:9px;height:9px;border-radius:50%;background:#ff4d6d;box-shadow:0 0 0 0 rgba(255,77,109,.7);animation:beat 1.6s infinite}
+.live.off{color:var(--muted);font-weight:600}.live.off i{background:#55627e;animation:none}
+@keyframes beat{0%{box-shadow:0 0 0 0 rgba(255,77,109,.6)}70%{box-shadow:0 0 0 8px rgba(255,77,109,0)}100%{box-shadow:0 0 0 0 rgba(255,77,109,0)}}
+
+/* the map */
+.mapbox{position:relative;border-radius:16px;overflow:hidden;border:2px solid #2b4372;box-shadow:0 18px 50px rgba(0,0,0,.45);background:#0d2f63;
+  aspect-ratio:1/1;user-select:none;-webkit-user-select:none}
+.mapbox img.map{position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none}
+.mapbox::after{content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 70px rgba(4,12,30,.55);border-radius:14px}
+.mk{position:absolute;width:max(30px,5.4%);aspect-ratio:40/50;transform:translate(-50%,-92%);border:0;padding:0;background:none;cursor:pointer;z-index:2;
+  filter:drop-shadow(0 3px 3px rgba(0,0,0,.55));-webkit-tap-highlight-color:transparent;transition:transform .15s ease}
+.mk svg{width:100%;height:100%;display:block;overflow:visible}
+svg .pin{fill:var(--c);stroke:#0b1424;stroke-width:2.4}
+svg .face{fill:rgba(8,16,32,.28)}
+svg .ic{color:#0b1424}
+.mk.boss{width:max(38px,7%)}
+.mk.boss .pin{stroke:#fff3c4;stroke-width:2.6}
+.mk:hover,.mk:focus-visible,.mk.sel{transform:translate(-50%,-92%) scale(1.14);z-index:4}
+.mk:focus-visible{outline:none}
+.mk:focus-visible .pin,.mk.sel .pin{stroke:#fff;stroke-width:3.2}
+.mk .ring{fill:none;stroke:var(--c);stroke-width:2;opacity:0;transform-origin:20px 47px}
+.mk.open .ring{animation:ping 2.4s ease-out infinite}
+@keyframes ping{0%{opacity:.9;transform:scale(.3)}80%,100%{opacity:0;transform:scale(1.5)}}
+.mk.fail .pin{fill:#4a5268}
+.mk.fail .ic{color:#9aa3b6}
+.mk .badge{display:none}
+.mk.done .badge.ok,.mk.fail .badge.no{display:block}
+.tip{position:absolute;z-index:6;max-width:260px;min-width:170px;background:rgba(8,15,30,.96);border:1px solid #34507f;border-radius:10px;padding:8px 11px 9px;
+  pointer-events:none;opacity:0;transform:translateY(4px);transition:opacity .12s,transform .12s;box-shadow:0 10px 30px rgba(0,0,0,.5)}
+.tip.on{opacity:1;transform:none}
+.tip .tt{font-size:11.5px;font-weight:700;letter-spacing:.04em;color:var(--c)}
+.tip .tn{font-family:Anton;font-size:19px;line-height:1.1;margin:1px 0 3px;letter-spacing:.01em}
+.tip .td{font-size:13px;color:#c9d3e6;line-height:1.35}
+.tip .tc{font-size:12px;color:var(--muted);margin-top:5px}
+
+.legend{display:flex;flex-wrap:wrap;gap:6px 16px;margin:10px 2px 0;font-size:13px;color:var(--muted)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend svg{width:16px;height:20px;filter:drop-shadow(0 1px 1px rgba(0,0,0,.5))}
+
+/* side panel */
+.panel{background:rgba(14,23,42,.93);border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;position:sticky;top:14px;
+  max-height:calc(100vh - 28px);overflow:auto}
+.panel h2{font-family:Anton;font-weight:400;font-size:22px;letter-spacing:.03em;margin:0 0 10px;text-transform:uppercase}
+.qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
+.qrow{display:flex;gap:10px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:#0f1a30;border:1px solid #22355a;
+  border-radius:11px;padding:8px 10px;cursor:pointer}
+.qrow:hover,.qrow:focus-visible{border-color:var(--c);outline:none;background:#13213d}
+.qrow svg{flex:none;width:22px;height:28px}
+.qrow .qb{flex:1;min-width:0}
+.qrow .qt,.qrow .mini{display:block}
+.qrow .qn{font-weight:600;font-size:14.5px;line-height:1.2;display:flex;gap:6px;align-items:baseline}
+.qrow .qn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qrow .qt{font-size:11.5px;color:var(--c);font-weight:700;letter-spacing:.03em}
+.mini{height:5px;border-radius:9px;background:#22314f;margin-top:5px;overflow:hidden}
+.mini i{display:block;height:100%;background:var(--c);border-radius:9px}
+.qrow .st{flex:none;font-size:12px;font-weight:700}
+.st.done{color:var(--ok)}.st.fail{color:var(--bad)}.st.open{color:#c9d3e6}.st.idle{color:var(--muted)}
+.panel .foot{font-size:12px;color:var(--muted);margin-top:12px}
+
+.dv[hidden],.lv[hidden]{display:none}
+.backbtn{font:inherit;font-size:13px;font-weight:600;color:var(--teal);background:none;border:0;padding:2px 0;cursor:pointer;margin-bottom:8px}
+.backbtn:hover{text-decoration:underline}
+.dtype{display:flex;align-items:center;gap:8px;font-size:12.5px;font-weight:700;letter-spacing:.04em;color:var(--c)}
+.dtype svg{width:22px;height:28px}
+.dname{font-family:Anton;font-weight:400;font-size:30px;line-height:1.05;margin:6px 0 4px;letter-spacing:.01em}
+.lvl{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);margin-bottom:10px}
+.pips{display:inline-flex;gap:3px}
+.pips i{width:9px;height:9px;transform:rotate(45deg);background:#2a3a5c;border-radius:2px}
+.pips i.f{background:var(--gold)}
+.ddesc{font-size:15px;color:#dbe3f2;margin:0 0 14px}
+.box{background:#0f1a30;border:1px solid #22355a;border-radius:12px;padding:11px 12px;margin-bottom:10px}
+.box .k{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-bottom:5px;display:flex;justify-content:space-between;gap:8px}
+.big{height:12px;border-radius:9px;background:#22314f;overflow:hidden}
+.big i{display:block;height:100%;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 60%,#fff));border-radius:9px;transition:width .5s ease}
+.pl{font-size:12px;color:var(--muted);margin-top:9px}
+.prog{font-family:Pixel;font-size:21px;line-height:1.1;margin-top:1px;color:#fff}
+.box.done{border-color:rgba(94,224,138,.45);background:rgba(20,60,40,.35)}
+.box.fail{border-color:rgba(255,107,125,.4);background:rgba(70,20,30,.3)}
+.stages{display:grid;grid-template-columns:repeat(3,1fr);gap:6px}
+.stg{border-radius:9px;border:1px solid #2a3c62;padding:6px 6px 5px;text-align:center;font-size:12px;color:var(--muted)}
+.stg b{display:block;font-size:13px;color:var(--text)}
+.stg.done{border-color:rgba(94,224,138,.55);background:rgba(94,224,138,.10)}.stg.done b{color:var(--ok)}
+.stg.fail{border-color:rgba(255,107,125,.5);background:rgba(255,107,125,.08)}.stg.fail b{color:var(--bad)}
+.stg.now{border-color:var(--c)}
+.reward{display:flex;align-items:center;gap:12px}
+.reward .exp{font-family:Pixel;font-size:34px;line-height:1;color:var(--gold)}
+.reward .rx{font-size:13.5px;color:#c9d3e6;line-height:1.3}
+.note{font-size:13px;color:#c9d3e6;margin:2px 0 0}
+.note b{color:#fff}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+footer{color:var(--muted);font-size:13px;padding:0 0 30px}
+@media (max-width:980px){
+  .layout{grid-template-columns:1fr}
+  .panel{position:static;max-height:none}
+}
+@media (max-width:560px){h1{margin-top:8px}.mapbox{border-radius:12px}.tip{max-width:220px}}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style></head><body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+ <symbol id="i-main" viewBox="0 0 24 24"><path fill="currentColor" d="M9.6 2.5h4.8l-.9 12.6h-3zM12 17.2a2.6 2.6 0 1 1 0 5.2 2.6 2.6 0 0 1 0-5.2z"/></symbol>
+ <symbol id="i-side" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.8c-3.9 0-6.6 2.3-6.8 5.8h3.9c.2-1.6 1.3-2.6 2.8-2.6 1.6 0 2.7.9 2.7 2.3 0 1.2-.6 1.9-2.1 2.8-1.9 1.1-2.6 2.4-2.5 4.5v.9h3.8v-.7c0-1.3.4-1.9 2-2.8 1.8-1.1 3-2.6 3-4.9 0-3.3-2.8-5.3-6.8-5.3zM12.1 17.4a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5z"/></symbol>
+ <symbol id="i-hunt" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.2c-5 0-8.6 3.4-8.6 8 0 2.8 1.3 4.8 3.2 6v2.9c0 .8.6 1.4 1.4 1.4h1v-2.1h1.6v2.1h2.8v-2.1H15v2.1h1c.8 0 1.4-.6 1.4-1.4v-2.9c1.9-1.2 3.2-3.2 3.2-6 0-4.6-3.6-8-8.6-8zM8.3 9.2a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zm7.4 0a2.2 2.2 0 1 1 0 4.4 2.2 2.2 0 0 1 0-4.4zM12 13.4l1.3 2.4h-2.6z"/></symbol>
+ <symbol id="i-boss" viewBox="0 0 24 24"><path fill="currentColor" d="M3 2.5l3.6 4.1A8.6 8.6 0 0 1 12 4.8c2 0 3.9.7 5.4 1.8L21 2.5l-.6 6.2c.5 1 .8 2.1.8 3.3 0 2.6-1.2 4.5-3 5.6v2.6c0 .8-.6 1.3-1.3 1.3h-1v-2h-1.5v2h-2.8v-2H9v2H8c-.7 0-1.3-.5-1.3-1.3v-2.6c-1.8-1.1-3-3-3-5.6 0-1.2.3-2.3.8-3.3zM8.6 10.4a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm6.8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4z"/></symbol>
+ <symbol id="i-gold" viewBox="0 0 24 24"><path fill="currentColor" d="M12 1.6l2.9 6.6 7.2.7-5.4 4.8 1.6 7.1L12 17.1l-6.3 3.7 1.6-7.1-5.4-4.8 7.2-.7z"/></symbol>
+ <symbol id="i-choco" viewBox="0 0 24 24"><path fill="currentColor" d="M20.6 2.2c-6.9.3-12.2 4.6-13.8 11l-.7 2.9-2.8 4.5 1.3.9 2.9-4.3 2.9-.8c6.2-1.7 10-6.8 10.2-14.2zM9.4 13.6c1.6-3.4 4.2-6.1 7.6-7.9-2.6 2.2-4.6 4.8-6 8z"/></symbol>
+ <symbol id="i-chest" viewBox="0 0 24 24"><path fill="currentColor" d="M5 4.2h14c1.5 0 2.6 1.1 2.6 2.6v3.4H2.4V6.8C2.4 5.3 3.5 4.2 5 4.2zM2.4 11.6h7.8v1.9c0 .9.8 1.7 1.8 1.7s1.8-.8 1.8-1.7v-1.9h7.8v6.6c0 .9-.7 1.6-1.6 1.6H4c-.9 0-1.6-.7-1.6-1.6z"/></symbol>
+ <symbol id="pinshape" viewBox="0 0 40 50"><path d="M20 48.5S5 33.5 5 20.4a15 15 0 0 1 30 0C35 33.5 20 48.5 20 48.5z"/></symbol>
+</svg>
+<div class="wrap">
+<header><a href="../"><img src="../img/logo_nav.png" alt="Droogle Channel Guide"></a><a class="back" href="../">Back to the guide</a></header>
+<h1>Mog's Weekly Quests</h1>
+<p class="lead">Every Monday at 8&nbsp;AM&nbsp;ET, Mog pins a new set of quests on the world map. They're all <b>community</b> goals: when chat clears one together, <b>everyone in chat</b> earns its EXP as nuts. Select a marker to see the quest and how close chat is to clearing it.</p>
+<p class="preview" id="preview"></p>
+<div class="layout">
+ <section aria-label="World map">
+  <div class="weekbar" id="weekbar"></div>
+  <div class="mapbox" id="mapbox"><img class="map" id="mapimg" alt="" src="map_a.webp">
+   <div class="tip" id="tip" role="tooltip"></div>
+  </div>
+  <div class="legend" id="legend"></div>
+ </section>
+ <aside class="panel" id="panel" aria-live="polite">
+  <div class="lv" id="lv"><h2>Quest log</h2><ul class="qlist" id="qlist"></ul><p class="foot" id="foot"></p></div>
+  <div class="dv" id="dv" hidden></div>
+ </aside>
+</div>
+<footer>Quest progress updates while Droogle is live. Type <b>!quests</b> in chat for a quick summary.</footer>
+</div>
+<script>
+(function(){
+'use strict';
+var DATA_URL='https://raw.githubusercontent.com/DroogleTTV/droogle-guide/quest-data/quest_state.json';
+var LAUNCH='2026-11-16', TZ='America/New_York';
+var MASKS={"a":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA+A8AAAAAAAAAAAAAgP8AAAAADgAAAAAAAPgPAAAAgAAAAAAAAPAHAAAAABgAAAAAAIA/AAAAAAAAAAAAAAD4AwAAAAAAAAAAAADAPwAAAAAAAAAAAAAA/AMAAAAAAAAAAAAAwD8AAAAfAAAAAAAAAPwDAAAwAAAAAAAAAP8/AAAAAAAADAAAAPAAAAAAAAAcfgAAAIAHAAAAAADA4wcAAAAAAAAAABgA/H8AAAAAAAAAAPwH4P8HAAAAAAAAAPj/wP//AAAAAAAAAMD/H/8/DAAAAAAAAAD8///5gwAAAAAAAADA//8PfxAAAAAAAAAA4P//4AcAAAAAAAAAAMD/D34AAAAAAAAAIAD8/8AHAAAAAAAAAALA8A9wAAAAAAAAACAAAH4ABAAAAIAAAAAAAMAHwAAAAAAYAAAAAABAAAAAAADMAQAAAAAAAAAAAAD4HwAAAAAAAAAAAAAA/wcAAAAAAAAAAAAAgP8AAAAAAAAAAAAAAOADAAAAAAAAAAAAAAgeAAAAAAAAAAAAAADAARAAAAAAAAAAAAACHIABAAAAAAAAAAAQgAcSAAAAAAAAAAAAAfg/AAAAAAAAPAAAAID/AwAAAAAAwA8AAAD4PwAAAAAAAPwBAACA/wcAAAAAAOB/AAAA+B8AAAAAgID/DwAAAPwBAAAAwA/4/wAAAMAfAAAAAP+A/w8AAAD8DwAAAPAP/P8AAADA/wEAAAD/+f8/AAAA/H8AAAD+////BwAAwP8BAAD8/////wAAAPwfAAD4/////x8AAMB/AADA//////8DAAD8BwAA/P////8fAADAfwAA4P//////AQAA+AMAAP//////HwAAAD8AAOD//////wEAAPADAAD4/////w8AAAA/AACA//////8AAADAwwAA+P////8fAAAAjD8AgP//////AQAAAPADAID/////PwAAAAD/AADw/////wcAAADwAQAA/P////8AAAAAHwAAwP////8fAIAAAAEAAPz/////AAAAAAAAAMD/////DwAAAAAAAAD8////8AAAAAAQAADAf/7/BwcAAAgAAAAA/AM8fCAAAIABAAAAwD8AgAMCAAD4AAAAAP4DADggAAAADwAAAPA/AAAAAQAAMAAAAMD/AwAAAAAAAAIAAID/PwAAAAAAAAAAAADw/wMAAAAAAAAAAAAA8D8AAAAAAAAAAAAAAP4AAAAAAAAAAAAAAMAPAAAAAAAAAAAAAAD8AAAAAAAAAAAAAADAHwAAAAAAAAAAAAAAPgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","b":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAA8DAGAAAAAAAAAAAAAIxjCAAAAAAAgAAAAIA4xgAAAAAAAAgAAAAIPwwAAAAAAMAAAAAAQGAAAAAAAAAEAAAAAAACAAAAAAAgAAAAAAAwAAAAAAAAAgAAAAAAAwAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAADAAAAAAAAAAAAAAAAADAADAAwAAwAMAAAAwAAAAPgAAAPwBAAAAAwAA4AMAAPz/AwAAYAAAAT4AAMD//wEAAAYA8PADAAD+/wAAAGAAgI8/AAD4/w8AAAACAP74BwAA/v9/AAAQAPDPfwAA4P//HwCA4QD+/+cDAP7//wMAEAbg/38OAOD///8HACMA/v//AAD+//9/APAD8PH/BwDAj///AwA/AAz/PwAA4Pj/PwDwD8Bw/AEAAM7//wMA/wAEwx8AAOT//x8A4AdAOPwBAMD///8AAHAAgMMfAAD///8PAAAPADj8IQD4//9/AADwAYDDPwIA/P8PAQAAHwB4/CMAQPwfAAAAEACA/8MDAMT/AQAEAAGA/z8AAAD4HwAAAAAA/P8DAAAA/wEAAAAAgP8/AAAA8AMAAAAAAPD/DwAAAB8AAAAAAAD//wEAAPgAAAAAAADw/w8AAMAAAAAAAAAA/P8AgD8AAAAAAAAAgPEPAPgDAAAAAAAAAAg/APA/AAAAAAAAAADwAAAAAAAAAAAAAACAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA8AEAAAAAAAAAAAAAAAAHAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=","c":"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAARgAAAAAAAAAAAAAA4AAAAAAAAAAAAAAAgAEAAAAAAAAAAAAAABgAAAABAAAAAAAAAAAAQADgAQAAAAAAAAAA/A8MBgAAAAAAAAAAwP/AYQAAAAAAAAAAAP4//AcAAAAAAAAAAOD/438AAAAAAAAAAAD8//8HAAAAAAAAAADA//9/AAAAAAAAAAAAAP//BwAAAAAAAIAAAIAPfwAGAAAAAAAIAABw8A9gAAAAAACAAAAAAv/ABwAAAAAAGAAAAPAHfAAAAAAAgAMAAAAPwAcAAAAAADwAAADwAPwBAAAAAOABAAAADgAfAAAAYAAeAAAA4ABgAAAAAAfgAcA4AAwABgAAAHCADwD8AcAPQAAAAIA//AAADgD8AwwAAID//w8AAADAP8AAAAD+//8BAAAA/AMMAACI////AAAA8B/gAQBA8P8fDwAAAP8BPgAAAP7/4QAAAPA/4AAAAID/Hw4AAAD/Jw8AAADg//8AAADw//8AAAAA/v8PAAAA//8HAAAA4P+BAQAA8P9/AAAAAPwPAAAAAP/4BwAAAID/AAAAAPyD/wAAAAD4DwAAAMAf+AcAAACA/wAAAAD+gH8AAAAA+AcAAADAD/gHAAAAAB8AAAAA/MB/AAAAABAAAAAAwA//BwAAAIAAAAAAAHxwfAAAAAAIAAAAAMAHwAcAAABAAAAAAAA8AHwAAAAAAAAAAADAA8ABAAAAAAAAcAAAPgAEAAAAAAAAAA8A4AcgAAAAAAAAAPAAAPgBAAAAAAAAAIAPAIAfAAAAAAAAAAAAAACIAQAAAAAAAAAAMAAAGAAAAAAAAAAgAAMAgAEAAAAAAAAAAHAAAAgAAAAAAACAAwAeAAAAAAAAAAAAIADgAQAAAAAAAAAAAAIAHuABAAAAAAAAAAAA8AA+AAAAAAAAAAAAEAPwBwAAAAAAAAAAAB8AfwAAAAAAAAAAAMAA4AcAAAAAAAAAAAAAAD4AAAAAAAAAABgAAHAAAAAAAAAAAAAAAAAHAAAAAAAAAAAAAIBxAAAAAAAAAAAAIAD8DwAAAAAAAAAAAAP84wAAAAAAAAAAAGDwDw4AAAAAAAAAAAAAAmAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA="};
+var TYPES={
+ main:{label:'Main quest',c:'#f9c74f',ic:'i-main',o:0},
+ side:{label:'Side quest',c:'#5ec8ff',ic:'i-side',o:3},
+ hunt:{label:'Hunt',c:'#ff5a6e',ic:'i-hunt',o:1},
+ hunt_c:{label:'Hunt',c:'#ff5a6e',ic:'i-hunt',o:1},
+ hunt_b:{label:'Boss hunt',c:'#ff3b54',ic:'i-boss',o:2,boss:1},
+ gold:{label:'Gold Saucer',c:'#c792ff',ic:'i-gold',o:4},
+ chocobo:{label:'Chocobo',c:'#b8e05a',ic:'i-choco',o:5},
+ treasure:{label:'Treasure',c:'#ff9f5a',ic:'i-chest',o:6}
+};
+var LEGEND=['main','side','hunt_c','hunt_b','gold','chocobo','treasure'];
+var DEMO={week:LAUNCH,stream:2,live:false,now:0,demo:true,quests:[
+ {id:'midgar',type:'main',name:'Escape from Midgar',lvl:3,exp:2250,status:'open',desc:'300 messages and 30 chatters in every stream, then all 4 daily goals in one stream',prog:'tonight 187/300 msgs, 22/30 chatters',pct:0.333,stages:['done','','']},
+ {id:'hunt_bomb',type:'hunt_c',name:'Bomb',lvl:1,exp:250,status:'',desc:'defeat the Bomb (500-599 HP) with !hunt when it appears',prog:'appears 30-90 min into a stream',pct:0},
+ {id:'hunt_ultros',type:'hunt_b',name:'Ultros',lvl:2,exp:450,status:'',desc:'defeat Ultros (600-799 HP) with !hunt when it appears',prog:'appears 150-210 min into a stream',pct:0},
+ {id:'kalm_inn',type:'side',name:'Kalm Inn Gossip',lvl:3,exp:250,status:'done',desc:'50 different SFX commands in one stream',prog:'tonight 50/50',pct:1},
+ {id:'costa_wave',type:'side',name:'Costa del Sol Wave',lvl:3,exp:250,status:'open',desc:'20 messages in a row with the emote of the week',prog:'best wave 12/20 drooHype',pct:0.6,emote:'drooHype'},
+ {id:'rally_ho',type:'side',name:'Rally-ho!',lvl:3,exp:250,status:'open',desc:'greet 20 newcomers with "Rally-ho!" within 10 s of their first message',prog:'7/20',pct:0.35},
+ {id:'wheel_of_fate',type:'gold',name:'Wheel of Fate',lvl:3,exp:375,status:'open',desc:'Goal Wheel payouts add up to 5,000 nuts this week',prog:'2,750/5,000 nuts',pct:0.55},
+ {id:'gold_chocobo',type:'chocobo',name:'Gold Chocobo',lvl:3,exp:375,status:'done',desc:'one rider wins 3 duels in a row',prog:'best streak 3/3',pct:1},
+ {id:'seed_exam',type:'treasure',name:'SeeD Exam',lvl:3,exp:375,status:'fail',desc:'10 trivia questions answered correctly in one stream',prog:'tonight 6/10',pct:0.6}
+]};
+var qs=new URLSearchParams(location.search);
+var $=function(id){return document.getElementById(id)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})};
+var fmt=function(n){return Number(n||0).toLocaleString('en-US')};
+var cap=function(s){s=String(s||'');return s.charAt(0).toUpperCase()+s.slice(1)};
+function T(q){return TYPES[q.type]||TYPES.side}
+
+/* ---------- time (Eastern) ---------- */
+var dtf=new Intl.DateTimeFormat('en-US',{timeZone:TZ,hourCycle:'h23',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'});
+function wall(ms){var o={};dtf.formatToParts(new Date(ms)).forEach(function(p){o[p.type]=+p.value});return Date.UTC(o.year,o.month-1,o.day,o.hour%24,o.minute)}
+function etToUtc(wallMs){var g=wallMs;for(var i=0;i<3;i++){g-= (wall(g)-wallMs)}return g}
+function iso(ms){return new Date(ms).toISOString().slice(0,10)}
+function weekKey(ms){var w=wall(ms)-8*36e5;var d=new Date(w);var back=(d.getUTCDay()+6)%7;return iso(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate())-back*864e5)}
+function resetAfter(week){return etToUtc(Date.parse(week+'T00:00:00Z')+7*864e5+8*36e5)}
+function startOf(week){return etToUtc(Date.parse(week+'T00:00:00Z')+8*36e5)}
+function dur(ms){ms=Math.max(0,ms);var m=Math.floor(ms/6e4),d=Math.floor(m/1440),h=Math.floor(m%1440/60),mm=m%60;return d?d+'d '+h+'h':h?h+'h '+mm+'m':mm+'m'}
+function dayName(week,add){return new Date(Date.parse(week+'T12:00:00Z')+add*864e5).toLocaleDateString('en-US',{timeZone:'UTC',month:'short',day:'numeric'})}
+
+/* ---------- map choice + marker spots, the same for everyone all week ---------- */
+function hash(s){var h=2166136261>>>0;for(var i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0}
+function rng(a){return function(){a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function mapFor(week){
+  var n=Math.max(0,Math.round((Date.parse(week)-Date.parse(LAUNCH))/6048e5));
+  var idx=hash('droogle-map-0')%3;
+  for(var i=1;i<=n;i++)idx=(idx+1+(hash('droogle-map-'+i)&1))%3;   // never the same map two weeks running
+  return 'abc'.charAt(idx);
+}
+var CANDS={};
+function cands(k){
+  if(CANDS[k])return CANDS[k];
+  var b=atob(MASKS[k]),out=[];
+  for(var i=0;i<10000;i++)if(b.charCodeAt(i>>3)>>(i&7)&1)out.push([i%100+.5,Math.floor(i/100)+.5]);
+  return CANDS[k]=out;
+}
+function place(quests,week,k){
+  var c=cands(k),r=rng(hash(week+'|'+k)),placed=[],pos={};
+  var order=quests.slice().sort(function(a,b){return T(a).o-T(b).o||(a.id<b.id?-1:1)});
+  order.forEach(function(q){
+    var best=null,bs=-1;
+    for(var s=0;s<30;s++){
+      var p=c[Math.floor(r()*c.length)],d=99;
+      placed.forEach(function(o){d=Math.min(d,Math.hypot(o[0]-p[0],o[1]-p[1]))});
+      var sc=Math.min(d,17)+r()*.5;
+      if(sc>bs){bs=sc;best=p}
+    }
+    placed.push(best);pos[q.id]=best;
+  });
+  return pos;
+}
+
+/* ---------- rendering ---------- */
+var S=null,POS={},MAP='',SEL=null;
+function pinSvg(q,small){
+  var t=T(q);
+  return '<svg viewBox="0 0 40 50" aria-hidden="true" style="--c:'+t.c+'">'+
+    (small?'':'<ellipse class="ring" cx="20" cy="47" rx="9" ry="3.2"/>')+
+    '<use class="pin" href="#pinshape" style="fill:'+(small&&q.status==='fail'?'#4a5268':'')+'"/>'+
+    '<circle class="face" cx="20" cy="20.4" r="10.5"/>'+
+    '<use class="ic" href="#'+t.ic+'" x="10.5" y="10.9" width="19" height="19"/>'+
+    (small?'':'<g class="badge ok"><circle cx="33" cy="8" r="6.5" fill="#5ee08a" stroke="#0b1424" stroke-width="2"/><path d="M30 8l2.1 2.1 4-4.1" fill="none" stroke="#0b1424" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>'+
+    '<g class="badge no"><circle cx="33" cy="8" r="6.5" fill="#ff6b7d" stroke="#0b1424" stroke-width="2"/><path d="M30.6 5.6l4.8 4.8M35.4 5.6l-4.8 4.8" stroke="#0b1424" stroke-width="2.2" stroke-linecap="round"/></g>')+
+    '</svg>';
+}
+function stText(q){return q.status==='done'?'Cleared':q.status==='fail'?'Failed':q.status==='open'?'In progress':'Not started'}
+function stCls(q){return q.status==='done'?'done':q.status==='fail'?'fail':q.status==='open'?'open':'idle'}
+function pct(q){return q.status==='done'?1:Math.max(0,Math.min(1,+q.pct||0))}
+
+function render(){
+  var q=S.quests||[];
+  var k=/^[abc]$/.test(qs.get('map')||'')?qs.get('map'):mapFor(S.week);
+  if(k!==MAP){MAP=k;$('mapimg').src='map_'+k+'.webp'}
+  POS=place(q,S.week+(qs.get('seed')||''),MAP);
+  var box=$('mapbox');
+  box.querySelectorAll('.mk').forEach(function(e){e.remove()});
+  q.forEach(function(x){
+    var p=POS[x.id],t=T(x),b=document.createElement('button');
+    b.type='button';b.className='mk '+stCls(x)+(t.boss?' boss':'')+(SEL===x.id?' sel':'');
+    b.style.left=p[0]+'%';b.style.top=p[1]+'%';b.style.setProperty('--c',t.c);b.dataset.id=x.id;
+    b.setAttribute('aria-label',t.label+': '+x.name+' ('+stText(x)+')');
+    b.innerHTML=pinSvg(x);
+    box.appendChild(b);
+  });
+  // quest log
+  var order=q.slice().sort(function(a,b){return T(a).o-T(b).o});
+  $('qlist').innerHTML=order.map(function(x){var t=T(x);
+    return '<li><button type="button" class="qrow" data-id="'+esc(x.id)+'" style="--c:'+t.c+'">'+pinSvg(x,1)+
+      '<span class="qb"><span class="qt">'+t.label+'</span><span class="qn"><span>'+esc(x.name)+'</span></span>'+
+      '<span class="mini"><i style="width:'+(pct(x)*100).toFixed(1)+'%'+(x.status==='fail'?';background:#5a6378':'')+'"></i></span></span>'+
+      '<span class="st '+stCls(x)+'">'+stText(x)+'</span></button></li>'}).join('');
+  var done=q.filter(function(x){return x.status==='done'}).length;
+  var earned=q.reduce(function(s,x){return s+(x.status==='done'?+x.exp||0:0)},0);
+  $('foot').innerHTML=done+' of '+q.length+' cleared this week'+(earned?' &middot; '+fmt(earned)+' nuts paid to everyone so far':'');
+  // week bar
+  var now=Date.now(),wb=[];
+  wb.push('<span>Week of <b>'+dayName(S.week,0)+' &ndash; '+dayName(S.week,7)+'</b></span>');
+  if(now<startOf(S.week))wb.push('<span>Quests go up in <b>'+dur(startOf(S.week)-now)+'</b></span>');
+  else wb.push('<span>New quests in <b>'+dur(resetAfter(S.week)-now)+'</b></span>');
+  if(!S.demo)wb.push(S.live?'<span class="live"><i></i>Live &middot; stream '+(S.stream||1)+' of the week</span>':'<span class="live off"><i></i>Offline'+(S.stream?' &middot; '+S.stream+' stream'+(S.stream>1?'s':'')+' so far':'')+'</span>');
+  $('weekbar').innerHTML=wb.join('');
+  var pv=$('preview');
+  if(S.demo){pv.className='preview on';pv.innerHTML=Date.now()<startOf(LAUNCH)?'<b>Preview:</b> these are sample quests to show how the map works. The first real quests go up <b>Monday, Nov 16 at 8&nbsp;AM&nbsp;ET</b>.':'<b>Preview:</b> these are sample quests. Live quest progress will show here once it&rsquo;s connected.'}
+  else pv.className='preview';
+  if(SEL)detail(SEL,true);
+}
+function legend(){
+  $('legend').innerHTML=LEGEND.map(function(k){var t=TYPES[k];return '<span style="--c:'+t.c+'">'+pinSvg({type:k},1)+t.label+'</span>'}).join('')+
+   '<span><svg viewBox="0 0 14 14" style="width:13px;height:13px"><circle cx="7" cy="7" r="6" fill="#5ee08a"/><path d="M4 7l2 2 4-4" fill="none" stroke="#0b1424" stroke-width="1.8" stroke-linecap="round"/></svg>Cleared</span>'+
+   '<span><svg viewBox="0 0 14 14" style="width:13px;height:13px"><circle cx="7" cy="7" r="6" fill="#ff6b7d"/><path d="M4.6 4.6l4.8 4.8M9.4 4.6l-4.8 4.8" stroke="#0b1424" stroke-width="1.8" stroke-linecap="round"/></svg>Failed</span>';
+}
+function find(id){return (S.quests||[]).filter(function(x){return x.id===id})[0]}
+
+/* tooltip */
+var tip=$('tip');
+function showTip(btn){
+  var q=find(btn.dataset.id);if(!q)return;var t=T(q);
+  tip.style.setProperty('--c',t.c);
+  tip.innerHTML='<div class="tt">'+t.label+' &middot; Lv '+(q.lvl||1)+'</div><div class="tn">'+esc(q.name)+'</div><div class="td">'+esc(cap(q.desc))+'</div><div class="tc">'+stText(q)+(q.status==='done'?'':' &middot; '+Math.round(pct(q)*100)+'%')+' &middot; '+fmt(q.exp)+' EXP</div>';
+  var box=$('mapbox').getBoundingClientRect(),r=btn.getBoundingClientRect();
+  tip.classList.add('on');
+  var tw=tip.offsetWidth,th=tip.offsetHeight,cx=r.left+r.width/2-box.left;
+  var x=Math.max(8,Math.min(box.width-tw-8,cx-tw/2)),y=r.top-box.top-th-8;
+  if(y<8)y=r.bottom-box.top+8;
+  tip.style.left=x+'px';tip.style.top=y+'px';
+}
+function hideTip(){tip.classList.remove('on')}
+
+/* detail */
+function detail(id,quiet){
+  var q=find(id);if(!q){back();return}
+  SEL=id;var t=T(q),p=pct(q),prog=String(q.prog||''),lab='Progress';
+  if(/^tonight /.test(prog)){prog=prog.slice(8);lab='This stream'}
+  else if(/^best /.test(prog)){lab='Best so far';prog=prog.slice(5).replace(/^(wave|streak) /,'')}
+  else if(/^stream \d+: /.test(prog)){lab=cap(prog.split(':')[0]);prog=prog.replace(/^stream \d+: /,'')}
+  else lab='So far';
+  var h='<button type="button" class="backbtn" id="backbtn">&larr; All quests</button>'+
+   '<div class="dtype" style="--c:'+t.c+'">'+pinSvg(q,1)+t.label+'</div>'+
+   '<div class="dname">'+esc(q.name)+'</div>'+
+   '<div class="lvl"><span class="pips">'+[1,2,3,4,5].map(function(i){return '<i class="'+(i<=(q.lvl||1)?'f':'')+'"></i>'}).join('')+'</span>Level '+(q.lvl||1)+' of 5</div>'+
+   '<p class="ddesc">'+esc(cap(q.desc))+'.</p>'+
+   '<div class="box '+(q.status==='done'?'done':q.status==='fail'?'fail':'')+'" style="--c:'+(q.status==='done'?'#5ee08a':q.status==='fail'?'#ff6b7d':t.c)+'">'+
+   '<div class="k"><span>'+(q.status==='done'?'Cleared':q.status==='fail'?'Failed this week':'Progress')+'</span><span>'+Math.round(p*100)+'%</span></div>'+
+   '<div class="big"><i style="width:'+(p*100).toFixed(1)+'%"></i></div>'+
+   (prog&&q.status!=='done'?'<div class="pl">'+lab+'</div><div class="prog">'+esc(prog)+'</div>':'')+'</div>';
+  if(q.stages){
+    h+='<div class="box" style="--c:'+t.c+'"><div class="k"><span>Three streams this week</span></div><div class="stages">'+
+     q.stages.map(function(s,i){var now=S.live&&(S.stream||1)===i+1&&!s;return '<div class="stg '+(s||'')+(now?' now':'')+'"><b>'+(s==='done'?'Cleared':s==='fail'?'Missed':now?'Tonight':'To do')+'</b>Stream '+(i+1)+'</div>'}).join('')+'</div></div>';
+  }
+  if(q.emote)h+='<p class="note">Emote of the week: <b>'+esc(q.emote)+'</b></p>';
+  if(q.paid)h+='<p class="note">Progress on this one comes from <b>Bits, subs or tips</b>.</p>';
+  h+='<div class="box"><div class="reward"><span class="exp">'+fmt(q.exp)+'</span><span class="rx"><b style="color:#fff">EXP reward.</b> When chat clears this quest, everyone in chat gets '+fmt(q.exp)+' nuts.</span></div></div>';
+  $('dv').innerHTML=h;$('dv').hidden=false;$('lv').hidden=true;
+  $('backbtn').onclick=back;
+  document.querySelectorAll('.mk').forEach(function(m){m.classList.toggle('sel',m.dataset.id===id)});
+  if(!quiet&&window.innerWidth<=980){var r=$('panel').getBoundingClientRect();if(r.top>innerHeight-120||r.top<0)$('panel').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion:reduce)').matches?'auto':'smooth',block:'start'})}
+}
+function back(){SEL=null;$('dv').hidden=true;$('lv').hidden=false;document.querySelectorAll('.mk.sel').forEach(function(m){m.classList.remove('sel')})}
+
+var box=$('mapbox');
+box.addEventListener('mouseover',function(e){var b=e.target.closest('.mk');if(b)showTip(b)});
+box.addEventListener('mouseout',function(e){var b=e.target.closest('.mk');if(b&&!b.contains(e.relatedTarget))hideTip()});
+box.addEventListener('focusin',function(e){var b=e.target.closest('.mk');if(b)showTip(b)});
+box.addEventListener('focusout',hideTip);
+box.addEventListener('click',function(e){var b=e.target.closest('.mk');if(b){hideTip();detail(b.dataset.id)}});
+$('qlist').addEventListener('click',function(e){var b=e.target.closest('.qrow');if(b)detail(b.dataset.id)});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){hideTip();if(SEL)back()}});
+
+/* ---------- data ---------- */
+function parse(txt){txt=txt.trim().replace(/^window\.QUEST_STATE\s*=\s*/,'').replace(/;\s*$/,'');return JSON.parse(txt)}
+function demo(){var d=JSON.parse(JSON.stringify(DEMO));var wk=weekKey(Date.now());if(wk>LAUNCH)d.week=wk;d.now=Date.now()/1000;return d}
+function load(){
+  if(qs.get('demo')==='1'){S=demo();render();return}
+  fetch(DATA_URL+'?t='+Math.floor(Date.now()/6e4),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.text()}).then(function(t){
+    var d=parse(t);if(!d||!d.week||!d.quests||!d.quests.length)throw 0;S=d;render();
+  }).catch(function(){if(!S||S.demo){S=demo();render()}});
+}
+legend();load();
+setInterval(load,60000);
+})();
+</script>
+</body></html>
