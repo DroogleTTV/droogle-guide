@@ -132,7 +132,8 @@ img.emo{height:1.5em;width:auto;vertical-align:-.4em;margin:0 1px}
 .prog img.emo{height:30px;vertical-align:-7px}
 button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-footer{color:var(--muted);font-size:13px;padding:0 0 30px}
+.mapnote{color:var(--muted);font-size:13px;margin:10px 2px 0}
+.mapnote b{color:var(--text)}
 @media (max-width:980px){
   .layout{grid-template-columns:1fr}
   .panel{position:static;max-height:none}
@@ -162,13 +163,13 @@ footer{color:var(--muted);font-size:13px;padding:0 0 30px}
    <div class="tip" id="tip" role="tooltip"></div>
   </div>
   <div class="legend" id="legend"></div>
+  <p class="mapnote">Quest progress updates while Droogle is live. Type <b>!quests</b> in chat for a quick summary.</p>
  </section>
  <aside class="panel" id="panel" aria-live="polite">
   <div class="lv" id="lv"><h2>Quest log</h2><ul class="qlist" id="qlist"></ul><p class="foot" id="foot"></p></div>
   <div class="dv" id="dv" hidden></div>
  </aside>
 </div>
-<footer>Quest progress updates while Droogle is live. Type <b>!quests</b> in chat for a quick summary.</footer>
 </div>
 <script>
 (function(){
