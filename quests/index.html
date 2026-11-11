@@ -78,20 +78,21 @@ svg .ic{color:#0b1424}
 .panel{background:rgba(14,23,42,.93);border:1px solid var(--line);border-radius:16px;padding:16px 16px 14px;position:sticky;top:14px;
   max-height:calc(100vh - 28px);overflow:auto}
 .panel h2{font-family:Anton;font-weight:400;font-size:22px;letter-spacing:.03em;margin:0 0 10px;text-transform:uppercase}
-.qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:6px}
-.qrow{display:flex;gap:10px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:#0f1a30;border:1px solid #22355a;
-  border-radius:11px;padding:8px 10px;cursor:pointer}
-.qrow:hover,.qrow:focus-visible{border-color:var(--c);outline:none;background:#13213d}
-.qrow svg{flex:none;width:22px;height:28px}
-.qrow .qb{flex:1;min-width:0}
-.qrow .qt,.qrow .mini{display:block}
-.qrow .qn{font-weight:600;font-size:14.5px;line-height:1.2;display:flex;gap:6px;align-items:baseline}
-.qrow .qn span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.qrow .qt{font-size:11.5px;color:var(--c);font-weight:700;letter-spacing:.03em}
-.mini{height:5px;border-radius:9px;background:#22314f;margin-top:5px;overflow:hidden}
-.mini i{display:block;height:100%;background:var(--c);border-radius:9px}
-.qrow .st{flex:none;font-size:12px;font-weight:700}
-.st.done{color:var(--ok)}.st.fail{color:var(--bad)}.st.open{color:#c9d3e6}.st.idle{color:var(--muted)}
+.qlist{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.qrow{display:flex;gap:12px;align-items:center;width:100%;text-align:left;font:inherit;color:inherit;background:#0d1830;
+  border:1.5px solid rgba(132,168,224,.34);border-radius:10px;padding:10px 12px 11px 10px;cursor:pointer;transition:border-color .15s,background .15s}
+.qrow:hover,.qrow:focus-visible{border-color:var(--c);outline:none;background:#112142}
+.qrow svg{flex:none;width:34px;height:43px;filter:drop-shadow(0 2px 2px rgba(0,0,0,.45))}
+.qrow .qb{flex:1;min-width:0;display:block}
+.qrow .qh{display:flex;justify-content:space-between;align-items:baseline;gap:8px;font-size:13px;font-weight:700;line-height:1.2}
+.qrow .qt{color:var(--c)}
+.qrow .qn{display:block;font-weight:700;font-size:17px;line-height:1.2;margin-top:1px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.qrow .qd{display:block;font-size:12.5px;line-height:1.3;color:#b9c4da;margin-top:1px}
+.qrow .qd img.emo{height:1.35em;vertical-align:-.35em}
+.mini{display:block;height:6px;border-radius:9px;background:#22314f;margin-top:7px;overflow:hidden}
+.mini i{display:block;height:100%;min-width:0;background:linear-gradient(90deg,var(--c),color-mix(in srgb,var(--c) 70%,#fff));border-radius:9px}
+.qrow .st{flex:none;white-space:nowrap}
+.st.done{color:var(--ok)}.st.fail{color:var(--bad)}.st.open{color:#e9eef8}.st.idle{color:var(--muted)}
 .panel .foot{font-size:12px;color:var(--muted);margin-top:12px}
 
 .dv[hidden],.lv[hidden]{display:none}
@@ -266,8 +267,9 @@ function pinSvg(q,small){
     '<g class="badge no"><circle cx="33" cy="8" r="6.5" fill="#ff6b7d" stroke="#0b1424" stroke-width="2"/><path d="M30.6 5.6l4.8 4.8M35.4 5.6l-4.8 4.8" stroke="#0b1424" stroke-width="2.2" stroke-linecap="round"/></g>')+
     '</svg>';
 }
-function stText(q){return q.status==='done'?'Cleared':q.status==='fail'?'Failed':q.status==='open'?'In progress':'Not started'}
-function stCls(q){return q.status==='done'?'done':q.status==='fail'?'fail':q.status==='open'?'open':'idle'}
+function early(){return S&&!S.demo&&S.week&&Date.now()<startOf(S.week)}
+function stText(q){return q.status==='done'?'Cleared':q.status==='fail'?'Failed':q.status==='open'&&!early()?'In progress':'Not started'}
+function stCls(q){return q.status==='done'?'done':q.status==='fail'?'fail':q.status==='open'&&!early()?'open':'idle'}
 function pct(q){return q.status==='done'?1:Math.max(0,Math.min(1,+q.pct||0))}
 
 function render(){
@@ -289,9 +291,9 @@ function render(){
   var order=q.slice().sort(function(a,b){return T(a).o-T(b).o});
   $('qlist').innerHTML=order.map(function(x){var t=T(x);
     return '<li><button type="button" class="qrow" data-id="'+esc(x.id)+'" style="--c:'+t.c+'">'+pinSvg(x,1)+
-      '<span class="qb"><span class="qt">'+t.label+'</span><span class="qn"><span>'+esc(x.name)+'</span></span>'+
-      '<span class="mini"><i style="width:'+(pct(x)*100).toFixed(1)+'%'+(x.status==='fail'?';background:#5a6378':'')+'"></i></span></span>'+
-      '<span class="st '+stCls(x)+'">'+stText(x)+'</span></button></li>'}).join('');
+      '<span class="qb"><span class="qh"><span class="qt">'+t.label+'</span><span class="st '+stCls(x)+'">'+stText(x)+'</span></span>'+
+      '<span class="qn">'+esc(x.name)+'</span><span class="qd">'+descH(x)+'.</span>'+
+      '<span class="mini"><i style="width:'+(pct(x)*100).toFixed(1)+'%'+(x.status==='fail'?';background:#5a6378':'')+'"></i></span></span></button></li>'}).join('');
   var done=q.filter(function(x){return x.status==='done'}).length;
   var earned=q.reduce(function(s,x){return s+(x.status==='done'?+x.exp||0:0)},0);
   $('foot').innerHTML=done+' of '+q.length+' cleared this week'+(earned?' &middot; '+fmt(earned)+' nuts paid to everyone so far':'');
