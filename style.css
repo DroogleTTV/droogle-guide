@@ -166,3 +166,4 @@ details.cx .cxb th,details.cx .cxb td{padding:3px 7px}
 .chosprite{flex:none;image-rendering:pixelated}
 .chosprite.pdfonly{width:90px;height:90px}
 .webonly{display:none}
+table.shop td{padding:3px 8px}
