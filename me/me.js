@@ -235,7 +235,7 @@
     if (ME && ME.who.login === w.login) { drawMe(); return; }
     msg('Your profile', 'Loading your profile…');
     hex16(w.login).then(function (k) {
-      return getJSON(PROFILE_BASE + k.charAt(0) + '.json?t=' + Math.floor(Date.now() / 6e4)).then(function (shard) {
+      return getJSON(PROFILE_BASE + k.charAt(0) + '.json?t=' + Math.floor(Date.now() / 6e4)).catch(function (e) { if (String(e && e.message) === '404') return {}; throw e; }).then(function (shard) {   // no file yet = no profile yet
         var raw = shard && shard.u && typeof shard.u === 'object' ? shard.u[k] : null;
         ME = { who: w, p: PROF.valid(raw), np: num(shard && shard.np), nh: num(shard && shard.nh), nq: num(shard && shard.nq), nm: num(shard && shard.nm), t: str(shard && shard.t, 40) };
         if (MODAL) drawMe();
