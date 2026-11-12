@@ -9,7 +9,7 @@
    a page address to see it before then. */
 (function () {
   'use strict';
-  var CLIENT_ID = '';            // the Twitch app's Client ID (public by design); the sign-in stays hidden while this is empty
+  var CLIENT_ID = 's9gtu4kx8bs7rjp5lv10g8hj7gy6ea';   // Droogle Channel Guide app (Twitch developer console, 2026-11-12)            // the Twitch app's Client ID (public by design); the sign-in stays hidden while this is empty
   var SITE = 'https://drooglettv.github.io/droogle-guide/';
   var REDIRECT = SITE + 'auth/';
   var PROFILE_BASE = 'https://raw.githubusercontent.com/DroogleTTV/droogle-guide/quest-data/profiles/';
