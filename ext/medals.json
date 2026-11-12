@@ -287,6 +287,19 @@
 ]
 },
 {
+"id":"duel1",
+"c":"choco",
+"t":"b",
+"n":"Duel-icious",
+"d":"Win a chocobo duel",
+"r":[
+[
+"duel_wins",
+1
+]
+]
+},
+{
 "id":"black",
 "c":"choco",
 "t":"g",
@@ -820,6 +833,19 @@
 ]
 },
 {
+"id":"steal1",
+"c":"games",
+"t":"b",
+"n":"Mug Shot",
+"d":"Successfully !steal nuts from someone",
+"r":[
+[
+"steals",
+1
+]
+]
+},
+{
 "id":"kupo25",
 "c":"games",
 "t":"s",
@@ -859,6 +885,45 @@
 [
 "tonb_hits",
 25
+]
+]
+},
+{
+"id":"kupogold",
+"c":"games",
+"t":"s",
+"n":"All That Glitters",
+"d":"Catch a gold Kupo Nut",
+"r":[
+[
+"kupo_gold",
+1
+]
+]
+},
+{
+"id":"tt300",
+"c":"games",
+"t":"s",
+"n":"Queen of Cards",
+"d":"Have a Triple Triad card score of 300+",
+"r":[
+[
+"tt_score",
+300
+]
+]
+},
+{
+"id":"omni10",
+"c":"games",
+"t":"s",
+"n":"Limit Breaker",
+"d":"Add damage to 10 Omnislashes",
+"r":[
+[
+"omni",
+10
 ]
 ]
 },
@@ -924,6 +989,19 @@
 [
 "tt_score",
 600
+]
+]
+},
+{
+"id":"steal25",
+"c":"games",
+"t":"g",
+"n":"Not a Thief, a Treasure Hunter",
+"d":"Successfully !steal 25 times",
+"r":[
+[
+"steals",
+25
 ]
 ]
 },
@@ -1002,6 +1080,19 @@
 [
 "quests_helped",
 25
+]
+]
+},
+{
+"id":"hunt10",
+"c":"quests",
+"t":"s",
+"n":"Clan Primer",
+"d":"Join 10 hunts",
+"r":[
+[
+"hunt_join",
+10
 ]
 ]
 },
