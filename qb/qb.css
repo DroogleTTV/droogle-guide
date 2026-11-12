@@ -41,8 +41,8 @@
 .qbcoin{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;font-family:QBRoman;font-weight:700;font-size:20px;color:var(--gold2);
   text-shadow:0 1px 0 #1d1404;box-shadow:inset 0 0 0 2.5px var(--gold),inset 0 0 0 4px #3b2a0c,0 2px 6px rgba(0,0,0,.55)}
 .qbcoin.t{background:radial-gradient(circle at 35% 30%,#2fa69c,#0b4a47 72%)}
-.qbcoin.c{background:radial-gradient(circle at 35% 30%,#c23a52,#4d0a18 72%);width:56px;height:56px;font-size:17px;flex-direction:column;line-height:1}
-.qbcoin.c small{font-family:QBRoman;font-weight:600;font-size:8.5px;letter-spacing:.14em;color:#f2c8cf;margin-top:2px}
+.qbcoin.c{background:radial-gradient(circle at 35% 30%,#c23a52,#4d0a18 72%);width:56px;height:56px;font-size:17px;display:flex;flex-direction:column;align-items:center;justify-content:center;line-height:1;padding-top:var(--cpt,2px)}
+.qbcoin.c small{font-family:QBRoman;font-weight:600;font-size:8.5px;letter-spacing:.14em;color:#f2c8cf;margin-top:var(--cgap,1px);padding-left:.14em}
 .qblane.p1 .qbcoin.t{background:radial-gradient(circle at 35% 30%,#ffe9a8,#b98a2a 60%,#5a3d0c);color:#3b2608;text-shadow:0 1px 0 #ffefbf}
 .qblane.p2 .qbcoin.t{background:radial-gradient(circle at 35% 30%,#f4f6fa,#9aa3b2 60%,#3e4552);color:#1f2530;text-shadow:0 1px 0 #fff}
 .qblane.p3 .qbcoin.t{background:radial-gradient(circle at 35% 30%,#f2c49a,#a8673a 60%,#4a2610);color:#2b1406;text-shadow:0 1px 0 #f7d6b6}
