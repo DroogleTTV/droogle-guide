@@ -47,226 +47,92 @@
     return fetch(url, { cache: 'no-store', credentials: 'omit' }).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); });
   }
 
-  var BIRD_COL = { Yellow: '#ffd23f', Blue: '#5ec8ff', Green: '#7ee05a', Black: '#9aa3c0', Gold: '#ffb52e' };
-  var CLASS_CAP = { Weak: 150, Good: 190, Great: 230, Wonderful: 255 };   // the chocobo classes and their feeding speed caps (chocobo guide)
-  function slug(n) { return n.toLowerCase().replace(/'/g, '').replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, ''); }
   function hex16(s) {
     return crypto.subtle.digest('SHA-256', new TextEncoder().encode(s.toLowerCase())).then(function (b) {
       return [].map.call(new Uint8Array(b).slice(0, 8), function (x) { return ('0' + x.toString(16)).slice(-2); }).join('');
     });
   }
+  // the profile and Moogle Medals are drawn by profile.js, the same file the Twitch panel uses
+  if (!window.DroogleProfile) return;
+  var PROF = window.DroogleProfile({ site: SITE, img: SITE + 'me/img/', cls: { foot: 'mfoot', card: 'qcard', chips: 'mchips' },
+    box: function () { return BOX(); }, scroll: function () { return SCR(); }, share: shareCard });
+  function drawMe() { if (BOX() && ME) PROF.draw(ME); }
 
-  function validProfile(r) {
-    if (!r || typeof r !== 'object') return null;
-    var o = { p: r.p != null ? Math.max(0, num(r.p)) : null, pr: num(r.pr), h: r.h != null ? Math.max(0, num(r.h)) : null, hr: num(r.hr), r: str(r.r, 60),
-      g: r.g != null ? Math.max(0, num(r.g)) : null, i: [], c: [], q: null, m: {} };
-    if (r.m && typeof r.m === 'object') Object.keys(r.m).slice(0, 200).forEach(function (k) { if (/^[a-z0-9_]{1,30}$/.test(k) && num(r.m[k]) > 0) o.m[k] = num(r.m[k]); });
-    if (r.i && typeof r.i === 'object') Object.keys(r.i).slice(0, 80).forEach(function (k) { if (/^[A-Za-z0-9' .\-]{1,40}$/.test(k) && num(r.i[k]) > 0) o.i.push([k, num(r.i[k])]); });
-    if (Array.isArray(r.c)) r.c.slice(0, 5).forEach(function (b) {
-      if (!Array.isArray(b) || b.length < 8) return;
-      var col = BIRD_COL[b[1]] ? b[1] : 'Yellow';
-      o.c.push({ slot: num(b[0]), color: col, sex: b[2] === 'Female' ? 'Female' : b[2] === 'Male' ? 'Male' : '', cls: CLASS_CAP[b[3]] ? b[3] : '', wins: Math.max(0, num(b[4])),
-        name: str(b[5], 30), speed: Math.max(0, Math.min(255, num(b[6]))), primary: b[7] === 1 });
-    });
-    o.c.sort(function (a, b) { return (b.primary ? 1 : 0) - (a.primary ? 1 : 0) || a.slot - b.slot; });
-    if (r.q && typeof r.q === 'object') {
-      o.q = { r: str(r.q.r, 60), s: r.q.s != null ? num(r.q.s) : null, qr: num(r.q.qr), c: [] };
-      if (r.q.c && typeof r.q.c === 'object') Object.keys(r.q.c).slice(0, 400).forEach(function (k) { if (k.length <= 60 && num(r.q.c[k]) > 0) o.q.c.push([k, num(r.q.c[k])]); });
-    }
-    return o;
+  /* ---------- "Save as image": a 1200x630 card to post anywhere ---------- */
+  function loadImg(src, cors) {
+    return new Promise(function (ok) { var im = new Image(); if (cors) im.crossOrigin = 'anonymous'; im.onload = function () { ok(im); }; im.onerror = function () { ok(null); }; im.src = src; });
   }
-  function spot(n, of) { return n > 0 ? '#' + fmt(n) + (of ? ' of ' + fmt(of) : '') : ''; }
-  function section(title, extra) { var s = h('section', 'msec'), hd = h('div', 'mh'); add(hd, h('h3', null, title), extra ? h('span', null, extra) : null); s.appendChild(hd); return s; }
-  function drawMe() {
-    if (!BOX() || !ME) return; var box = BOX(), P = ME.p, W = ME.who; box.textContent = '';
-    // header
-    var hd = h('div', 'mhead');
-    if (W.img) { var av = h('img', 'av'); av.src = W.img; av.alt = ''; hd.appendChild(av); } else hd.appendChild(h('span', 'av ph', W.name.charAt(0).toUpperCase()));
-    var nm = h('div', 'mname'); add(nm, h('b', null, W.name), P && P.r ? h('span', 'rank', P.r) : null);
-    hd.appendChild(nm); box.appendChild(hd);
-    loadMedals();
-    var st = P && P.m ? P.m : {}, nE = 0;
-    if (MEDALS && MEDALS.medals) MEDALS.medals.forEach(function (m) { if (medalState(m, st).earned) nE++; });
-    meSwitch(box, nE, MEDALS && MEDALS.medals ? MEDALS.medals.length : 0);
-    if (MEVIEW === 'medals') { drawMedals(box, st); return; }
-    if (!P) {
-      add(box, h('p', 'mnone', 'No profile yet. Chat during one of Droogle’s streams to start earning nuts, then check back after the stream. Profiles update about every 20 minutes while he’s live.'));
-      return;
-    }
-    // stats
-    var st = h('div', 'mstats');
-    [['Nuts', P.p, spot(P.pr, ME.np)], ['Hours watched', P.h, spot(P.hr, ME.nh)], ['Gil', P.g, '']].forEach(function (x) {
-      if (x[1] == null) return; var d = h('div', 'mstat'); add(d, h('span', 'k', x[0]), h('b', null, fmt(x[1])), x[2] ? h('span', 's', x[2]) : null); st.appendChild(d);
-    });
-    box.appendChild(st);
-    // chocobos
-    var cs = section('Chocobo stable', P.c.length ? P.c.length + ' of 5' : '');
-    if (!P.c.length) cs.appendChild(h('p', 'mempty', 'No chocobos yet. Type !chocobo in chat to learn how to catch one.'));
-    P.c.forEach(function (b) {
-      var row = h('div', 'bird' + (b.primary ? ' prim' : '')); row.style.setProperty('--bc', BIRD_COL[b.color]);
-      var im = h('img', 'bsprite'); im.src = SITE + 'me/img/choco_' + b.color.toLowerCase() + '.png'; im.alt = b.color + ' chocobo';
-      var bi = h('div', 'bi'), top = h('div', 'bt');
-      add(top, h('b', null, b.name && b.name !== 'Unnamed' ? b.name : 'Unnamed'), b.primary ? h('span', 'ptag', 'Primary') : null);
-      var sub = [b.color, b.cls, b.sex, b.wins + (b.wins === 1 ? ' win' : ' wins')].filter(Boolean).join(' · ');
-      var bar = h('div', 'spd'), fill = h('i'); fill.style.width = (b.speed / 255 * 100).toFixed(1) + '%'; bar.appendChild(fill);
-      var sp = h('div', 'spl'); add(sp, h('span', null, 'Speed'), h('b', null, b.speed + ' / 255'));
-      add(bi, top, h('div', 'bs', sub), bar, sp);
-      add(row, im, bi); cs.appendChild(row);
-    });
-    box.appendChild(cs);
-    // items
-    var items = P.i.slice().sort(function (a, b) { return a[0] < b[0] ? -1 : 1; });
-    var is = section('Items', items.length ? items.reduce(function (s, x) { return s + x[1]; }, 0).toLocaleString('en-US') + ' total' : '');
-    if (!items.length) is.appendChild(h('p', 'mempty', 'No items yet. Turn nuts into Gil and shop in the Item Shop.'));
-    var grid = h('div', 'igrid');
-    items.forEach(function (x) {
-      var t = h('div', 'it'), ic = h('img'); ic.src = SITE + 'img/it_' + slug(x[0]) + '.png'; ic.alt = ''; ic.loading = 'lazy';
-      ic.addEventListener('error', function () { ic.replaceWith(h('span', 'iph', x[0].charAt(0))); });
-      t.title = x[0] + ' ×' + fmt(x[1]); add(t, ic, h('span', 'in', x[0]), h('b', null, '×' + fmt(x[1]))); grid.appendChild(t);
-    });
-    if (items.length) is.appendChild(grid);
-    box.appendChild(is);
-    // Queen's Blood
-    var Q = P.q;
-    var qs = section('Queen’s Blood', Q && Q.qr ? spot(Q.qr, ME.nq) : '');
-    if (!Q || !Q.c.length) qs.appendChild(h('p', 'mempty', 'No Queen’s Blood cards yet. Redeem Queen’s Blood with Pom Poms to draw your first.'));
-    else {
-      var copies = Q.c.reduce(function (s, x) { return s + x[1]; }, 0);
-      var qh = h('div', 'qbh');
-      add(qh, Q.r ? h('span', 'rank', Q.r) : null, Q.s != null ? h('span', 'qpts', fmt(Q.s) + ' pts') : null);
-      qs.appendChild(qh);
-      var prog = h('div', 'qprog'), pl = h('div', 'spl');
-      var total = QBCARDS ? QBCARDS.cards.length : 152;
-      add(pl, h('span', null, Q.c.length + ' of ' + total + ' cards'), h('b', null, fmt(copies) + (copies === 1 ? ' copy' : ' copies')));
-      var pb = h('div', 'spd gold'), pf = h('i'); pf.style.width = Math.min(100, Q.c.length / total * 100).toFixed(1) + '%'; pb.appendChild(pf);
-      add(prog, pl, pb); qs.appendChild(prog);
-      var cg = h('div', 'cgrid'); qs.appendChild(cg);
-      var more = h('button', 'more2'); more.type = 'button'; qs.appendChild(more);
-      var drawCards = function () {
-        cg.textContent = '';
-        var byName = {}; if (QBCARDS) QBCARDS.cards.forEach(function (c) { byName[c.name] = c; });
-        var list = Q.c.map(function (x) { var c = byName[x[0]]; return { n: x[0], k: x[1], id: c ? c.id : '', w: c ? c.w : 999 }; })
-          .sort(function (a, b) { return a.w - b.w || (a.n < b.n ? -1 : 1); });
-        var show = meShowAll ? list : list.slice(0, 6);
-        show.forEach(function (c) {
-          var t = h('div', 'qcard ' + tier(c.w));
-          if (c.id && /^\d{1,3}[A-Z]?$/.test(String(c.id))) { var im = h('img'); im.src = SITE + 'qb/s/' + c.id + '.webp'; im.alt = c.n; im.loading = 'lazy'; t.appendChild(im); }
-          else t.appendChild(h('span', 'cph', c.n));
-          if (c.k > 1) t.appendChild(h('b', 'ck', '×' + c.k));
-          t.title = c.n + (c.k > 1 ? ' ×' + c.k : '');
-          cg.appendChild(t);
-        });
-        more.hidden = list.length <= 6;
-        more.textContent = meShowAll ? 'Show fewer' : 'Show all ' + list.length + ' cards (rarest first)';
-      };
-      more.addEventListener('click', function () { meShowAll = !meShowAll; drawCards(); });
-      drawCards();
-      if (!QBCARDS) getJSON(SITE + 'qb/cards.json').then(function (d) { if (d && Array.isArray(d.cards)) { QBCARDS = { cards: d.cards.filter(function (c) { return c && typeof c.name === 'string'; }).map(function (c) { return { id: String(c.id), name: c.name, w: num(c.w) }; }) }; drawMe(); } }).catch(function () {});
-    }
-    box.appendChild(qs);
-    var when = ME.t && !isNaN(Date.parse(ME.t)) ? new Date(Date.parse(ME.t)).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' }) : '';
-    box.appendChild(h('p', 'mfoot', (when ? 'Updated ' + when + '. ' : '') + 'Profiles update about every 20 minutes while Droogle is live. For your exact nuts right now, type !nuts in chat.'));
-  }
-  /* ---------- Moogle Medals (inside the Me tab) ---------- */
-  var MEDALS = null, MEVIEW = 'profile', MFILTER = 'all';
-  try { if (sessionStorage.getItem('droogleMeView') === 'medals') MEVIEW = 'medals'; } catch (e) {}
-  var TIER = { b: ['bronze', 'Bronze'], s: ['silver', 'Silver'], g: ['gold', 'Gold'], p: ['platinum', 'Platinum'] };
-  function validMedals(d) {
-    if (!d || !Array.isArray(d.medals) || !Array.isArray(d.cats)) return null;
-    var cats = d.cats.filter(function (c) { return c && typeof c.id === 'string' && typeof c.n === 'string'; }).map(function (c) { return { id: str(c.id, 20), n: str(c.n, 40) }; });
-    var ms = d.medals.filter(function (m) { return m && TIER[m.t] && typeof m.id === 'string' && typeof m.n === 'string' && Array.isArray(m.r) && m.r.length; }).slice(0, 400).map(function (m) {
-      return { id: str(m.id, 30), c: str(m.c, 20), t: m.t, n: str(m.n, 60), d: str(m.d, 120),
-        r: m.r.filter(function (x) { return Array.isArray(x) && typeof x[0] === 'string' && /^[a-z0-9_]{1,30}$/.test(x[0]) && num(x[1]) > 0; }).map(function (x) { return [x[0], num(x[1])]; }) };
-    }).filter(function (m) { return m.r.length; });
-    return { cats: cats, medals: ms };
-  }
-  function medalState(m, st) {     // earned?, progress 0..1, progress text
-    var fr = m.r.map(function (x) { return Math.min(1, (st[x[0]] || 0) / x[1]); });
-    var earned = fr.every(function (f) { return f >= 1; });
-    var p = fr.reduce(function (a, b) { return a + b; }, 0) / fr.length, txt = '';
-    if (!earned) {
-      if (m.r.length === 1 && m.r[0][1] > 1) txt = fmt(Math.min(st[m.r[0][0]] || 0, m.r[0][1])) + ' / ' + fmt(m.r[0][1]);
-      else if (m.r.length > 1) txt = fr.filter(function (f) { return f >= 1; }).length + ' of ' + m.r.length + ' done';
-    }
-    return { earned: earned, p: p, txt: txt };
-  }
-  function medalImg(t, cls) { var im = h('img', cls); im.src = SITE + 'me/img/medal_' + TIER[t][0] + '.png'; im.alt = TIER[t][1] + ' medal'; return im; }
-  function meSwitch(box, nEarned, nAll) {
-    var sw = h('div', 'mswitch'); sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Show');
-    [['profile', 'Profile'], ['medals', 'Medals']].forEach(function (x) {
-      var b = h('button', MEVIEW === x[0] ? 'on' : '', x[1]); b.type = 'button'; b.setAttribute('aria-pressed', MEVIEW === x[0] ? 'true' : 'false');
-      if (x[0] === 'medals' && nAll) b.appendChild(h('span', 'cnt', nEarned + '/' + nAll));
-      b.addEventListener('click', function () {
-        if (MEVIEW === x[0]) return; MEVIEW = x[0];
-        try { sessionStorage.setItem('droogleMeView', MEVIEW); } catch (e) {}
-        drawMe(); SCR().scrollTop = 0;
+  var FRAME_COL = { b: ['#7a4420', '#f3c49c', '#e0a274'], s: ['#7d8aa3', '#ffffff', '#c8d2e2'], g: ['#a8740e', '#fff0b8', '#f9c74f'], p: ['#9be7ff', '#f5d0ff', '#b7a3ff'] };
+  var TIERN = { b: 'bronze', s: 'silver', g: 'gold', p: 'platinum' };
+  function shareCard(d, btn) {
+    btn.disabled = true; var old = btn.textContent; btn.textContent = 'Making your card…';
+    var fonts = document.fonts && document.fonts.load ? Promise.all(['24px Anton', '24px Pixel', '600 24px Outfit', '400 24px Outfit'].map(function (f) { return document.fonts.load(f).catch(function () {}); })) : Promise.resolve();
+    var imgs = [d.who.img ? loadImg(d.who.img, true) : Promise.resolve(null), Promise.resolve(null)]
+      .concat(['b', 's', 'g', 'p'].map(function (t) { return loadImg(d.img + 'medal_' + TIERN[t] + '.png', false); }));
+    Promise.all([fonts].concat(imgs)).then(function (r) {
+      var av = r[1], med = { b: r[3], s: r[4], g: r[5], p: r[6] };
+      var W = 1200, H = 630, c = document.createElement('canvas'); c.width = W; c.height = H; var x = c.getContext('2d');
+      var bg = x.createLinearGradient(0, 0, W, H); bg.addColorStop(0, '#1b2d53'); bg.addColorStop(.55, '#0f1a31'); bg.addColorStop(1, '#0b1322');
+      x.fillStyle = bg; x.fillRect(0, 0, W, H);
+      var glow = x.createRadialGradient(250, 250, 10, 250, 250, 420); glow.addColorStop(0, 'rgba(37,214,200,.16)'); glow.addColorStop(1, 'rgba(37,214,200,0)'); x.fillStyle = glow; x.fillRect(0, 0, W, H);
+      x.strokeStyle = 'rgba(249,199,79,.35)'; x.lineWidth = 2; rr(x, 18, 18, W - 36, H - 36, 26); x.stroke();
+      // avatar + frame
+      var ax = 190, ay = 215, ar = 112;
+      if (d.frame) { var fc = FRAME_COL[d.frame], g = x.createLinearGradient(ax - ar, ay - ar, ax + ar, ay + ar); g.addColorStop(0, fc[0]); g.addColorStop(.45, fc[1]); g.addColorStop(1, fc[2]);
+        x.beginPath(); x.arc(ax, ay, ar + 12, 0, Math.PI * 2); x.fillStyle = g; x.shadowColor = fc[2]; x.shadowBlur = 30; x.fill(); x.shadowBlur = 0; }
+      else { x.beginPath(); x.arc(ax, ay, ar + 6, 0, Math.PI * 2); x.fillStyle = '#25d6c8'; x.fill(); }
+      x.save(); x.beginPath(); x.arc(ax, ay, ar, 0, Math.PI * 2); x.clip();
+      if (av) x.drawImage(av, ax - ar, ay - ar, ar * 2, ar * 2); else { x.fillStyle = '#1a2a4a'; x.fillRect(ax - ar, ay - ar, ar * 2, ar * 2); x.fillStyle = '#25d6c8'; x.font = '110px Anton'; x.textAlign = 'center'; x.textBaseline = 'middle'; x.fillText(d.who.name.charAt(0).toUpperCase(), ax, ay + 6); }
+      x.restore(); x.textAlign = 'left'; x.textBaseline = 'alphabetic';
+      // name, rank
+      x.fillStyle = '#fff'; x.font = fit(x, d.who.name, 'Anton', 84, 640) ; x.fillText(d.who.name, 360, 168);
+      x.fillStyle = '#9aa8c4'; x.font = '600 26px Outfit'; x.fillText('Adventurer Rank ' + d.rank.lv, 362, 214);
+      x.fillStyle = '#f9c74f'; x.font = fit(x, d.rank.name, 'Anton', 56, 520); x.fillText(d.rank.name, 360, 270);
+      x.textAlign = 'right'; x.fillStyle = '#f9c74f'; x.font = '78px Pixel'; x.fillText(String(d.score), 1150, 172);
+      x.fillStyle = '#9aa8c4'; x.font = '600 24px Outfit'; x.fillText('medal points' + (d.spot ? ' · #' + d.spot + (d.of ? ' of ' + d.of : '') : ''), 1150, 206); x.textAlign = 'left';
+      // tier counts
+      var tx = 362;
+      ['b', 's', 'g', 'p'].forEach(function (t) {
+        if (med[t]) x.drawImage(med[t], tx, 300, 52, 52);
+        x.fillStyle = '#fff'; x.font = '44px Pixel'; x.fillText(String(d.per[t]), tx + 60, 342); tx += 60 + x.measureText(String(d.per[t])).width + 34;
       });
-      sw.appendChild(b);
-    });
-    box.appendChild(sw);
-  }
-  function loadMedals() {
-    if (MEDALS || loadMedals.busy) return; loadMedals.busy = true;
-    getJSON(SITE + 'ext/medals.json').then(function (d) { MEDALS = validMedals(d); if (ME) drawMe(); })
-      .catch(function () { MEDALS = { cats: [], medals: [], failed: true }; if (ME) drawMe(); })
-      .then(function () { loadMedals.busy = false; });
-  }
-  function drawMedals(box, st) {
-    if (!MEDALS) { box.appendChild(h('p', 'mnone', 'Loading the Moogle Medals…')); return; }
-    if (MEDALS.failed || !MEDALS.medals.length) { box.appendChild(h('p', 'mnone', 'The Moogle Medals couldn’t be loaded. Close and reopen the panel to try again.')); return; }
-    var all = MEDALS.medals, states = {}, per = { b: [0, 0], s: [0, 0], g: [0, 0], p: [0, 0] };
-    all.forEach(function (m) { var s = medalState(m, st); states[m.id] = s; per[m.t][1]++; if (s.earned) per[m.t][0]++; });
-    var tiers = h('div', 'mtiers');
-    ['b', 's', 'g', 'p'].forEach(function (t) {
-      var d = h('div', 'mtier'); add(d, medalImg(t, 'tm'), h('b', null, String(per[t][0])), h('span', null, 'of ' + per[t][1]));
-      d.setAttribute('aria-label', TIER[t][1] + ': ' + per[t][0] + ' of ' + per[t][1] + ' earned'); tiers.appendChild(d);
-    });
-    box.appendChild(tiers);
-    var ch = h('div', 'mchips mfilter'); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
-    [['all', 'All'], ['earned', 'Earned'], ['next', 'Closest'], ['locked', 'Locked']].forEach(function (x) {
-      var b = h('button', MFILTER === x[0] ? 'on' : '', x[1]); b.type = 'button'; b.setAttribute('aria-pressed', MFILTER === x[0] ? 'true' : 'false');
-      b.addEventListener('click', function () { MFILTER = x[0]; drawMe(); }); ch.appendChild(b);
-    });
-    box.appendChild(ch);
-    var order = { b: 0, s: 1, g: 2, p: 3 }, shown = 0;
-    var row = function (m) {
-      var s = states[m.id], r = h('div', 'medal ' + (s.earned ? 'got ' : 'locked ') + TIER[m.t][0]);
-      r.appendChild(medalImg(m.t, 'mimg'));
-      var b = h('div', 'mb'), top = h('div', 'mn'); add(top, h('b', null, m.n), h('span', 'mt', TIER[m.t][1]));
-      add(b, top, h('div', 'md', m.d));
-      if (!s.earned && s.txt) { var bar = h('div', 'mbar'), f = h('i'); f.style.width = (s.p * 100).toFixed(1) + '%'; bar.appendChild(f); add(b, bar, h('div', 'mpt', s.txt)); }
-      r.appendChild(b);
-      r.setAttribute('aria-label', m.n + ', ' + TIER[m.t][1] + (s.earned ? ', earned' : ', not earned yet') + '. ' + m.d + (s.txt ? '. Progress ' + s.txt : ''));
-      return r;
-    };
-    if (MFILTER === 'next') {
-      var nx = all.filter(function (m) { return !states[m.id].earned && states[m.id].p > 0; }).sort(function (a, b) { return states[b.id].p - states[a.id].p; }).slice(0, 12);
-      var sec = section('Closest to earning');
-      nx.forEach(function (m) { sec.appendChild(row(m)); }); shown = nx.length;
-      if (!nx.length) sec.appendChild(h('p', 'mempty', 'Nothing in progress yet. Chat, play the mini-games and join in on stream to start earning!'));
-      box.appendChild(sec);
-    } else {
-      MEDALS.cats.forEach(function (c) {
-        var list = all.filter(function (m) { return m.c === c.id; });
-        var got = list.filter(function (m) { return states[m.id].earned; }).length;
-        list = list.filter(function (m) { return MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned; })
-          .sort(function (a, b) { return order[a.t] - order[b.t]; });
-        if (!list.length) return;
-        var sec = section(c.n, got + ' of ' + all.filter(function (m) { return m.c === c.id; }).length);
-        list.forEach(function (m) { sec.appendChild(row(m)); }); shown += list.length;
-        box.appendChild(sec);
+      x.fillStyle = '#9aa8c4'; x.font = '600 24px Outfit'; x.fillText(d.earned + ' of ' + d.total + ' Moogle Medals', tx + 6, 336);
+      // showcase
+      x.fillStyle = '#fff'; x.font = '30px Anton'; x.fillText('Showcase', 60, 420);
+      d.show.forEach(function (m, i) {
+        var bx = 60 + i * 370, by = 440, bw = 350, bh = 120;
+        x.fillStyle = 'rgba(6,12,24,.6)'; rr(x, bx, by, bw, bh, 16); x.fill();
+        x.strokeStyle = { b: 'rgba(205,127,72,.6)', s: 'rgba(200,210,226,.55)', g: 'rgba(249,199,79,.7)', p: 'rgba(190,170,255,.75)' }[m.t]; x.lineWidth = 2; rr(x, bx, by, bw, bh, 16); x.stroke();
+        if (med[m.t]) x.drawImage(med[m.t], bx + 14, by + 18, 84, 84);
+        x.fillStyle = '#fff'; x.font = fit(x, m.n, '600', 28, 230, 'Outfit'); x.fillText(m.n, bx + 110, by + 56);
+        x.fillStyle = m.r === 'Legendary' ? '#ff8fe0' : m.r === 'Rare' ? '#f9c74f' : '#9aa8c4'; var rt = m.r ? m.r + (m.pc != null ? ' · ' + (m.pc < 1 ? '<1' : Math.round(m.pc)) + '% have it' : '') : { b: 'Bronze', s: 'Silver', g: 'Gold', p: 'Platinum' }[m.t];
+        x.font = fit(x, rt, '600', 22, 225, 'Outfit'); x.fillText(rt, bx + 110, by + 90);
       });
-      if (!shown) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No medals yet. Every medal is free to earn; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
-    }
-    box.appendChild(h('p', 'mfoot', 'Moogle Medals are free to earn and never go away once you have them. Progress updates about every 20 minutes while Droogle is live.'));
+      if (!d.show.length) { x.fillStyle = '#6f7f9f'; x.font = '600 26px Outfit'; x.fillText('Earn Moogle Medals on stream to fill your showcase!', 60, 500); }
+      // footer
+      x.fillStyle = '#9aa8c4'; x.font = '600 22px Outfit';
+      var bits = []; if (d.streams) bits.push(d.streams + ' streams'); if (d.streak) bits.push('best streak ' + d.streak); if (d.hours != null) bits.push(d.hours.toLocaleString('en-US') + ' hours watched');
+      x.fillText(bits.join('  ·  '), 60, 600);
+      x.textAlign = 'right'; x.fillStyle = '#25d6c8'; x.font = '600 24px Outfit'; x.fillText('twitch.tv/droogle', 1150, 600);
+      try {
+        c.toBlob(function (b) {
+          if (!b) throw new Error('blob');
+          var a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'droogle-profile-' + d.who.login + '.png';
+          document.body.appendChild(a); a.click(); setTimeout(function () { URL.revokeObjectURL(a.href); a.remove(); }, 4000);
+          btn.textContent = 'Saved! Look in your downloads'; setTimeout(function () { btn.textContent = old; btn.disabled = false; }, 3000);
+        }, 'image/png');
+      } catch (e) { btn.textContent = 'Your browser couldn’t save the image'; setTimeout(function () { btn.textContent = old; btn.disabled = false; }, 3000); }
+    });
   }
-
-
-
-  function tier(w) { return w <= 6 ? 'ur' : w <= 11 ? 'vr' : w <= 19 ? 'r' : w <= 31 ? 'u' : 'c'; }
+  function rr(x, a, b, w, hh, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + hh, r); x.arcTo(a + w, b + hh, a, b + hh, r); x.arcTo(a, b + hh, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+  function fit(x, text, fam, size, max, fam2) {      // shrink a font until the text fits
+    var f = fam2 ? function (s) { return fam + ' ' + s + 'px ' + fam2; } : function (s) { return s + 'px ' + fam; };
+    for (; size > 14; size -= 2) { x.font = f(size); if (x.measureText(text).width <= max) break; }
+    return f(size);
+  }
 
   /* ---------- sign-in ---------- */
-  var ME = null, QBCARDS = null, meShowAll = false, TOKEN = null, MODAL = null;
+  var ME = null, TOKEN = null, MODAL = null;
   function store(k, v) { try { if (v == null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function rnd() { var a = new Uint8Array(16); crypto.getRandomValues(a); return [].map.call(a, function (x) { return ('0' + x.toString(16)).slice(-2); }).join(''); }
@@ -361,7 +227,7 @@
     $('twm-out').hidden = !TOKEN;
     var w = whoNow();
     if (!w) {
-      msg('Your Droogle profile', 'See your nuts, Chatbot rank, hours watched, items, chocobos, Queen’s Blood cards and Moogle Medals.', {
+      msg('Your Droogle profile', 'See your Moogle Medals, Adventurer Rank, attendance, nuts, hours watched, chocobos, items and Queen’s Blood cards.', {
         label: 'Log in with Twitch', on: login,
         note: 'Twitch only tells the guide your name and avatar. You only ever see your own profile, and you can log out any time.' });
       return;
@@ -371,7 +237,7 @@
     hex16(w.login).then(function (k) {
       return getJSON(PROFILE_BASE + k.charAt(0) + '.json?t=' + Math.floor(Date.now() / 6e4)).then(function (shard) {
         var raw = shard && shard.u && typeof shard.u === 'object' ? shard.u[k] : null;
-        ME = { who: w, p: validProfile(raw), np: num(shard && shard.np), nh: num(shard && shard.nh), nq: num(shard && shard.nq), t: str(shard && shard.t, 40) };
+        ME = { who: w, p: PROF.valid(raw), np: num(shard && shard.np), nh: num(shard && shard.nh), nq: num(shard && shard.nq), nm: num(shard && shard.nm), t: str(shard && shard.t, 40) };
         if (MODAL) drawMe();
       });
     }).catch(function () { msg('Your profile', 'Your profile couldn’t be loaded right now. Close this and try again in a moment.'); });

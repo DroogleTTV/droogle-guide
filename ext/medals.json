@@ -1,5 +1,5 @@
 {
-"v":1,
+"v":2,
 "cats":[
 {
 "id":"rpg",
@@ -33,6 +33,80 @@
 "id":"events",
 "n":"Events"
 }
+],
+"pts":{
+"b":1,
+"s":3,
+"g":10,
+"p":25
+},
+"ranks":[
+[
+0,
+"Onion Knight"
+],
+[
+5,
+"Freelancer"
+],
+[
+15,
+"Squire"
+],
+[
+30,
+"Knight"
+],
+[
+50,
+"Dragoon"
+],
+[
+80,
+"Paladin"
+],
+[
+120,
+"Sage"
+],
+[
+175,
+"Dark Knight"
+],
+[
+250,
+"Holy Knight"
+],
+[
+350,
+"Mystic Knight"
+],
+[
+500,
+"Champion of Light"
+],
+[
+700,
+"Moogle Monarch"
+]
+],
+"frames":[
+[
+15,
+"b"
+],
+[
+50,
+"s"
+],
+[
+175,
+"g"
+],
+[
+400,
+"p"
+]
 ],
 "medals":[
 {
@@ -1343,5 +1417,6 @@
 ]
 ]
 }
-]
+],
+"max":743
 }
