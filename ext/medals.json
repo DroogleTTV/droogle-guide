@@ -32,6 +32,10 @@
 {
 "id":"events",
 "n":"Events"
+},
+{
+"id":"season",
+"n":"Seasonal"
 }
 ],
 "pts":{
@@ -1416,6 +1420,23 @@
 50
 ]
 ]
+},
+{
+"id":"santa",
+"c":"season",
+"t":"p",
+"n":"Ho-Ho-Holy",
+"d":"Be at a stream when Santa flies past the studio window (December 1-25)",
+"r":[
+[
+"santa",
+1
+]
+],
+"from":"12-01",
+"until":"12-25",
+"s":1,
+"ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
 "max":743

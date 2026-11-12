@@ -33,7 +33,11 @@
   function today() { return etDay(Date.now()); }
   function streamDay() { return etDay(Date.now() - 6 * 36e5); }      // a stream that runs past midnight stays on its evening
   function dayText(d, long) { return new Date(d * 864e5).toLocaleDateString('en-US', long ? { timeZone: 'UTC', month: 'short', day: 'numeric', year: 'numeric' } : { timeZone: 'UTC', month: 'short', day: 'numeric' }); }
-  function isoDay(s) { var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '')); return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5) : null; }
+  function isoDay(s) {               // "yyyy-mm-dd", or "mm-dd" for a window that comes back every year (this year's date)
+    var m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || ''));
+    if (!m && (m = /^(\d{2})-(\d{2})$/.exec(String(s || '')))) m = [0, new Date(today() * 864e5).getUTCFullYear(), m[1], m[2]];
+    return m ? Math.floor(Date.UTC(+m[1], +m[2] - 1, +m[3]) / 864e5) : null;
+  }
 
   window.DroogleProfile = function (cfg) {
     var SITE = cfg.site, IMG = cfg.img, CLS = cfg.cls || {};
@@ -72,7 +76,7 @@
       if (!d || !Array.isArray(d.medals) || !Array.isArray(d.cats)) return null;
       var cats = d.cats.filter(function (c) { return c && typeof c.id === 'string' && typeof c.n === 'string'; }).map(function (c) { return { id: str(c.id, 20), n: str(c.n, 40) }; });
       var ms = d.medals.filter(function (m) { return m && TIER[m.t] && typeof m.id === 'string' && typeof m.n === 'string' && Array.isArray(m.r) && m.r.length; }).slice(0, 400).map(function (m) {
-        return { id: str(m.id, 30), c: str(m.c, 20), t: m.t, n: str(m.n, 60), d: str(m.d, 120), from: isoDay(m.from), until: isoDay(m.until),
+        return { id: str(m.id, 30), c: str(m.c, 20), t: m.t, n: str(m.n, 60), d: str(m.d, 120), from: isoDay(m.from), until: isoDay(m.until), s: m.s === 1,
           r: m.r.filter(function (x) { return Array.isArray(x) && typeof x[0] === 'string' && /^[a-z0-9_]{1,30}$/.test(x[0]) && num(x[1]) > 0; }).map(function (x) { return [x[0], num(x[1])]; }) };
       }).filter(function (m) { return m.r.length; });
       var pts = {}; ['b', 's', 'g', 'p'].forEach(function (t) { pts[t] = d.pts && num(d.pts[t]) > 0 ? num(d.pts[t]) : DEF_PTS[t]; });
@@ -107,7 +111,8 @@
         if (m.r.length === 1 && m.r[0][1] > 1) txt = fmt(Math.min(st[m.r[0][0]] || 0, m.r[0][1])) + ' / ' + fmt(m.r[0][1]);
         else if (m.r.length > 1) txt = fr.filter(function (f) { return f >= 1; }).length + ' of ' + m.r.length + ' done';
       }
-      if (m.from != null || m.until != null) {
+      if (m.s && m.from != null && m.until != null) lim = open ? 'Seasonal, now until ' + dayText(m.until) : 'Seasonal, every year ' + dayText(m.from) + '–' + dayText(m.until);
+      else if (m.from != null || m.until != null) {
         if (m.from != null && t < m.from) lim = 'Opens ' + dayText(m.from);
         else if (m.until != null && t > m.until) lim = 'Event ended';
         else lim = m.until != null ? 'Limited time, until ' + dayText(m.until) : 'Limited time';
@@ -201,7 +206,7 @@
       var shh = h('div', 'shh'); add(shh, h('span', null, 'Showcase'), h('small', null, 'your rarest medals'));
       add(c, shh, sh);
       // categories finished
-      var done = MEDALS.cats.filter(function (ct) { var l = MEDALS.medals.filter(function (m) { return m.c === ct.id; }); return l.length && l.every(function (m) { return states[m.id].earned; }); });
+      var done = MEDALS.cats.filter(function (ct) { var l = MEDALS.medals.filter(function (m) { return m.c === ct.id && !m.s; }); return l.length && l.every(function (m) { return states[m.id].earned; }); });
       if (done.length) { var cb = h('div', 'cdone'); done.forEach(function (ct) { cb.appendChild(h('span', null, ct.n)); }); c.appendChild(cb); }
       box.appendChild(c);
     }
@@ -320,7 +325,7 @@
       if (!MEDALS) { box.appendChild(h('p', 'mnone', 'Loading the Moogle Medals…')); return; }
       if (MEDALS.failed || !MEDALS.medals.length) { box.appendChild(h('p', 'mnone', 'The Moogle Medals couldn’t be loaded. Close and reopen this to try again.')); return; }
       var all = MEDALS.medals, per = { b: [0, 0], s: [0, 0], g: [0, 0], p: [0, 0] };
-      all.forEach(function (m) { per[m.t][1]++; if (states[m.id].earned) per[m.t][0]++; });
+      all.forEach(function (m) { if (m.s) return; per[m.t][1]++; if (states[m.id].earned) per[m.t][0]++; });
       var tiers = h('div', 'mtiers');
       ['b', 's', 'g', 'p'].forEach(function (t) {
         var d = h('div', 'mtier'); add(d, medalImg(t, 'tm'), h('b', null, String(per[t][0])), h('span', null, 'of ' + per[t][1]));
@@ -368,6 +373,10 @@
           var list = full.filter(function (m) { return MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned; })
             .sort(function (a, b) { return TORD[a.t] - TORD[b.t]; });
           if (!list.length) return;
+          if (c.id === 'season' || full.every(function (m) { return m.s; })) {      // seasonal: extra to the 100, no completion bar
+            var ss = section(c.n, 'extra to the ' + MEDALS.medals.filter(function (m) { return !m.s; }).length, 'mseason');
+            list.forEach(function (m) { ss.appendChild(row(m)); }); shown += list.length; box.appendChild(ss); return;
+          }
           var complete = full.length && got === full.length;
           var sec = section(c.n, got + ' of ' + full.length, complete ? 'mdone' : '');
           if (complete) { var rb = h('div', 'ribbon'); add(rb, h('b', null, 'Category complete'), h('span', null, 'Every ' + c.n + ' medal earned')); sec.insertBefore(rb, sec.children[1] || null); }
@@ -389,8 +398,8 @@
       var info = null;
       if (ready) { var sc = scoreOf(P, states); info = { score: sc, rank: rankOf(sc), frame: frameOf(sc) }; }
       drawHead(box, P, info);
-      var nE = 0; if (ready) MEDALS.medals.forEach(function (m) { if (states[m.id].earned) nE++; });
-      meSwitch(box, nE, ready ? MEDALS.medals.length : 0);
+      var nE = 0, nAll = 0; if (ready) MEDALS.medals.forEach(function (m) { if (m.s) return; nAll++; if (states[m.id].earned) nE++; });   // seasonal medals are extra to the 100
+      meSwitch(box, nE, nAll);
       if (MEVIEW === 'medals') { drawMedals(box, P, states); return; }
       if (!P) {
         add(box, h('p', 'mnone', 'No profile yet. Chat during one of Droogle’s streams to start earning nuts, then check back after the stream. Profiles update about every 20 minutes while he’s live.'));
@@ -410,8 +419,8 @@
       box.appendChild(h('p', CLS.foot || 'foot', (when ? 'Updated ' + when + '. ' : '') + 'Profiles update about every 20 minutes while Droogle is live. For your exact nuts right now, type !nuts in chat.'));
     }
     function snapshot(P, info, states) {     // what the share card needs
-      var per = { b: 0, s: 0, g: 0, p: 0 }, n = 0; MEDALS.medals.forEach(function (m) { if (states[m.id].earned) { per[m.t]++; n++; } });
-      return { who: ME.who, rank: info.rank, score: info.score, frame: info.frame, spot: P.msr, of: ME.nm, per: per, earned: n, total: MEDALS.medals.length,
+      var per = { b: 0, s: 0, g: 0, p: 0 }, n = 0, tot = 0; MEDALS.medals.forEach(function (m) { if (m.s) return; tot++; if (states[m.id].earned) { per[m.t]++; n++; } });
+      return { who: ME.who, rank: info.rank, score: info.score, frame: info.frame, spot: P.msr, of: ME.nm, per: per, earned: n, total: tot,
         show: rarest(P, states, 3).map(function (m) { var r = rarity(m); return { n: m.n, t: m.t, r: r ? r.label : '', pc: r ? r.pc : null }; }),
         nuts: P.p, hours: P.h, streams: P.a ? P.a.n : 0, streak: P.a ? P.a.b : 0, chatRank: P.r, img: IMG };
     }
