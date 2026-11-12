@@ -166,3 +166,4 @@ details.cx .cxb{padding:2px 14px 12px;font-size:10.5pt}
   #stagger .row > img[src$="meteor_big.png"]{width:70%!important;max-width:320px;margin:10px auto 0!important}
 }
 #stagger .row:has(> img[src$="meteor_big.png"]){margin-bottom:14px}
+@media (max-width:760px){.qlink img{height:auto}.qlink .qgo{font-size:11pt;padding:4px 10px;right:6px;bottom:6px}}

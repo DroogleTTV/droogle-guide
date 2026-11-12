@@ -167,3 +167,11 @@ details.cx .cxb th,details.cx .cxb td{padding:3px 7px}
 .chosprite.pdfonly{width:90px;height:90px}
 .webonly{display:none}
 table.shop td{padding:3px 8px}
+/* Weekly Quests (2026-11-11) */
+.qlink{display:block;position:relative;margin-top:10px;border:3px solid var(--ffedge);border-radius:10px;overflow:hidden;text-decoration:none}
+.qlink img{display:block;width:100%;height:3.1in;object-fit:cover;object-position:50% 20%}
+.qlink .qgo{position:absolute;right:10px;bottom:10px;background:#f2c230;color:#1a1300;font-family:Anton;font-size:13pt;letter-spacing:.03em;padding:6px 14px;border-radius:7px;border:2px solid #1a1300}
+.qpin{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:1px;border:2px solid #0b1322}
+.qbar{display:block;margin-top:14px;padding:9px 14px;border-radius:9px;background:linear-gradient(90deg,#2b2160,#163b63);border:2px solid #f2c230;color:#fff;text-decoration:none;font-size:10.6pt}
+.qbar b{color:#f2c230}
+.qbar span{color:#f2c230;font-weight:700;white-space:nowrap}
