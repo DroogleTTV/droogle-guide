@@ -1,0 +1,1256 @@
+{
+"v":1,
+"cats":[
+{
+"id":"rpg",
+"n":"Healer & Attacker"
+},
+{
+"id":"choco",
+"n":"Chocobos"
+},
+{
+"id":"qb",
+"n":"Queen's Blood"
+},
+{
+"id":"items",
+"n":"Items & Gil"
+},
+{
+"id":"loyal",
+"n":"Loyalty"
+},
+{
+"id":"games",
+"n":"Mini-games"
+},
+{
+"id":"quests",
+"n":"Quests & Hunts"
+},
+{
+"id":"events",
+"n":"Events"
+}
+],
+"medals":[
+{
+"id":"heal3",
+"c":"rpg",
+"t":"b",
+"n":"Cure-ious",
+"d":"Reach Healer Lv 3",
+"r":[
+[
+"heal_lv",
+3
+]
+]
+},
+{
+"id":"heal10",
+"c":"rpg",
+"t":"s",
+"n":"Cura-tor",
+"d":"Reach Healer Lv 10",
+"r":[
+[
+"heal_lv",
+10
+]
+]
+},
+{
+"id":"heal20",
+"c":"rpg",
+"t":"g",
+"n":"Curaga-geous",
+"d":"Reach Healer Lv 20",
+"r":[
+[
+"heal_lv",
+20
+]
+]
+},
+{
+"id":"heal35",
+"c":"rpg",
+"t":"p",
+"n":"Holy Moly",
+"d":"Reach Healer Lv 35",
+"r":[
+[
+"heal_lv",
+35
+]
+]
+},
+{
+"id":"atk3",
+"c":"rpg",
+"t":"b",
+"n":"Fire Starter",
+"d":"Reach Attacker Lv 3",
+"r":[
+[
+"atk_lv",
+3
+]
+]
+},
+{
+"id":"atk10",
+"c":"rpg",
+"t":"s",
+"n":"Fira at Will",
+"d":"Reach Attacker Lv 10",
+"r":[
+[
+"atk_lv",
+10
+]
+]
+},
+{
+"id":"atk20",
+"c":"rpg",
+"t":"g",
+"n":"Meteor-ic Rise",
+"d":"Reach Attacker Lv 20",
+"r":[
+[
+"atk_lv",
+20
+]
+]
+},
+{
+"id":"atk35",
+"c":"rpg",
+"t":"p",
+"n":"Ultima-te Power",
+"d":"Reach Attacker Lv 35",
+"r":[
+[
+"atk_lv",
+35
+]
+]
+},
+{
+"id":"dualcast",
+"c":"rpg",
+"t":"g",
+"n":"Dualcast Away",
+"d":"Healer and Attacker both Lv 10",
+"r":[
+[
+"heal_lv",
+10
+],
+[
+"atk_lv",
+10
+]
+]
+},
+{
+"id":"credits",
+"c":"rpg",
+"t":"s",
+"n":"Credit Where It’s Due",
+"d":"Finish a stream as #1 Top Healer or Top Attacker",
+"r":[
+[
+"credits_top",
+1
+]
+]
+},
+{
+"id":"kweh",
+"c":"choco",
+"t":"b",
+"n":"The Kweh-st Begins",
+"d":"Catch a chocobo",
+"r":[
+[
+"choco_n",
+1
+]
+]
+},
+{
+"id":"flock",
+"c":"choco",
+"t":"b",
+"n":"Birds of a Feather",
+"d":"Have 3 chocobos in your stable",
+"r":[
+[
+"choco_n",
+3
+]
+]
+},
+{
+"id":"wonderful",
+"c":"choco",
+"t":"b",
+"n":"Simply Wonderful",
+"d":"Own a Wonderful-class chocobo",
+"r":[
+[
+"choco_wonderful",
+1
+]
+]
+},
+{
+"id":"racewin",
+"c":"choco",
+"t":"b",
+"n":"Winner Winner, Chocobo Dinner",
+"d":"Win a chocobo race",
+"r":[
+[
+"choco_wins",
+1
+]
+]
+},
+{
+"id":"ranch",
+"c":"choco",
+"t":"s",
+"n":"Ranch Dressing",
+"d":"Fill your stable with 5 chocobos",
+"r":[
+[
+"choco_n",
+5
+]
+]
+},
+{
+"id":"rivermtn",
+"c":"choco",
+"t":"s",
+"n":"Over the River and Through the Woods",
+"d":"Own a Blue or Green chocobo",
+"r":[
+[
+"choco_bluegreen",
+1
+]
+]
+},
+{
+"id":"speed",
+"c":"choco",
+"t":"s",
+"n":"Fast and Feathery",
+"d":"Raise a chocobo to 255 speed",
+"r":[
+[
+"choco_spd",
+255
+]
+]
+},
+{
+"id":"aclass",
+"c":"choco",
+"t":"s",
+"n":"A-Class Act",
+"d":"Win 5 races with one chocobo",
+"r":[
+[
+"choco_wins",
+5
+]
+]
+},
+{
+"id":"duels",
+"c":"choco",
+"t":"s",
+"n":"Duel-ly Noted",
+"d":"Win 5 chocobo duels",
+"r":[
+[
+"duel_wins",
+5
+]
+]
+},
+{
+"id":"black",
+"c":"choco",
+"t":"g",
+"n":"Back in Black",
+"d":"Own a Black chocobo",
+"r":[
+[
+"choco_black",
+1
+]
+]
+},
+{
+"id":"sclass",
+"c":"choco",
+"t":"g",
+"n":"S-Class Racer",
+"d":"Win 10 races with one chocobo",
+"r":[
+[
+"choco_wins",
+10
+]
+]
+},
+{
+"id":"gold",
+"c":"choco",
+"t":"p",
+"n":"Knights of the Round-Up",
+"d":"Own a Gold chocobo",
+"r":[
+[
+"choco_gold",
+1
+]
+]
+},
+{
+"id":"teioh",
+"c":"choco",
+"t":"p",
+"n":"Teioh Who?",
+"d":"Win 25 races with one chocobo",
+"r":[
+[
+"choco_wins",
+25
+]
+]
+},
+{
+"id":"qbfirst",
+"c":"qb",
+"t":"b",
+"n":"Fresh Blood",
+"d":"Own a Queen’s Blood card",
+"r":[
+[
+"qb_cards",
+1
+]
+]
+},
+{
+"id":"qbtrade",
+"c":"qb",
+"t":"b",
+"n":"Blood Brothers",
+"d":"Complete a card trade",
+"r":[
+[
+"qb_trade",
+1
+]
+]
+},
+{
+"id":"qb25",
+"c":"qb",
+"t":"s",
+"n":"Card Sharp",
+"d":"Collect 25 different cards",
+"r":[
+[
+"qb_cards",
+25
+]
+]
+},
+{
+"id":"qbknight",
+"c":"qb",
+"t":"s",
+"n":"Good Knight",
+"d":"Reach LVL 5 Blood Knight",
+"r":[
+[
+"qb_rank",
+5
+]
+]
+},
+{
+"id":"qb75",
+"c":"qb",
+"t":"g",
+"n":"Deck the Halls",
+"d":"Collect 75 different cards",
+"r":[
+[
+"qb_cards",
+75
+]
+]
+},
+{
+"id":"qbtact",
+"c":"qb",
+"t":"g",
+"n":"Strategy Guide",
+"d":"Reach LVL 8 Blood Tactician",
+"r":[
+[
+"qb_rank",
+8
+]
+]
+},
+{
+"id":"qbultra",
+"c":"qb",
+"t":"g",
+"n":"Medium? No, Ultra Rare",
+"d":"Own an ultra-rare card",
+"r":[
+[
+"qb_ultra",
+1
+]
+]
+},
+{
+"id":"qbking",
+"c":"qb",
+"t":"p",
+"n":"King of Queens",
+"d":"Reach LVL 13 Blood King",
+"r":[
+[
+"qb_rank",
+13
+]
+]
+},
+{
+"id":"qball",
+"c":"qb",
+"t":"p",
+"n":"Playing with a Full Deck",
+"d":"Collect all 152 cards",
+"r":[
+[
+"qb_cards",
+152
+]
+]
+},
+{
+"id":"shop",
+"c":"items",
+"t":"b",
+"n":"Shop-a-holic",
+"d":"Own any item",
+"r":[
+[
+"item_kinds",
+1
+]
+]
+},
+{
+"id":"gil10k",
+"c":"items",
+"t":"b",
+"n":"Gil-ty Pleasure",
+"d":"Have 10,000 Gil",
+"r":[
+[
+"gil",
+10000
+]
+]
+},
+{
+"id":"elixir",
+"c":"items",
+"t":"b",
+"n":"Saving It for Later",
+"d":"Own an Elixir (and never use it)",
+"r":[
+[
+"elixir",
+1
+]
+]
+},
+{
+"id":"fatchoco",
+"c":"items",
+"t":"s",
+"n":"Fat Chocobo",
+"d":"Own 10 different items",
+"r":[
+[
+"item_kinds",
+10
+]
+]
+},
+{
+"id":"gil100k",
+"c":"items",
+"t":"s",
+"n":"Gil-ded Age",
+"d":"Have 100,000 Gil",
+"r":[
+[
+"gil",
+100000
+]
+]
+},
+{
+"id":"invfull",
+"c":"items",
+"t":"g",
+"n":"Inventory Full",
+"d":"Own 20 different items",
+"r":[
+[
+"item_kinds",
+20
+]
+]
+},
+{
+"id":"gil250k",
+"c":"items",
+"t":"g",
+"n":"Gil-gamesh",
+"d":"Have 250,000 Gil",
+"r":[
+[
+"gil",
+250000
+]
+]
+},
+{
+"id":"allitems",
+"c":"items",
+"t":"p",
+"n":"Nothing Left to Steal",
+"d":"Own one of every Item Shop item",
+"r":[
+[
+"item_kinds",
+37
+]
+]
+},
+{
+"id":"gil1m",
+"c":"items",
+"t":"p",
+"n":"Gillionaire",
+"d":"Have 1,000,000 Gil",
+"r":[
+[
+"gil",
+1000000
+]
+]
+},
+{
+"id":"hours10",
+"c":"loyal",
+"t":"b",
+"n":"Just Passing Through",
+"d":"Watch 10 hours",
+"r":[
+[
+"hours",
+10
+]
+]
+},
+{
+"id":"hours50",
+"c":"loyal",
+"t":"s",
+"n":"Rest at the Inn",
+"d":"Watch 50 hours",
+"r":[
+[
+"hours",
+50
+]
+]
+},
+{
+"id":"hours250",
+"c":"loyal",
+"t":"g",
+"n":"Permanent Resident",
+"d":"Watch 250 hours",
+"r":[
+[
+"hours",
+250
+]
+]
+},
+{
+"id":"hours1000",
+"c":"loyal",
+"t":"p",
+"n":"Time Mage",
+"d":"Watch 1,000 hours",
+"r":[
+[
+"hours",
+1000
+]
+]
+},
+{
+"id":"nuts10k",
+"c":"loyal",
+"t":"b",
+"n":"Kupo-n Clipper",
+"d":"Have 10,000 nuts",
+"r":[
+[
+"nuts",
+10000
+]
+]
+},
+{
+"id":"nuts100k",
+"c":"loyal",
+"t":"s",
+"n":"Going Nuts",
+"d":"Have 100,000 nuts",
+"r":[
+[
+"nuts",
+100000
+]
+]
+},
+{
+"id":"nuts1m",
+"c":"loyal",
+"t":"g",
+"n":"Nutcracker",
+"d":"Have 1,000,000 nuts",
+"r":[
+[
+"nuts",
+1000000
+]
+]
+},
+{
+"id":"nuts10m",
+"c":"loyal",
+"t":"p",
+"n":"Mognificent Fortune",
+"d":"Have 10,000,000 nuts",
+"r":[
+[
+"nuts",
+10000000
+]
+]
+},
+{
+"id":"follow1",
+"c":"loyal",
+"t":"b",
+"n":"Kupo-versary",
+"d":"Follow Droogle for 1 year",
+"r":[
+[
+"follow_days",
+365
+]
+]
+},
+{
+"id":"follow3",
+"c":"loyal",
+"t":"s",
+"n":"Seasoned Adventurer",
+"d":"Follow Droogle for 3 years",
+"r":[
+[
+"follow_days",
+1096
+]
+]
+},
+{
+"id":"follow5",
+"c":"loyal",
+"t":"g",
+"n":"Veteran of the Wars",
+"d":"Follow Droogle for 5 years",
+"r":[
+[
+"follow_days",
+1826
+]
+]
+},
+{
+"id":"follow10",
+"c":"loyal",
+"t":"p",
+"n":"Warrior of Light",
+"d":"Follow Droogle for 10 years",
+"r":[
+[
+"follow_days",
+3653
+]
+]
+},
+{
+"id":"kupo1",
+"c":"games",
+"t":"b",
+"n":"Catch Me If You Kupo",
+"d":"Catch a Kupo Nut",
+"r":[
+[
+"kupo",
+1
+]
+]
+},
+{
+"id":"ntt1",
+"c":"games",
+"t":"b",
+"n":"Note-able",
+"d":"Win a round of Name That Track",
+"r":[
+[
+"ntt_wins",
+1
+]
+]
+},
+{
+"id":"wtfm1",
+"c":"games",
+"t":"b",
+"n":"Libra-rian",
+"d":"Win a round of Who’s That FF Monster",
+"r":[
+[
+"wtfm_wins",
+1
+]
+]
+},
+{
+"id":"tonb1",
+"c":"games",
+"t":"b",
+"n":"Shank You",
+"d":"Strike the Tonberry",
+"r":[
+[
+"tonb_hits",
+1
+]
+]
+},
+{
+"id":"omni1",
+"c":"games",
+"t":"b",
+"n":"Omni-present",
+"d":"Add damage to an Omnislash",
+"r":[
+[
+"omni",
+1
+]
+]
+},
+{
+"id":"tt1",
+"c":"games",
+"t":"b",
+"n":"Card-Carrying Member",
+"d":"Own a Triple Triad card",
+"r":[
+[
+"tt_card",
+1
+]
+]
+},
+{
+"id":"wake1",
+"c":"games",
+"t":"b",
+"n":"Smelling Salts",
+"d":"Wake Droogle with !wake",
+"r":[
+[
+"wake",
+1
+]
+]
+},
+{
+"id":"kupo25",
+"c":"games",
+"t":"s",
+"n":"Nuts for Kupo",
+"d":"Catch 25 Kupo Nuts",
+"r":[
+[
+"kupo",
+25
+]
+]
+},
+{
+"id":"quizboth",
+"c":"games",
+"t":"s",
+"n":"Quiz-ard",
+"d":"Win both Name That Track and Who’s That FF Monster",
+"r":[
+[
+"ntt_wins",
+1
+],
+[
+"wtfm_wins",
+1
+]
+]
+},
+{
+"id":"tonb25",
+"c":"games",
+"t":"s",
+"n":"Everyone’s Grudge",
+"d":"Strike the Tonberry 25 times",
+"r":[
+[
+"tonb_hits",
+25
+]
+]
+},
+{
+"id":"kupoplat",
+"c":"games",
+"t":"g",
+"n":"Platinum Status",
+"d":"Catch a platinum Kupo Nut",
+"r":[
+[
+"kupo_plat",
+1
+]
+]
+},
+{
+"id":"ntt10",
+"c":"games",
+"t":"g",
+"n":"Uematsu Approved",
+"d":"Win 10 rounds of Name That Track",
+"r":[
+[
+"ntt_wins",
+10
+]
+]
+},
+{
+"id":"wtfm10",
+"c":"games",
+"t":"g",
+"n":"Bestiary Buff",
+"d":"Win 10 rounds of Who’s That FF Monster",
+"r":[
+[
+"wtfm_wins",
+10
+]
+]
+},
+{
+"id":"tonbkill",
+"c":"games",
+"t":"g",
+"n":"Knife to Meet You",
+"d":"Be in the strike that defeats the Tonberry",
+"r":[
+[
+"tonb_kill",
+1
+]
+]
+},
+{
+"id":"tt600",
+"c":"games",
+"t":"g",
+"n":"CC Group Member",
+"d":"Have a Triple Triad card score of 600+",
+"r":[
+[
+"tt_score",
+600
+]
+]
+},
+{
+"id":"kupo100",
+"c":"games",
+"t":"p",
+"n":"Kupo Nut Case",
+"d":"Catch 100 Kupo Nuts",
+"r":[
+[
+"kupo",
+100
+]
+]
+},
+{
+"id":"quest1",
+"c":"quests",
+"t":"b",
+"n":"Quest-ionable Hero",
+"d":"Help clear a weekly quest",
+"r":[
+[
+"quests_helped",
+1
+]
+]
+},
+{
+"id":"hunt1",
+"c":"quests",
+"t":"b",
+"n":"Mark My Words",
+"d":"Join a hunt with !hunt",
+"r":[
+[
+"hunt_join",
+1
+]
+]
+},
+{
+"id":"cdig",
+"c":"quests",
+"t":"b",
+"n":"Bone Appétit",
+"d":"Dig for Choco’s treasure with !dig",
+"r":[
+[
+"cdig",
+1
+]
+]
+},
+{
+"id":"lend",
+"c":"quests",
+"t":"b",
+"n":"Loan Ranger",
+"d":"Lend O’aka nuts with !lend",
+"r":[
+[
+"lend",
+1
+]
+]
+},
+{
+"id":"quest25",
+"c":"quests",
+"t":"s",
+"n":"Side Quest Supreme",
+"d":"Help clear 25 weekly quests",
+"r":[
+[
+"quests_helped",
+25
+]
+]
+},
+{
+"id":"huntfinal",
+"c":"quests",
+"t":"s",
+"n":"Clan Centurio Approved",
+"d":"Land the final strike on a hunt",
+"r":[
+[
+"hunt_final",
+1
+]
+]
+},
+{
+"id":"safe",
+"c":"quests",
+"t":"s",
+"n":"Vincent’s Wake-Up Call",
+"d":"Crack a Shinra Mansion safe number",
+"r":[
+[
+"safe",
+1
+]
+]
+},
+{
+"id":"quest100",
+"c":"quests",
+"t":"g",
+"n":"Hero of Gaia",
+"d":"Help clear 100 weekly quests",
+"r":[
+[
+"quests_helped",
+100
+]
+]
+},
+{
+"id":"bossfinal",
+"c":"quests",
+"t":"g",
+"n":"Weapon Slayer",
+"d":"Land the final strike on a boss hunt",
+"r":[
+[
+"boss_final",
+1
+]
+]
+},
+{
+"id":"boss10",
+"c":"quests",
+"t":"p",
+"n":"Montblanc’s MVP",
+"d":"Land the final strike on 10 boss hunts",
+"r":[
+[
+"boss_final",
+10
+]
+]
+},
+{
+"id":"perfectweek",
+"c":"quests",
+"t":"p",
+"n":"Weekly Planet Saver",
+"d":"Be part of a week where every quest is cleared",
+"r":[
+[
+"perfect_week",
+1
+]
+]
+},
+{
+"id":"zelda1",
+"c":"events",
+"t":"b",
+"n":"It’s Dangerous to Go Alone",
+"d":"Enter a Hero of Time draw",
+"r":[
+[
+"zelda_entry",
+1
+]
+]
+},
+{
+"id":"boost1",
+"c":"events",
+"t":"b",
+"n":"Booster Shot",
+"d":"Help a summon with !boost",
+"r":[
+[
+"boost",
+1
+]
+]
+},
+{
+"id":"ffb1",
+"c":"events",
+"t":"b",
+"n":"Called It",
+"d":"Correctly predict an FF Battle",
+"r":[
+[
+"ffb_correct",
+1
+]
+]
+},
+{
+"id":"taco1",
+"c":"events",
+"t":"b",
+"n":"Think Outside the Bun",
+"d":"Place an order at Taco Bell",
+"r":[
+[
+"taco_order",
+1
+]
+]
+},
+{
+"id":"gommage1",
+"c":"events",
+"t":"s",
+"n":"We Continue",
+"d":"Survive a Gommage",
+"r":[
+[
+"gommage",
+1
+]
+]
+},
+{
+"id":"golden",
+"c":"events",
+"t":"s",
+"n":"Rave New World",
+"d":"Rave in a Golden Rave that seals the Honmoon",
+"r":[
+[
+"golden",
+1
+]
+]
+},
+{
+"id":"lost",
+"c":"events",
+"t":"s",
+"n":"We Have to Go Back",
+"d":"Type the numbers in a LOST where the plane is saved",
+"r":[
+[
+"lost_saved",
+1
+]
+]
+},
+{
+"id":"ffb10",
+"c":"events",
+"t":"s",
+"n":"Fortune Teller",
+"d":"Correctly predict 10 FF Battles",
+"r":[
+[
+"ffb_correct",
+10
+]
+]
+},
+{
+"id":"hero",
+"c":"events",
+"t":"g",
+"n":"Hero of Time",
+"d":"Be chosen as the Hero of Time",
+"r":[
+[
+"zelda_hero",
+1
+]
+]
+},
+{
+"id":"boostmax",
+"c":"events",
+"t":"g",
+"n":"Yuna-nimous",
+"d":"Help !boost a summon all the way to max",
+"r":[
+[
+"boost_max",
+1
+]
+]
+},
+{
+"id":"tacomedal",
+"c":"events",
+"t":"g",
+"n":"Kupo de Gallo",
+"d":"Find the Moogle Medal at Taco Bell",
+"r":[
+[
+"taco_medal",
+1
+]
+]
+},
+{
+"id":"gommage5",
+"c":"events",
+"t":"g",
+"n":"For Those Who Come After",
+"d":"Survive 5 Gommages",
+"r":[
+[
+"gommage",
+5
+]
+]
+},
+{
+"id":"ffb50",
+"c":"events",
+"t":"p",
+"n":"Nostradamoogle",
+"d":"Correctly predict 50 FF Battles",
+"r":[
+[
+"ffb_correct",
+50
+]
+]
+}
+]
+}
