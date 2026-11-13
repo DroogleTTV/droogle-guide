@@ -15,6 +15,11 @@
 .twm-x:hover{background:#1a2844;color:#fff}
 .twm-x svg{width:20px;height:20px}
 .twm-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
+.twm-scroll::-webkit-scrollbar{width:9px}
+.twm-scroll::-webkit-scrollbar-track{background:#0b1322}
+.twm-scroll::-webkit-scrollbar-thumb{background:#3f5688;border-radius:5px;border:2px solid #0b1322}
+.twm-scroll::-webkit-scrollbar-thumb:hover{background:#5674b3}
+@supports not selector(::-webkit-scrollbar){.twm-scroll{scrollbar-width:thin;scrollbar-color:#3f5688 #0b1322}}
 .twm :focus-visible{outline:2px solid #25d6c8;outline-offset:1px}
 .twm ul{list-style:none;margin:0;padding:0}
 .twm h2,.twm h3,.twm p{text-transform:none}
