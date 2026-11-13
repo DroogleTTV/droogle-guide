@@ -1422,6 +1422,19 @@
 ]
 },
 {
+"id":"mail20",
+"c":"events",
+"t":"g",
+"n":"Mognet Central",
+"d":"Send 20 letters to the Moogle Mailbox",
+"r":[
+[
+"mail",
+20
+]
+]
+},
+{
 "id":"hero",
 "c":"events",
 "t":"g",
@@ -1504,5 +1517,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":761
+"max":771
 }
