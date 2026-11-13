@@ -439,7 +439,7 @@
         box.appendChild(sb);
       }
       var when = ME.t && !isNaN(Date.parse(ME.t)) ? new Date(Date.parse(ME.t)).toLocaleString('en-US', { weekday: 'short', hour: 'numeric', minute: '2-digit' }) : '';
-      box.appendChild(h('p', CLS.foot || 'foot', (when ? 'Updated ' + when + '. ' : '') + 'Profiles update about every 20 minutes while Droogle is live. For your exact nuts right now, type !nuts in chat.'));
+      box.appendChild(h('p', CLS.foot || 'foot', (when ? 'Updated ' + when + '. ' : '') + 'Profiles update about every 20 minutes while Droogle is live. For your exact nuts right now, type !sack in chat.'));
     }
     function snapshot(P, info, states) {     // what the share card needs
       var per = { b: 0, s: 0, g: 0, p: 0 }, n = 0, tot = 0; MEDALS.medals.forEach(function (m) { if (m.s) return; tot++; if (states[m.id].earned) { per[m.t]++; n++; } });
