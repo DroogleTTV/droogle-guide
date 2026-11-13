@@ -250,7 +250,7 @@
     function drawRecent(box, P, states) {
       var got = MEDALS.medals.filter(function (m) { return states[m.id].day != null; }).sort(function (a, b) { return states[b.id].day - states[a.id].day || TORD[b.t] - TORD[a.t]; }).slice(0, 4);
       if (!got.length) return;
-      var s = section('Recent medals'), l = h('div', 'recent');
+      var s = section('Recent Medals'), l = h('div', 'recent');
       got.forEach(function (m) { var r = h('div', 'rc ' + TIER[m.t][0]); add(r, medalImg(m.t, 'rci'), h('b', null, m.n), h('span', null, dayText(states[m.id].day))); l.appendChild(r); });
       s.appendChild(l); box.appendChild(s);
     }
@@ -265,7 +265,7 @@
     }
     function drawStats(box, P) {
       var st = h('div', 'mstats'), nuts = P.p != null ? P.p : P.g;        /* nuts and gil are the same purse: one tile */
-      var tiles = [['Nuts / Gil', nuts != null ? fmt(nuts) : null, spot(P.pr, ME.np)], ['Hours watched', P.h != null ? fmt(P.h) : null, spot(P.hr, ME.nh)]];
+      var tiles = [['Nuts / Gil', nuts != null ? fmt(nuts) : null, spot(P.pr, ME.np)], ['Hours Watched', P.h != null ? fmt(P.h) : null, spot(P.hr, ME.nh)]];
       if (P.fd) tiles.push(['Following', followAge(P.fd), 'since ' + new Date(P.fd * 864e5).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', year: 'numeric' })]);
       tiles.forEach(function (x) {
         if (x[1] == null) return; var d = h('div', 'mstat'); add(d, h('span', 'k', x[0]), h('b', null, x[1]), x[2] ? h('span', 's', x[2]) : null); st.appendChild(d);
@@ -273,7 +273,7 @@
       if (st.firstChild) box.appendChild(st);
     }
     function drawBirds(box, P) {
-      var cs = section('Chocobo stable', P.c.length ? P.c.length + ' of 5' : '');
+      var cs = section('Chocobo Stable', P.c.length ? P.c.length + ' of 5' : '');
       if (!P.c.length) cs.appendChild(h('p', 'mempty', 'No chocobos yet. Type !chocobo in chat to learn how to catch one.'));
       P.c.forEach(function (b) {
         var row = h('div', 'bird' + (b.primary ? ' prim' : '')); row.style.setProperty('--bc', BIRD_COL[b.color]);
