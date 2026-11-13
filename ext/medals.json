@@ -248,6 +248,19 @@
 ]
 },
 {
+"id":"credits10",
+"c":"rpg",
+"t":"g",
+"n":"Executive Producer",
+"d":"Finish a stream as #1 Top Healer or Top Attacker 10 times",
+"r":[
+[
+"credits_top",
+10
+]
+]
+},
+{
 "id":"kweh",
 "c":"choco",
 "t":"b",
@@ -1279,6 +1292,19 @@
 ]
 },
 {
+"id":"thunder200",
+"c":"quests",
+"t":"p",
+"n":"Venus Sigil",
+"d":"Dodge 200 lightning strikes",
+"r":[
+[
+"dodge",
+200
+]
+]
+},
+{
 "id":"perfectweek",
 "c":"quests",
 "t":"p",
@@ -1353,6 +1379,19 @@
 [
 "mail",
 5
+]
+]
+},
+{
+"id":"taco4",
+"c":"events",
+"t":"s",
+"n":"Yo Kupo Taco Bell",
+"d":"Place 4 orders at Taco Bell",
+"r":[
+[
+"taco_order",
+4
 ]
 ]
 },
@@ -1517,5 +1556,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":771
+"max":809
 }
