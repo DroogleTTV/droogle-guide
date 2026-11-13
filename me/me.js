@@ -230,7 +230,7 @@
     if (!w) {
       msg('Your Droogle profile', 'See your Moogle Medals, Adventurer Rank, attendance, nuts, hours watched, chocobos, items and Queen’s Blood cards.', {
         label: 'Log in with Twitch', on: login,
-        note: 'Twitch only tells the guide your name and avatar. You only ever see your own profile, and you can log out any time.' });
+        note: 'Twitch only tells the Droogle Dashboard your name and avatar. You only ever see your own profile, and you can log out any time.' });
       return;
     }
     if (ME && ME.who.login === w.login) { drawMe(); return; }

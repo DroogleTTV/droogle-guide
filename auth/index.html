@@ -1,7 +1,7 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
-<title>Signing in&hellip; | Droogle Channel Guide</title>
+<title>Signing in&hellip; | Droogle Dashboard</title>
 <link rel="icon" type="image/png" href="../img/favicon.png">
 <style>
 @font-face{font-family:Outfit;font-weight:400;src:url(../outfit-latin-400-normal.woff2)}
@@ -26,7 +26,7 @@ a{color:#25d6c8}
   } else if (q.get('error') || p.get('error')) {
     location.replace(back.replace(/#me$/, ''));                  // they chose not to sign in
   } else {
-    document.getElementById('m').innerHTML = 'That sign-in didn’t work. <a href="' + SITE + '">Back to the guide</a> and try again.';
+    document.getElementById('m').innerHTML = 'That sign-in didn’t work. <a href="' + SITE + '">Back to the Dashboard</a> and try again.';
   }
 })();
 </script>
