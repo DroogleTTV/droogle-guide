@@ -1,0 +1,80 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Privacy | Droogle Dashboard</title>
+<meta name="description" content="What the Droogle Dashboard and the Droogle Twitch panel show about you, where it comes from and how to have it removed.">
+<link rel="icon" type="image/png" href="../img/favicon.png">
+<style>
+@font-face{font-family:Outfit;font-weight:400;font-display:swap;src:url(../outfit-latin-400-normal.woff2) format("woff2")}
+@font-face{font-family:Outfit;font-weight:600;font-display:swap;src:url(../outfit-latin-600-normal.woff2) format("woff2")}
+@font-face{font-family:Anton;font-weight:400;font-display:swap;src:url(../anton-latin-400-normal.woff2) format("woff2")}
+*{box-sizing:border-box}
+body{margin:0;background:#0b1322;color:#d5ddec;font:16px/1.6 Outfit,system-ui,sans-serif}
+main{max-width:720px;margin:0 auto;padding:28px 20px 64px}
+.top{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:28px}
+.top img{height:44px;width:auto;display:block}
+.top a.back{color:#25d6c8;font-weight:600;text-decoration:none;font-size:14px}
+.top a.back:hover{text-decoration:underline}
+h1{font:400 40px/1.05 Anton,Impact,sans-serif;letter-spacing:.01em;color:#fff;margin:0 0 6px}
+.date{color:#8c9bb8;font-size:14px;margin:0 0 26px}
+h2{font:400 22px/1.2 Anton,Impact,sans-serif;letter-spacing:.02em;color:#fff;margin:32px 0 8px}
+p{margin:0 0 12px}
+ul{margin:0 0 12px;padding-left:22px}
+li{margin:0 0 6px}
+a{color:#25d6c8}
+b{color:#fff;font-weight:600}
+.lead{font-size:17px;color:#e9eef8}
+footer{margin-top:40px;padding-top:16px;border-top:1px solid #1b2945;color:#8c9bb8;font-size:14px}
+a:focus-visible{outline:2px solid #25d6c8;outline-offset:2px;border-radius:3px}
+</style>
+</head><body><main>
+<div class="top"><a href="../" aria-label="Droogle Dashboard"><img src="../img/logo_nav.png" alt="Droogle"></a><a class="back" href="../">Back to the Dashboard</a></div>
+<h1>Privacy</h1>
+<p class="date">Last updated November 13, 2026</p>
+
+<p class="lead">This page covers the <b>Droogle Dashboard</b> website and the <b>Droogle panel</b> on Droogle&rsquo;s Twitch channel. Both are run by Droogle, a Twitch streamer (<a href="https://www.twitch.tv/droogle">twitch.tv/droogle</a>). They are a fan-made community feature and are not run by Twitch.</p>
+
+<h2>The short version</h2>
+<ul>
+<li>Your profile is built from what you do on Droogle&rsquo;s channel. It is not built from anything outside the channel.</li>
+<li>Logging in only tells the site your Twitch name and avatar. No email address and no password ever reach it.</li>
+<li>There are no ads, no analytics and no tracking cookies.</li>
+<li>Treat what is on your profile as public, like a leaderboard.</li>
+<li>You can ask for your profile to be removed.</li>
+</ul>
+
+<h2>What your profile shows</h2>
+<p>Your stream profile on Droogle&rsquo;s channel: nuts and Gil, hours watched, your Chatbot rank, how long you have followed, which streams your account was in chat for (attendance and streaks), the game you watched first and most, Moogle Medals, chocobos, items, Queen&rsquo;s Blood cards and quest progress.</p>
+
+<h2>Where it comes from</h2>
+<p>From the stream tools Droogle runs during his streams (Streamlabs Chatbot, Streamer.bot and SAMMI), which keep track of channel activity. Attendance from June 2023 to November 2026 came from StreamHound&rsquo;s record of which accounts were in the channel&rsquo;s chat during each stream. Follow dates come from Twitch.</p>
+<p>Chat messages are not stored in profiles.</p>
+
+<h2>Where it is kept</h2>
+<p>The profiles are published as data files in a public GitHub repository so the Dashboard and the panel can read them. Each profile is filed under a code made from your Twitch username instead of the name itself. That code can be worked out by anyone who knows your username, so please treat your profile as public information.</p>
+
+<h2>Logging in on the Dashboard</h2>
+<p>&ldquo;Log in with Twitch&rdquo; uses Twitch&rsquo;s own login page and asks for no extra permissions. Twitch tells the site your <b>username, display name and avatar</b>, and gives your browser a login token. The token stays in your browser. It is only ever sent to Twitch, and logging out cancels it and clears it.</p>
+
+<h2>The Twitch panel</h2>
+<p>The Quests, SFX and Games tabs work without knowing who you are. The <b>Me</b> tab asks you to share your Twitch ID first, using Twitch&rsquo;s own prompt. If you agree, the panel receives your Twitch user ID, asks Twitch for your username, and loads your profile. It only ever shows your own profile. You can stop sharing at any time from the panel&rsquo;s menu on Twitch.</p>
+
+<h2>What is stored in your browser</h2>
+<p>Your login token, your name and avatar (so the page loads faster), and a few preferences such as preview volume and the mature-sounds setting. Nothing else, and no cookies.</p>
+
+<h2>Other services involved</h2>
+<ul>
+<li><b>Twitch</b> handles login and serves avatars.</li>
+<li><b>GitHub</b> hosts the website and the data files. Like any web host, GitHub may log the IP address of visitors under its own privacy policy.</li>
+</ul>
+<p>Your information is not sold or shared with anyone else.</p>
+
+<h2>Having your profile removed</h2>
+<p>Send Droogle a whisper on Twitch (<a href="https://www.twitch.tv/droogle">twitch.tv/droogle</a>) from the account in question and ask for your profile to be removed. It will be taken out of the published files and will no longer be updated.</p>
+
+<h2>Age</h2>
+<p>Twitch requires its users to be at least 13. The Dashboard and the panel are meant for Twitch users.</p>
+
+<h2>Changes</h2>
+<p>If this page changes, the date at the top changes with it.</p>
+<footer><a href="../privacy/">Privacy</a> &nbsp;&middot;&nbsp; <a href="../terms/">Terms</a> &nbsp;&middot;&nbsp; <a href="../">Droogle Dashboard</a></footer>
+</main></body></html>
