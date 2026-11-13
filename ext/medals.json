@@ -192,6 +192,19 @@
 ]
 },
 {
+"id":"revive",
+"c":"rpg",
+"t":"b",
+"n":"Phoenix Down Payment",
+"d":"Revive Droogle with a Phoenix Down or Mega-Phoenix",
+"r":[
+[
+"revives",
+1
+]
+]
+},
+{
 "id":"atk10",
 "c":"rpg",
 "t":"s",
@@ -256,6 +269,45 @@
 "r":[
 [
 "credits_top",
+1
+]
+]
+},
+{
+"id":"zantetsu",
+"c":"rpg",
+"t":"s",
+"n":"Zantetsu-can",
+"d":"Cut Droogle down with a Zantetsuken",
+"r":[
+[
+"zant_kills",
+1
+]
+]
+},
+{
+"id":"finisher",
+"c":"rpg",
+"t":"s",
+"n":"Finishing Touch",
+"d":"Land the hit that takes Droogle to 0 HP (instant-death moves don’t count)",
+"r":[
+[
+"kos",
+1
+]
+]
+},
+{
+"id":"overkill",
+"c":"rpg",
+"t":"s",
+"n":"Overkill",
+"d":"Land an Overkill on Droogle",
+"r":[
+[
+"overkills",
 1
 ]
 ]
@@ -937,6 +989,19 @@
 ]
 },
 {
+"id":"chattop",
+"c":"loyal",
+"t":"s",
+"n":"Bard to the Bone",
+"d":"Finish a stream as #1 Top Chatter",
+"r":[
+[
+"chat_top",
+1
+]
+]
+},
+{
 "id":"follow5",
 "c":"loyal",
 "t":"g",
@@ -1171,6 +1236,32 @@
 ]
 },
 {
+"id":"trivia5",
+"c":"games",
+"t":"b",
+"n":"Is That Your Final Fantasy Answer?",
+"d":"Answer 5 trivia questions correctly with !answer",
+"r":[
+[
+"trivia",
+5
+]
+]
+},
+{
+"id":"bombboom",
+"c":"games",
+"t":"b",
+"n":"Self-Destruct",
+"d":"Be holding the !bomb when it explodes",
+"r":[
+[
+"bomb_boom",
+1
+]
+]
+},
+{
 "id":"kupo25",
 "c":"games",
 "t":"s",
@@ -1266,6 +1357,32 @@
 ]
 },
 {
+"id":"first10",
+"c":"games",
+"t":"s",
+"n":"SOLDIER 1st Class",
+"d":"Earn a !first reward at 10 streams",
+"r":[
+[
+"firsts",
+10
+]
+]
+},
+{
+"id":"bomblast",
+"c":"games",
+"t":"s",
+"n":"Bomb Squad",
+"d":"Be the last to pass the !bomb before it blows, 5 times",
+"r":[
+[
+"bomb_last",
+5
+]
+]
+},
+{
 "id":"kupoplat",
 "c":"games",
 "t":"g",
@@ -1340,6 +1457,19 @@
 [
 "steals",
 25
+]
+]
+},
+{
+"id":"trivia50",
+"c":"games",
+"t":"g",
+"n":"Bugenhagen’s Pupil",
+"d":"Answer 50 trivia questions correctly",
+"r":[
+[
+"trivia",
+50
 ]
 ]
 },
@@ -1760,6 +1890,19 @@
 ]
 },
 {
+"id":"snap",
+"c":"events",
+"t":"s",
+"n":"Perfectly Balanced",
+"d":"Survive a Thanos Snap",
+"r":[
+[
+"snap_survive",
+1
+]
+]
+},
+{
 "id":"mail20",
 "c":"events",
 "t":"g",
@@ -1851,6 +1994,45 @@
 ]
 },
 {
+"id":"hype5",
+"c":"events",
+"t":"g",
+"n":"All Aboard",
+"d":"Be watching when a Hype Train reaches level 5",
+"r":[
+[
+"hype5",
+1
+]
+]
+},
+{
+"id":"pilgrim",
+"c":"events",
+"t":"g",
+"n":"Summoner’s Pilgrimage",
+"d":"Help 5 different summons with !boost",
+"r":[
+[
+"boost_kinds",
+5
+]
+]
+},
+{
+"id":"timermax",
+"c":"events",
+"t":"g",
+"n":"Time Compression",
+"d":"Be watching when the stream timer hits its maximum",
+"r":[
+[
+"timer_max",
+1
+]
+]
+},
+{
 "id":"ffb50",
 "c":"events",
 "t":"p",
@@ -1860,6 +2042,32 @@
 [
 "ffb_correct",
 50
+]
+]
+},
+{
+"id":"eidolon",
+"c":"events",
+"t":"p",
+"n":"Eidolon Wall",
+"d":"Witness every summon",
+"r":[
+[
+"summons_all",
+1
+]
+]
+},
+{
+"id":"raves3",
+"c":"events",
+"t":"p",
+"n":"Rave Reviews",
+"d":"Rave in the FFVII, FFVIII and Kpop Demon Hunters raves",
+"r":[
+[
+"raves",
+3
 ]
 ]
 },
@@ -1881,5 +2089,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1012
+"max":1126
 }
