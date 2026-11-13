@@ -158,7 +158,7 @@
       hd.appendChild(avatar(ME.who, info ? info.frame : ''));
       var nm = h('div', 'mname'); nm.appendChild(h('b', null, ME.who.name));
       var tags = h('div', 'mtags');
-      if (info) { var at = h('span', 'arank'); at.appendChild(medalImg(info.frame || 'b', 'ari')); at.appendChild(document.createTextNode(info.rank.name)); at.title = 'Adventurer Rank (from Moogle Medals)'; tags.appendChild(at); }
+      /* only the Chatbot rank sits under the name; the Adventurer Rank has its own card just below (Andrew 2026-11-13) */
       if (P && P.r) { var cr = h('span', 'rank', P.r); cr.title = 'Chatbot rank'; tags.appendChild(cr); }
       if (tags.firstChild) nm.appendChild(tags);
       hd.appendChild(nm); box.appendChild(hd);
