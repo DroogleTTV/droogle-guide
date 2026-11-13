@@ -51,7 +51,7 @@
     function validProfile(r) {
       if (!r || typeof r !== 'object') return null;
       var o = { p: r.p != null ? Math.max(0, num(r.p)) : null, pr: num(r.pr), h: r.h != null ? Math.max(0, num(r.h)) : null, hr: num(r.hr), r: str(r.r, 60),
-        g: r.g != null ? Math.max(0, num(r.g)) : null, i: [], c: [], q: null, m: {}, me: {}, ms: r.ms != null ? Math.max(0, num(r.ms)) : null, msr: num(r.msr), a: null };
+        g: r.g != null ? Math.max(0, num(r.g)) : null, i: [], c: [], q: null, m: {}, me: {}, ms: r.ms != null ? Math.max(0, num(r.ms)) : null, msr: num(r.msr), a: null, fd: (num(r.fd) > 13000 && num(r.fd) < 40000) ? Math.floor(num(r.fd)) : 0 };
       if (r.m && typeof r.m === 'object') Object.keys(r.m).slice(0, 200).forEach(function (k) { if (/^[a-z0-9_]{1,30}$/.test(k) && num(r.m[k]) > 0) o.m[k] = num(r.m[k]); });
       if (r.me && typeof r.me === 'object') Object.keys(r.me).slice(0, 400).forEach(function (k) { var d = num(r.me[k]); if (/^[a-z0-9_]{1,30}$/.test(k) && d > 15000 && d < 40000) o.me[k] = Math.floor(d); });
       if (r.a && typeof r.a === 'object') {
@@ -256,10 +256,19 @@
     }
 
     /* ---------- profile view: stats, chocobos, items, Queen's Blood ---------- */
+    function followAge(fd) {                  /* "3y 10m" since the day they followed (calendar years and months) */
+      var today = etDay(Date.now()), a = new Date(fd * 864e5), b = new Date(today * 864e5);
+      var m = (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + b.getUTCMonth() - a.getUTCMonth() - (b.getUTCDate() < a.getUTCDate() ? 1 : 0);
+      if (m < 0) m = 0;
+      var y = Math.floor(m / 12), mo = m % 12, days = Math.max(0, today - fd);
+      return y ? y + 'y' + (mo ? ' ' + mo + 'm' : '') : mo ? mo + 'm' : days + 'd';
+    }
     function drawStats(box, P) {
-      var st = h('div', 'mstats');
-      [['Nuts', P.p, spot(P.pr, ME.np)], ['Hours watched', P.h, spot(P.hr, ME.nh)], ['Gil', P.g, '']].forEach(function (x) {
-        if (x[1] == null) return; var d = h('div', 'mstat'); add(d, h('span', 'k', x[0]), h('b', null, fmt(x[1])), x[2] ? h('span', 's', x[2]) : null); st.appendChild(d);
+      var st = h('div', 'mstats'), nuts = P.p != null ? P.p : P.g;        /* nuts and gil are the same purse: one tile */
+      var tiles = [['Nuts / Gil', nuts != null ? fmt(nuts) : null, spot(P.pr, ME.np)], ['Hours watched', P.h != null ? fmt(P.h) : null, spot(P.hr, ME.nh)]];
+      if (P.fd) tiles.push(['Following', followAge(P.fd), 'since ' + new Date(P.fd * 864e5).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'short', year: 'numeric' })]);
+      tiles.forEach(function (x) {
+        if (x[1] == null) return; var d = h('div', 'mstat'); add(d, h('span', 'k', x[0]), h('b', null, x[1]), x[2] ? h('span', 's', x[2]) : null); st.appendChild(d);
       });
       if (st.firstChild) box.appendChild(st);
     }
