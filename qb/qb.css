@@ -80,7 +80,7 @@
 .qbhead .rk{font-family:QBRoman;font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold2);margin-top:6px}
 .qbstats{display:flex;gap:10px;flex-wrap:wrap}
 .qbstat{min-width:92px;padding:8px 14px;border-radius:999px;text-align:center;background:#0a1622;box-shadow:inset 0 0 0 1.5px var(--gold)}
-.qbstat b{display:block;font-family:QBRoman;font-weight:700;font-size:19px;color:#fff3cf;line-height:1.1}
+.qbstat b{display:block;position:relative;top:2px;font-family:QBRoman;font-weight:700;font-size:19px;color:#fff3cf;line-height:1.1}   /* nudged down so the number and its label sit centred in the pill */
 .qbstat span{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#a9b8c8}
 .qbx2{position:absolute;top:14px;right:14px;width:40px;height:40px;border-radius:50%;border:1.5px solid var(--gold);background:#0b1826;color:var(--gold2);cursor:pointer;display:grid;place-items:center;z-index:2}
 .qbx2:hover,.qbx2:focus-visible{background:#16304a;outline:none}
