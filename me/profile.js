@@ -330,6 +330,14 @@
         more.textContent = showAllCards ? 'Show fewer' : 'Show all ' + list.length + ' cards (rarest first)';
       };
       more.addEventListener('click', function () { showAllCards = !showAllCards; drawCards(); });
+      if (cfg.qbUrl) {                        /* the panel: a link to their page on the guide */
+        var pl2 = h('a', 'more2 qbpage', 'Open my Queen’s Blood page'); pl2.href = cfg.qbUrl(ME); pl2.target = '_blank'; pl2.rel = 'noopener noreferrer';
+        pl2.setAttribute('aria-label', 'Open my Queen’s Blood page (opens the Droogle Channel Guide website in a new tab)'); qs.appendChild(pl2);
+      } else if (cfg.qb) {                    /* the guide: open the collection page right here */
+        var pb2 = h('button', 'more2 qbpage', 'Open my Queen’s Blood page'); pb2.type = 'button';
+        pb2.addEventListener('click', function () { var c = {}; Q.c.forEach(function (x) { c[x[0]] = x[1]; }); cfg.qb({ n: ME.who.name || ME.who.login, r: Q.r, s: Q.s, qr: Q.qr, c: c }, pb2); });
+        qs.appendChild(pb2);
+      }
       drawCards();
       if (!QBCARDS && !drawQB.busy) { drawQB.busy = 1; getJSON(SITE + 'qb/cards.json').then(function (d) { if (d && Array.isArray(d.cards)) { QBCARDS = { cards: d.cards.filter(function (c) { return c && typeof c.name === 'string'; }).map(function (c) { return { id: String(c.id), name: c.name, w: num(c.w) }; }) }; redraw(); } }).catch(function () {}); }
       box.appendChild(qs);

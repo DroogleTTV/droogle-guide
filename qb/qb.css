@@ -150,3 +150,23 @@
   .qbzt h3{font-size:22px}
 }
 @media (prefers-reduced-motion:reduce){.qbx[open] .qblane{animation:none;opacity:1;transform:none}.qbm.on,.qbpanel,.qbz.on{animation:none}}
+
+/* ---- find a collector (2026-11-12): sits on the header bar's right side ---- */
+#qbtop{position:relative}
+.qbfindgap{flex:none;width:226px}
+.qbfind{position:absolute;top:27px;right:70px;width:226px;display:flex;flex-wrap:wrap;align-items:center;z-index:2}
+.qbfi{flex:1 1 0;min-width:0;height:36px;box-sizing:border-box;padding:0 8px 0 13px;border:1.5px solid var(--gold);border-right:0;border-radius:18px 0 0 18px;background:rgba(10,4,9,.72);color:#f3e6cc;font:500 13px/1 inherit;font-family:inherit;outline:none;-webkit-appearance:none;appearance:none}
+.qbfi::placeholder{color:#a8957a;opacity:1}
+.qbfi:focus-visible{border-color:var(--gold2);box-shadow:0 0 0 2px rgba(216,178,92,.35)}
+.qbfb{flex:none;width:40px;height:36px;box-sizing:border-box;padding:0;border:1.5px solid var(--gold);border-radius:0 18px 18px 0;background:linear-gradient(180deg,#3a2a0d,#241806);color:var(--gold2);display:grid;place-items:center;cursor:pointer}
+.qbfb svg{width:15px;height:15px}
+.qbfb:hover{background:linear-gradient(180deg,#4d3812,#2e2009)}
+.qbfb:focus-visible{outline:2px solid var(--gold2);outline-offset:2px}
+.qbfm{position:absolute;top:100%;right:0;margin-top:6px;width:max-content;max-width:300px;box-sizing:border-box;padding:6px 10px;border-radius:8px;background:#120710;border:1px solid var(--gold3);color:#e9d9bb;font-size:12px;line-height:1.35;box-shadow:0 6px 16px rgba(0,0,0,.5)}
+.qbfm:empty{display:none}
+@media (max-width:760px){
+  .qbfindgap{display:none}
+  #qbtop{display:flex;flex-direction:column}
+  .qbfind{position:static;order:-1;width:auto;margin:0 2px 14px}   /* above the board, so it stays in reach when the board is open */
+  .qbfm{position:static;flex:1 1 100%;width:auto;max-width:none;margin-top:6px}
+}

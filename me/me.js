@@ -55,7 +55,8 @@
   // the profile and Moogle Medals are drawn by profile.js, the same file the Twitch panel uses
   if (!window.DroogleProfile) return;
   var PROF = window.DroogleProfile({ site: SITE, img: SITE + 'me/img/', cls: { foot: 'mfoot', card: 'qcard', chips: 'mchips' },
-    box: function () { return BOX(); }, scroll: function () { return SCR(); }, share: shareCard });
+    box: function () { return BOX(); }, scroll: function () { return SCR(); }, share: shareCard,
+    qb: function (u) { if (!window.DroogleQB) return; closeCard(); if (!window.DroogleQB.open(u)) window.DroogleQB.find(u.n); } });   /* the Queen's Blood collection page (qb.js) */
   function drawMe() { if (BOX() && ME) PROF.draw(ME); }
 
   /* ---------- "Save as image": a 1200x630 card to post anywhere ---------- */
