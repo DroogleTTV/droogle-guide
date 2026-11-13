@@ -1344,6 +1344,19 @@
 ]
 },
 {
+"id":"mail5",
+"c":"events",
+"t":"b",
+"n":"You’ve Got Mog",
+"d":"Send 5 letters to the Moogle Mailbox",
+"r":[
+[
+"mail",
+5
+]
+]
+},
+{
 "id":"gommage1",
 "c":"events",
 "t":"s",
@@ -1391,6 +1404,19 @@
 "r":[
 [
 "ffb_correct",
+10
+]
+]
+},
+{
+"id":"mail10",
+"c":"events",
+"t":"s",
+"n":"Mognet Regular",
+"d":"Send 10 letters to the Moogle Mailbox",
+"r":[
+[
+"mail",
 10
 ]
 ]
@@ -1478,5 +1504,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":757
+"max":761
 }
