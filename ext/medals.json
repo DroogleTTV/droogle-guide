@@ -1448,19 +1448,6 @@
 ]
 },
 {
-"id":"lost5",
-"c":"events",
-"t":"g",
-"n":"The Constant",
-"d":"Type the numbers in 5 LOSTs where the plane is saved",
-"r":[
-[
-"lost_saved",
-5
-]
-]
-},
-{
 "id":"ffb10",
 "c":"events",
 "t":"s",
@@ -1547,6 +1534,19 @@
 "r":[
 [
 "gommage",
+5
+]
+]
+},
+{
+"id":"lost5",
+"c":"events",
+"t":"g",
+"n":"The Constant",
+"d":"Type the numbers in 5 LOSTs where the plane is saved",
+"r":[
+[
+"lost_saved",
 5
 ]
 ]
