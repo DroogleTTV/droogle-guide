@@ -59,7 +59,7 @@ body.twm-open{overflow:hidden}
 .twm .av{flex:0 0 auto;width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);box-shadow:0 0 0 3px rgba(37,214,200,.15)}
 .twm .av.ph{display:grid;place-items:center;background:#1a2a4a;color:var(--teal);font:22px/1 Anton,sans-serif}
 .twm .mname{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
-.twm .mname b{font:22px/1 Anton,Impact,sans-serif;font-weight:400;letter-spacing:.01em;max-width:196px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.twm .mname b{font:22px/1.36 Anton,Impact,sans-serif;font-weight:400;letter-spacing:.01em;max-width:196px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin:-4px 0}   /* taller line box so g, j, p, q, y keep their tails */
 .twm .rank{display:inline-block;padding:2px 8px;border-radius:10px;background:linear-gradient(90deg,rgba(249,199,79,.22),rgba(249,199,79,.08));border:1px solid rgba(249,199,79,.45);
   color:#ffe29a;font-size:11.5px;font-weight:700;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .twm .mnone{margin:0;padding:16px 14px;color:#c9d3e6}
