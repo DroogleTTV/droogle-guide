@@ -212,7 +212,7 @@
     }
     function drawAttendance(box, P) {
       var A = P && P.a; if (!A || !A.n) return;
-      var s = section('Attendance', !A.f ? '' : A.o ? 'Here since before ' + new Date(A.f * 864e5).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', year: 'numeric' }) : 'Here since ' + dayText(A.f, true));
+      var s = section('Attendance', !A.f ? '' : A.o ? 'Based on data starting June 2023' : 'Here since ' + dayText(A.f, true));   /* o = already here when the attendance records begin (2023-06-14) */
       var g = h('div', 'atts');
       [['Streams', A.n], ['Streak', A.s], ['Best streak', A.b]].forEach(function (x, i) {
         var d = h('div', 'att' + (i === 1 && x[1] >= 3 ? ' hot' : '')); add(d, h('b', null, fmt(x[1])), h('span', null, x[0])); g.appendChild(d);
