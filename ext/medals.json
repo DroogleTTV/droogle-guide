@@ -1149,6 +1149,19 @@
 ]
 },
 {
+"id":"thunder3",
+"c":"quests",
+"t":"b",
+"n":"Thunder!",
+"d":"Dodge 3 lightning strikes with !dodge",
+"r":[
+[
+"dodge",
+3
+]
+]
+},
+{
 "id":"quest25",
 "c":"quests",
 "t":"s",
@@ -1201,6 +1214,19 @@
 ]
 },
 {
+"id":"thunder10",
+"c":"quests",
+"t":"s",
+"n":"Feel the Thunder!",
+"d":"Dodge 10 lightning strikes",
+"r":[
+[
+"dodge",
+10
+]
+]
+},
+{
 "id":"quest100",
 "c":"quests",
 "t":"g",
@@ -1223,6 +1249,19 @@
 [
 "boss_final",
 1
+]
+]
+},
+{
+"id":"thunder30",
+"c":"quests",
+"t":"g",
+"n":"Lightning and the Thunder!",
+"d":"Dodge 30 lightning strikes",
+"r":[
+[
+"dodge",
+30
 ]
 ]
 },
@@ -1439,5 +1478,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":743
+"max":757
 }
