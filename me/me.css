@@ -139,3 +139,6 @@ body.twm-open{overflow:hidden}
 .twm .mchips button{flex:0 0 auto;height:26px;padding:0 9px;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap}
 .twm .mchips button:hover{color:var(--text);border-color:#3d5a8f}
 .twm .mchips button.on{background:var(--c,var(--teal));border-color:var(--c,var(--teal));color:#071220}
+/* Big screens: the whole card at 1.5x (Andrew 2026-11-12 21:20). zoom scales layout too, so the height cap is divided by 1.5
+   to keep the card inside the window; it still scrolls inside. Phones and small windows keep the normal size. */
+@media (min-width:900px) and (min-height:700px){.twm-card{zoom:1.5;max-height:min(760px,calc((100vh - 32px) / 1.5))}}
