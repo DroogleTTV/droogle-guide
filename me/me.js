@@ -176,7 +176,7 @@
     b.type = 'button';
     if (w) {
       if (w.img) { var im = h('img'); im.src = w.img; im.alt = ''; b.appendChild(im); } else b.appendChild(h('span', 'ph', w.name.charAt(0).toUpperCase()));
-      if (where === 'side') { var t = h('span', 'tx'); add(t, h('b', null, w.name), h('small', null, 'My profile & medals')); b.appendChild(t); }
+      if (where === 'side') { var t = h('span', 'tx'); add(t, h('b', null, w.name), h('small', null, 'My Profile & Medals')); b.appendChild(t); }
       b.setAttribute('aria-label', 'Open your profile, ' + w.name);
     } else {
       b.appendChild(svgPath(TWITCH, 'twico'));
