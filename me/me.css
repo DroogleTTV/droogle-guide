@@ -6,11 +6,12 @@
 .twm-card{width:400px;max-width:100%;max-height:min(760px,calc(100vh - 32px));display:flex;flex-direction:column;border-radius:14px;overflow:hidden;
   background:#0b1322;color:#e9eef8;font:13px/1.4 Outfit,system-ui,sans-serif;border:1px solid #2a3d63;box-shadow:0 24px 60px rgba(0,0,0,.6)}
 .twm button{font:inherit;color:inherit;cursor:pointer}
-.twm-bar{flex:0 0 auto;display:flex;align-items:center;gap:8px;padding:8px 8px 8px 14px;background:#0e182b;border-bottom:1px solid #1b2945}
+.twm-card{position:relative}
+.twm-bar{position:absolute;top:8px;right:16px;z-index:6;display:flex;align-items:center;gap:4px}
 .twm-t{flex:1;font:16px/1 Anton,Impact,sans-serif;letter-spacing:.03em;color:#9aa8c4}
-.twm-out{height:28px;padding:0 10px;border-radius:14px;border:1px solid #2a416c;background:none;color:#9aa8c4;font-size:12px;font-weight:600}
+.twm-out{height:26px;padding:0 10px;border-radius:14px;border:1px solid #2a416c;background:none;color:#9aa8c4;font-size:12px;font-weight:600}
 .twm-out:hover{color:#fff;border-color:#3d5a8f}
-.twm-x{width:32px;height:32px;border:0;border-radius:8px;background:none;color:#9aa8c4;display:grid;place-items:center}
+.twm-x{width:30px;height:30px;border:0;border-radius:8px;background:none;color:#9aa8c4;display:grid;place-items:center}
 .twm-x:hover{background:#1a2844;color:#fff}
 .twm-x svg{width:20px;height:20px}
 .twm-scroll{flex:1 1 auto;min-height:0;overflow-y:auto;overscroll-behavior:contain}
@@ -49,11 +50,11 @@ body.twm-open{overflow:hidden}
   box-shadow:0 3px 0 #0b6f68,0 6px 16px rgba(37,214,200,.25)}
 .twm .cta:hover{filter:brightness(1.08)}
 .twm .cta:active{transform:translateY(2px);box-shadow:0 1px 0 #0b6f68}
-.twm .mhead{display:flex;align-items:center;gap:10px;padding:12px 12px 10px;background:linear-gradient(180deg,#152443,#0e182b);border-bottom:1px solid var(--line2)}
+.twm .mhead{position:sticky;top:0;z-index:4;display:flex;align-items:center;gap:10px;padding:12px 12px 10px;background:linear-gradient(180deg,#152443,#0e182b);border-bottom:1px solid var(--line2)}
 .twm .av{flex:0 0 auto;width:44px;height:44px;border-radius:50%;object-fit:cover;border:2px solid var(--teal);box-shadow:0 0 0 3px rgba(37,214,200,.15)}
 .twm .av.ph{display:grid;place-items:center;background:#1a2a4a;color:var(--teal);font:22px/1 Anton,sans-serif}
 .twm .mname{min-width:0;display:flex;flex-direction:column;align-items:flex-start;gap:4px}
-.twm .mname b{font:22px/1 Anton,Impact,sans-serif;font-weight:400;letter-spacing:.01em;max-width:230px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.twm .mname b{font:22px/1 Anton,Impact,sans-serif;font-weight:400;letter-spacing:.01em;max-width:196px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .twm .rank{display:inline-block;padding:2px 8px;border-radius:10px;background:linear-gradient(90deg,rgba(249,199,79,.22),rgba(249,199,79,.08));border:1px solid rgba(249,199,79,.45);
   color:#ffe29a;font-size:11.5px;font-weight:700;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .twm .mnone{margin:0;padding:16px 14px;color:#c9d3e6}

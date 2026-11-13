@@ -202,7 +202,7 @@
     var card = h('div', 'twm-card'), bar = h('div', 'twm-bar'), x = h('button', 'twm-x'); x.type = 'button'; x.setAttribute('aria-label', 'Close');
     x.appendChild(svgPath('M6.4 5 12 10.6 17.6 5 19 6.4 13.4 12 19 17.6 17.6 19 12 13.4 6.4 19 5 17.6 10.6 12 5 6.4z'));
     var out = h('button', 'twm-out', 'Log out'); out.type = 'button'; out.id = 'twm-out';
-    add(bar, h('span', 'twm-t', 'Droogle profile'), out, x);
+    add(bar, out, x);                      /* no title bar: Log out and Close sit on the name line (Andrew's mockup, 2026-11-12) */
     var sc = h('div', 'twm-scroll'); sc.id = 'twm-scroll'; var bd = h('div'); bd.id = 'twm-body'; sc.appendChild(bd);
     add(card, bar, sc); MODAL.appendChild(card); document.body.appendChild(MODAL); document.body.classList.add('twm-open');
     x.addEventListener('click', closeCard); out.addEventListener('click', logout);
