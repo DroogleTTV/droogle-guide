@@ -55,6 +55,11 @@
 .twm .att span{font-size:10.5px;color:var(--muted)}
 .twm .att.hot{border-color:rgba(255,154,77,.5);background:linear-gradient(180deg,rgba(255,140,60,.13),var(--panel))}
 .twm .att.hot b{color:#ffb070;text-shadow:0 0 8px rgba(255,140,60,.45)}
+.twm .attg{margin-top:5px;display:grid;gap:5px}
+.twm .attg div{display:flex;align-items:baseline;gap:7px;padding:6px 9px;border-radius:9px;background:var(--panel);border:1px solid var(--line2)}
+.twm .attg span{flex:0 0 auto;font-size:10.5px;color:var(--muted)}
+.twm .attg b{flex:1 1 auto;min-width:0;font-size:12.5px;color:#fff;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.twm .attg small{flex:0 0 auto;font-size:10.5px;color:var(--muted)}
 .twm .cal{margin-top:9px;padding:8px 8px 7px;border-radius:10px;background:var(--panel);border:1px solid var(--line2)}
 .twm .calm{display:grid;grid-template-columns:repeat(13,1fr);gap:3px;margin-left:15px;height:13px;font-size:9.5px;color:var(--muted);white-space:nowrap}
 .twm .calb{display:flex;gap:4px}

@@ -55,7 +55,7 @@
       if (r.m && typeof r.m === 'object') Object.keys(r.m).slice(0, 200).forEach(function (k) { if (/^[a-z0-9_]{1,30}$/.test(k) && num(r.m[k]) > 0) o.m[k] = num(r.m[k]); });
       if (r.me && typeof r.me === 'object') Object.keys(r.me).slice(0, 400).forEach(function (k) { var d = num(r.me[k]); if (/^[a-z0-9_]{1,30}$/.test(k) && d > 15000 && d < 40000) o.me[k] = Math.floor(d); });
       if (r.a && typeof r.a === 'object') {
-        o.a = { n: Math.max(0, num(r.a.n)), s: Math.max(0, num(r.a.s)), b: Math.max(0, num(r.a.b)), f: num(r.a.f), d: [] };
+        o.a = { n: Math.max(0, num(r.a.n)), s: Math.max(0, num(r.a.s)), b: Math.max(0, num(r.a.b)), f: num(r.a.f), d: [], o: r.a.o ? 1 : 0, fg: str(r.a.fg, 70), tg: str(r.a.tg, 70), tc: Math.max(0, num(r.a.tc)) };
         if (Array.isArray(r.a.d)) o.a.d = r.a.d.slice(0, 400).map(num).filter(function (d) { return d > 15000 && d < 40000; });
       }
       if (r.i && typeof r.i === 'object') Object.keys(r.i).slice(0, 80).forEach(function (k) { if (/^[A-Za-z0-9' .\-]{1,40}$/.test(k) && num(r.i[k]) > 0) o.i.push([k, num(r.i[k])]); });
@@ -212,12 +212,18 @@
     }
     function drawAttendance(box, P) {
       var A = P && P.a; if (!A || !A.n) return;
-      var s = section('Attendance', A.f ? 'Here since ' + dayText(A.f, true) : '');
+      var s = section('Attendance', !A.f ? '' : A.o ? 'Here since before ' + new Date(A.f * 864e5).toLocaleDateString('en-US', { timeZone: 'UTC', month: 'long', year: 'numeric' }) : 'Here since ' + dayText(A.f, true));
       var g = h('div', 'atts');
       [['Streams', A.n], ['Streak', A.s], ['Best streak', A.b]].forEach(function (x, i) {
         var d = h('div', 'att' + (i === 1 && x[1] >= 3 ? ' hot' : '')); add(d, h('b', null, fmt(x[1])), h('span', null, x[0])); g.appendChild(d);
       });
       s.appendChild(g);
+      if (A.fg || A.tg) {                     /* first game watched, and the game watched on the most stream days */
+        var gg = h('div', 'attg');
+        if (A.fg) { var g1 = h('div'); add(g1, h('span', null, 'First game'), h('b', null, A.fg)); g1.title = 'The game on your first stream here'; gg.appendChild(g1); }
+        if (A.tg) { var g2 = h('div'); add(g2, h('span', null, 'Most watched'), h('b', null, A.tg), A.tc ? h('small', null, fmt(A.tc) + ' streams') : null); g2.title = 'The game you have been here for the most'; gg.appendChild(g2); }
+        s.appendChild(gg);
+      }
       // calendar: the last 13 weeks, stream days you were at lit up
       var mine = {}; A.d.forEach(function (d) { mine[d] = 1; });
       var live = {}; if (RAR && RAR.streams && RAR.streams.length) RAR.streams.forEach(function (d) { live[d] = 1; }); else A.d.forEach(function (d) { live[d] = 1; });
