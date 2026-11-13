@@ -746,11 +746,11 @@
 "c":"loyal",
 "t":"g",
 "n":"Nutcracker",
-"d":"Have 1,000,000 nuts",
+"d":"Bank 250,000 nuts across seasons (your best balance each season counts)",
 "r":[
 [
-"nuts",
-1000000
+"nuts_career",
+250000
 ]
 ]
 },
@@ -759,11 +759,11 @@
 "c":"loyal",
 "t":"p",
 "n":"Mognificent Fortune",
-"d":"Have 10,000,000 nuts",
+"d":"Bank 1,000,000 nuts across seasons (your best balance each season counts)",
 "r":[
 [
-"nuts",
-10000000
+"nuts_career",
+1000000
 ]
 ]
 },
