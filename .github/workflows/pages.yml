@@ -1,0 +1,45 @@
+# Publishes the Droogle Dashboard to GitHub Pages.
+# The site is this branch (main) plus the live data files from the quest-data branch, copied into /data/
+# (quest_state.json, qb_top.json, medal_rarity.json, profiles/*.json). The stream PC's Quest Engine pushes those
+# files to quest-data; a small workflow on that branch starts this one after every push.
+name: Publish Dashboard
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Site (main)
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          path: site
+      - name: Live data (quest-data)
+        uses: actions/checkout@v4
+        with:
+          ref: quest-data
+          path: live
+      - name: Put the live data under /data/
+        run: |
+          rm -rf site/.git site/.github live/.git live/.github
+          mkdir -p site/data
+          cp -r live/. site/data/
+          touch site/.nojekyll
+          ls -la site/data | head -20
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deployment
+        uses: actions/deploy-pages@v4
