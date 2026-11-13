@@ -179,6 +179,19 @@
 ]
 },
 {
+"id":"badbreath",
+"c":"rpg",
+"t":"b",
+"n":"Bad Breath",
+"d":"Inflict Poison, Petrify, Silence, Confuse, Sleep and Doom on Droogle",
+"r":[
+[
+"ailments",
+6
+]
+]
+},
+{
 "id":"atk10",
 "c":"rpg",
 "t":"s",
@@ -495,6 +508,19 @@
 ]
 },
 {
+"id":"qbpacks",
+"c":"qb",
+"t":"s",
+"n":"Booster Pack Rat",
+"d":"Redeem Queen’s Blood 50 times",
+"r":[
+[
+"qb_packs",
+50
+]
+]
+},
+{
 "id":"qb75",
 "c":"qb",
 "t":"g",
@@ -530,6 +556,19 @@
 [
 "qb_ultra",
 1
+]
+]
+},
+{
+"id":"qbtrade10",
+"c":"qb",
+"t":"g",
+"n":"Card Mod",
+"d":"Complete 10 card trades",
+"r":[
+[
+"qb_trades",
+10
 ]
 ]
 },
@@ -647,6 +686,32 @@
 [
 "gil",
 250000
+]
+]
+},
+{
+"id":"pp250k",
+"c":"items",
+"t":"g",
+"n":"Gold Saucer High Roller",
+"d":"Spend 250,000 Pom Poms",
+"r":[
+[
+"pp_spent",
+250000
+]
+]
+},
+{
+"id":"hug10",
+"c":"items",
+"t":"g",
+"n":"Gil Toss",
+"d":"Give nuts to other viewers with !hug 10 times",
+"r":[
+[
+"hugs",
+10
 ]
 ]
 },
@@ -794,6 +859,32 @@
 ]
 },
 {
+"id":"kupofortune",
+"c":"loyal",
+"t":"b",
+"n":"Kupo of Fortune",
+"d":"Claim “Free” Nuts! at 10 streams",
+"r":[
+[
+"freenuts",
+10
+]
+]
+},
+{
+"id":"fanfare",
+"c":"loyal",
+"t":"b",
+"n":"Fanfare",
+"d":"Be there when the end credits roll at 10 streams",
+"r":[
+[
+"fanfare",
+10
+]
+]
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -803,6 +894,45 @@
 [
 "follow_days",
 1096
+]
+]
+},
+{
+"id":"prelude",
+"c":"loyal",
+"t":"s",
+"n":"Prelude",
+"d":"Chat in the first 10 minutes of 25 streams",
+"r":[
+[
+"prelude",
+25
+]
+]
+},
+{
+"id":"att100",
+"c":"loyal",
+"t":"s",
+"n":"Seventh Heaven Regular",
+"d":"Attend 100 streams",
+"r":[
+[
+"att_days",
+100
+]
+]
+},
+{
+"id":"streak10",
+"c":"loyal",
+"t":"s",
+"n":"Chain Combo",
+"d":"Attend 10 streams in a row",
+"r":[
+[
+"att_best",
+10
 ]
 ]
 },
@@ -820,6 +950,71 @@
 ]
 },
 {
+"id":"insomnia",
+"c":"loyal",
+"t":"g",
+"n":"Citizen of Insomnia",
+"d":"Chat after 1 AM Eastern at 5 streams",
+"r":[
+[
+"insomnia",
+5
+]
+]
+},
+{
+"id":"words1000",
+"c":"loyal",
+"t":"g",
+"n":"1,000 Words",
+"d":"Send 1,000 chat messages",
+"r":[
+[
+"chat_msgs",
+1000
+]
+]
+},
+{
+"id":"ff10",
+"c":"loyal",
+"t":"g",
+"n":"Crystal Chronicles",
+"d":"Attend streams of 10 different Final Fantasy games",
+"r":[
+[
+"ff_games",
+10
+]
+]
+},
+{
+"id":"seasontop",
+"c":"loyal",
+"t":"g",
+"n":"Sack Race Winner",
+"d":"Finish a nut season in the top 10",
+"r":[
+[
+"season_top10",
+1
+]
+]
+},
+{
+"id":"jobmaster",
+"c":"loyal",
+"t":"g",
+"n":"Job Master",
+"d":"Earn a medal in all 8 categories",
+"r":[
+[
+"cats_n",
+8
+]
+]
+},
+{
 "id":"follow10",
 "c":"loyal",
 "t":"p",
@@ -829,6 +1024,45 @@
 [
 "follow_days",
 3653
+]
+]
+},
+{
+"id":"ff15",
+"c":"loyal",
+"t":"p",
+"n":"Record Keeper",
+"d":"Attend streams of 15 different Final Fantasy games",
+"r":[
+[
+"ff_games",
+15
+]
+]
+},
+{
+"id":"att300",
+"c":"loyal",
+"t":"p",
+"n":"AVALANCHE Lifer",
+"d":"Attend 300 streams",
+"r":[
+[
+"att_days",
+300
+]
+]
+},
+{
+"id":"medals100",
+"c":"loyal",
+"t":"p",
+"n":"Mognum Opus",
+"d":"Earn 100 Moogle Medals",
+"r":[
+[
+"medals_n",
+100
 ]
 ]
 },
@@ -1015,6 +1249,19 @@
 [
 "omni",
 10
+]
+]
+},
+{
+"id":"gq1",
+"c":"games",
+"t":"s",
+"n":"Phone a Friend",
+"d":"Submit a question for Who Wants To Be A Gillionaire",
+"r":[
+[
+"gq",
+1
 ]
 ]
 },
@@ -1240,6 +1487,19 @@
 ]
 },
 {
+"id":"temple",
+"c":"quests",
+"t":"s",
+"n":"Keystone",
+"d":"Read a Temple Password",
+"r":[
+[
+"temple",
+1
+]
+]
+},
+{
 "id":"quest100",
 "c":"quests",
 "t":"g",
@@ -1383,6 +1643,19 @@
 ]
 },
 {
+"id":"clip5",
+"c":"events",
+"t":"b",
+"n":"Sphere Hunter",
+"d":"Clip the stream with !clip 5 times",
+"r":[
+[
+"clips",
+5
+]
+]
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -1474,6 +1747,19 @@
 ]
 },
 {
+"id":"sfx5",
+"c":"events",
+"t":"s",
+"n":"SFX-Y",
+"d":"Suggest 5 audio hooks",
+"r":[
+[
+"sfx_sug",
+5
+]
+]
+},
+{
 "id":"mail20",
 "c":"events",
 "t":"g",
@@ -1552,6 +1838,19 @@
 ]
 },
 {
+"id":"bluemage",
+"c":"events",
+"t":"g",
+"n":"Blue Mage",
+"d":"Redeem 15 different channel-point rewards",
+"r":[
+[
+"rewards_n",
+15
+]
+]
+},
+{
 "id":"ffb50",
 "c":"events",
 "t":"p",
@@ -1582,5 +1881,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":822
+"max":1012
 }
