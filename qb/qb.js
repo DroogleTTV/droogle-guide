@@ -5,8 +5,8 @@
 (function () {
   'use strict';
   var root = document.getElementById('qbtop'); if (!root) return;
-  var LIVE = 'https://raw.githubusercontent.com/DroogleTTV/droogle-guide/quest-data/qb_top.json';
-  var PROFILES = 'https://raw.githubusercontent.com/DroogleTTV/droogle-guide/quest-data/profiles/';   /* every collector's cards (the viewer profiles), for the search */
+  var LIVE = 'https://drooglettv.github.io/droogle-guide/data/qb_top.json';
+  var PROFILES = 'https://drooglettv.github.io/droogle-guide/data/profiles/';   /* every collector's cards (the viewer profiles), for the search */
   var CARDS = null, BYKEY = {}, DATA = null, POOL = 3030;
   var TIERS = [['urare', 'Ultra rare', 6], ['vrare', 'Very rare', 11], ['rare', 'Rare', 19], ['uncommon', 'Uncommon', 31], ['common', 'Common', 1e9]];   /* by odds, not the in-game Standard/Legendary label */
   function tier(w) { for (var i = 0; i < TIERS.length; i++) if (w <= TIERS[i][2]) return TIERS[i]; return TIERS[TIERS.length - 1]; }

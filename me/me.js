@@ -12,7 +12,7 @@
   var CLIENT_ID = 's9gtu4kx8bs7rjp5lv10g8hj7gy6ea';   // Droogle Channel Guide app (Twitch developer console, 2026-11-12)            // the Twitch app's Client ID (public by design); the sign-in stays hidden while this is empty
   var SITE = 'https://drooglettv.github.io/droogle-guide/';
   var REDIRECT = SITE + 'auth/';
-  var PROFILE_BASE = 'https://raw.githubusercontent.com/DroogleTTV/droogle-guide/quest-data/profiles/';
+  var PROFILE_BASE = SITE + 'data/profiles/';   /* live data from the stream PC, copied onto this site by its publish workflow */
   var TOK = 'dgTwTok', WHO = 'dgTwWho', SVGNS = 'http://www.w3.org/2000/svg';
   var dev = /[?&]twdev=1\b/.test(location.search);
   try { if (dev) sessionStorage.setItem('dgTwDev', '1'); else if (sessionStorage.getItem('dgTwDev') === '1') dev = true; } catch (e) {}

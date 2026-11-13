@@ -2,13 +2,12 @@
    profile card, so both always show the same thing. The page that loads it works out who the viewer is, fetches their
    entry from profiles/<x>.json and calls draw(); everything else (medal list, rarity, Queen's Blood cards) loads here.
      ext/medals.json             - the medal list, rank titles, avatar frames and tier points (guide site)
-     quest-data/medal_rarity.json - how many active members hold each medal, and the stream days (Quest Engine)
+     data/medal_rarity.json      - how many active members hold each medal, and the stream days (Quest Engine)
      qb/cards.json               - Queen's Blood card art and draw weights (guide site)
    Fetched text is always placed with textContent / setAttribute, never as HTML. */
 (function () {
   'use strict';
   var SVGNS = 'http://www.w3.org/2000/svg', TZ = 'America/New_York';
-  var RARITY_URL = 'https://raw.githubusercontent.com/DroogleTTV/droogle-guide/quest-data/medal_rarity.json';
   var TIER = { b: ['bronze', 'Bronze'], s: ['silver', 'Silver'], g: ['gold', 'Gold'], p: ['platinum', 'Platinum'] };
   var TORD = { b: 0, s: 1, g: 2, p: 3 };
   var BIRD_COL = { Yellow: '#ffd23f', Blue: '#5ec8ff', Green: '#7ee05a', Black: '#9aa3c0', Gold: '#ffb52e' };
@@ -41,6 +40,7 @@
 
   window.DroogleProfile = function (cfg) {
     var SITE = cfg.site, IMG = cfg.img, CLS = cfg.cls || {};
+    var RARITY_URL = SITE + 'data/medal_rarity.json';   /* live data, copied onto the Dashboard site by its publish workflow */
     var ME = null, MEDALS = null, RAR = null, QBCARDS = null, showAllCards = false, MEVIEW = 'profile', MFILTER = 'all';
     try { if (sessionStorage.getItem('droogleMeView') === 'medals') MEVIEW = 'medals'; } catch (e) {}
 
