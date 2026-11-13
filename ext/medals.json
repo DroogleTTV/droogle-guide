@@ -1435,6 +1435,32 @@
 ]
 },
 {
+"id":"zelda10",
+"c":"events",
+"t":"s",
+"n":"Hey! Listen!",
+"d":"Enter 10 Hero of Time draws",
+"r":[
+[
+"zelda_entry",
+10
+]
+]
+},
+{
+"id":"lost5",
+"c":"events",
+"t":"g",
+"n":"The Constant",
+"d":"Type the numbers in 5 LOSTs where the plane is saved",
+"r":[
+[
+"lost_saved",
+5
+]
+]
+},
+{
 "id":"ffb10",
 "c":"events",
 "t":"s",
@@ -1556,5 +1582,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":809
+"max":822
 }
