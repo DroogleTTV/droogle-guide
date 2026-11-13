@@ -1,0 +1,20 @@
+# Runs on the quest-data branch. Every time the stream PC pushes new live data here, start the "Publish Dashboard"
+# workflow on main, which copies these files to /data/ on the Dashboard site.
+name: Publish live data
+on:
+  push:
+    branches: [quest-data]
+permissions:
+  actions: write
+  contents: read
+concurrency:
+  group: publish-live-data
+  cancel-in-progress: true
+jobs:
+  start:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Publish Dashboard on main
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --repo "$GITHUB_REPOSITORY" --ref main
