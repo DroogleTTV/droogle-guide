@@ -1617,6 +1617,19 @@
 ]
 },
 {
+"id":"stellazio",
+"c":"quests",
+"t":"s",
+"n":"Queen Stella’s Favorite",
+"d":"Name a Stellazzio coin first and redeem it",
+"r":[
+[
+"stellazio",
+1
+]
+]
+},
+{
 "id":"temple",
 "c":"quests",
 "t":"s",
@@ -1834,19 +1847,6 @@
 [
 "lost_saved",
 1
-]
-]
-},
-{
-"id":"zelda10",
-"c":"events",
-"t":"s",
-"n":"Hey! Listen!",
-"d":"Enter 10 Hero of Time draws",
-"r":[
-[
-"zelda_entry",
-10
 ]
 ]
 },
