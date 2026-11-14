@@ -61,6 +61,10 @@
         o.a = { n: Math.max(0, num(r.a.n)), s: Math.max(0, num(r.a.s)), b: Math.max(0, num(r.a.b)), f: num(r.a.f), d: [], o: r.a.o ? 1 : 0, fg: str(r.a.fg, 70), tg: str(r.a.tg, 70), tc: Math.max(0, num(r.a.tc)) };
         if (Array.isArray(r.a.d)) o.a.d = r.a.d.slice(0, 400).map(num).filter(function (d) { return d > 15000 && d < 40000; });
       }
+      if (r.b && typeof r.b === 'object') {     /* battle EXP [exp, spot] (Dashboard only, cfg.rpg; Andrew 2026-11-14) */
+        o.b = {}; ['a', 'h'].forEach(function (k) { var x = r.b[k]; if (Array.isArray(x) && num(x[0]) > 0) o.b[k] = [Math.floor(num(x[0])), Math.max(0, Math.floor(num(x[1])))]; });
+        if (!o.b.a && !o.b.h) o.b = null;
+      }
       if (r.i && typeof r.i === 'object') Object.keys(r.i).slice(0, 80).forEach(function (k) { if (/^[A-Za-z0-9' .\-]{1,40}$/.test(k) && num(r.i[k]) > 0) o.i.push([k, num(r.i[k])]); });
       if (Array.isArray(r.c)) r.c.slice(0, 5).forEach(function (b) {
         if (!Array.isArray(b) || b.length < 8) return;
@@ -275,6 +279,33 @@
       });
       if (st.firstChild) box.appendChild(st);
     }
+    /* ---------- Attack / Healing levels (SAMMI's RPG: EXP from summons and attacks, !rpglevel in chat) ---------- */
+    var BTL_ICON = { a: 'M14.5 2.5h7v7L10 21l-3 1-1-1 1-3zM5 15l4 4M3 21l3-3', h: 'M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11zM12 9v6M9 12h6' };
+    function btlLevel(x, lv) { var l = 0; for (var i = 1; i < lv.length; i++) if (x >= lv[i]) l = i; return l; }
+    function drawBattle(box, P) {
+      if (!cfg.rpg || !P.b) return;
+      var lv = Array.isArray(ME.lv) ? ME.lv : [];
+      var bs = section('Battle Levels', 'type !rpglevel in chat');
+      [['a', 'Attack', '#ff7a59', ME.na, 'Damage you’ve dealt to Droogle.'], ['h', 'Healing', '#5fe08a', ME.nx, 'Healing you’ve given Droogle.']].forEach(function (k) {
+        var x = P.b[k[0]], row = h('div', 'bird btl' + (x ? '' : ' none')); row.style.setProperty('--bc', k[2]);
+        var ic = document.createElementNS('http://www.w3.org/2000/svg', 'svg'); ic.setAttribute('viewBox', '0 0 24 24'); ic.setAttribute('class', 'btli'); ic.setAttribute('aria-hidden', 'true');
+        var pa = document.createElementNS('http://www.w3.org/2000/svg', 'path'); pa.setAttribute('d', BTL_ICON[k[0]]); ic.appendChild(pa);
+        var bi = h('div', 'bi'), top = h('div', 'bt');
+        if (!x) { add(top, h('b', null, k[1]), h('span', 'btlv', 'Lv 0')); add(bi, top, h('div', 'bs', k[4] + ' No EXP yet.')); add(row, ic, bi); bs.appendChild(row); return; }
+        var l = lv.length > 1 ? btlLevel(x[0], lv) : null, max = l != null && l >= lv.length - 1;
+        add(top, h('b', null, k[1]), l != null ? h('span', 'btlv', 'Lv ' + l) : null, x[1] ? h('span', 'btsp', spot(x[1], k[3])) : null);
+        add(bi, top);
+        if (l != null) {
+          var lo = lv[l], hi = max ? lo : lv[l + 1], pc = max ? 100 : Math.max(0, Math.min(100, (x[0] - lo) / Math.max(1, hi - lo) * 100));
+          var bar = h('div', 'spd'), fill = h('i'); fill.style.width = pc.toFixed(1) + '%'; bar.appendChild(fill);
+          var sp = h('div', 'spl'); add(sp, h('b', null, fmt(x[0]) + ' EXP'), h('span', null, max ? 'Max level' : fmt(hi - x[0]) + ' EXP to Lv ' + (l + 1)));
+          bar.setAttribute('role', 'img'); bar.setAttribute('aria-label', Math.round(pc) + '% of the way to the next level');
+          add(bi, bar, sp);
+        } else add(bi, h('div', 'bs', fmt(x[0]) + ' EXP'));
+        add(row, ic, bi); bs.appendChild(row);
+      });
+      box.appendChild(bs);
+    }
     function drawBirds(box, P) {
       var cs = section('Chocobo Stable', P.c.length ? P.c.length + ' of 5' : '');
       if (!P.c.length) cs.appendChild(h('p', 'mempty', 'No chocobos yet. Type !chocobo in chat to learn how to catch one.'));
@@ -468,6 +499,7 @@
       if (info) drawRankCard(box, P, info, states);
       drawStats(box, P);
       drawAttendance(box, P);
+      drawBattle(box, P);
       if (ready) drawRecent(box, P, states);
       drawBirds(box, P); drawItems(box, P); drawQB(box, P);
       if (cfg.share && info) {

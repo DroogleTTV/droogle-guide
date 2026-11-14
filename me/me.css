@@ -87,6 +87,11 @@ body.twm-open{overflow:hidden}
 .twm .spd.gold i{background:linear-gradient(90deg,#b07a12,var(--gold))}
 .twm .spl{display:flex;justify-content:space-between;font-size:11px;color:var(--muted);margin-top:3px}
 .twm .spl b{color:var(--text);font-weight:600}
+.twm .btl{border-color:color-mix(in srgb,var(--bc) 35%,var(--line2))}
+.twm .btl.none{opacity:.6}
+.twm .btli{flex:0 0 auto;width:34px;height:34px;padding:6px;border-radius:9px;background:color-mix(in srgb,var(--bc) 16%,#0f1a30);fill:none;stroke:var(--bc);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.twm .btlv{flex:0 0 auto;font:15px/1 Pixel,monospace;color:var(--bc)}
+.twm .btsp{margin-left:auto;flex:0 0 auto;font-size:11px;font-weight:700;color:var(--teal);white-space:nowrap}
 .twm .igrid{display:grid;grid-template-columns:1fr 1fr;gap:5px}
 .twm .it{display:flex;align-items:center;gap:6px;min-width:0;padding:4px 7px 4px 5px;border-radius:8px;background:var(--panel);border:1px solid var(--line2)}
 .twm .it img,.twm .iph{flex:0 0 auto;width:24px;height:24px}

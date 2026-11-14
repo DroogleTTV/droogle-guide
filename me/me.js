@@ -54,7 +54,7 @@
   }
   // the profile and Moogle Medals are drawn by profile.js, the same file the Twitch panel uses
   if (!window.DroogleProfile) return;
-  var PROF = window.DroogleProfile({ site: SITE, img: SITE + 'me/img/', cls: { foot: 'mfoot', card: 'qcard', chips: 'mchips' }, tierFilter: true,   /* the medal tier dropdown (Andrew 2026-11-14) */
+  var PROF = window.DroogleProfile({ site: SITE, img: SITE + 'me/img/', cls: { foot: 'mfoot', card: 'qcard', chips: 'mchips' }, tierFilter: true, rpg: true,   /* the medal tier dropdown and the Battle Levels card (Andrew 2026-11-14) */
     box: function () { return BOX(); }, scroll: function () { return SCR(); }, share: shareCard,
     qb: function (u) { if (!window.DroogleQB) return; closeCard(); if (!window.DroogleQB.open(u)) window.DroogleQB.find(u.n); } });   /* the Queen's Blood collection page (qb.js) */
   function drawMe() { if (BOX() && ME) PROF.draw(ME); }
@@ -238,7 +238,8 @@
     hex16(w.login).then(function (k) {
       return getJSON(PROFILE_BASE + k.charAt(0) + '.json?t=' + Math.floor(Date.now() / 6e4)).catch(function (e) { if (String(e && e.message) === '404') return {}; throw e; }).then(function (shard) {   // no file yet = no profile yet
         var raw = shard && shard.u && typeof shard.u === 'object' ? shard.u[k] : null;
-        ME = { who: w, p: PROF.valid(raw), np: num(shard && shard.np), nh: num(shard && shard.nh), nq: num(shard && shard.nq), nm: num(shard && shard.nm), t: str(shard && shard.t, 40) };
+        ME = { who: w, p: PROF.valid(raw), np: num(shard && shard.np), nh: num(shard && shard.nh), nq: num(shard && shard.nq), nm: num(shard && shard.nm), na: num(shard && shard.na), nx: num(shard && shard.nx),
+          lv: shard && Array.isArray(shard.lv) ? shard.lv.slice(0, 60).map(num) : [], t: str(shard && shard.t, 40) };
         if (MODAL) drawMe();
       });
     }).catch(function () { msg('Your profile', 'Your profile couldn’t be loaded right now. Close this and try again in a moment.'); });
