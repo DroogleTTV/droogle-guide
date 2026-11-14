@@ -1,0 +1,119 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Al Bhed Cheat Sheet</title>
+<meta name="description" content="Every Al Bhed letter, and a box that writes any word in Al Bhed. For the Temple Password quest on the Droogle stream.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Al Bhed Cheat Sheet"><meta property="og:description" content="Every Al Bhed letter, and a box that writes any word in Al Bhed.">
+<meta property="og:image" content="https://drooglettv.github.io/droogle-guide/img/og.png"><meta name="theme-color" content="#0b1322">
+<link rel="icon" type="image/png" href="../../img/favicon.png"><link rel="apple-touch-icon" href="../../img/apple-touch-icon.png">
+<link rel="preload" as="font" type="font/otf" href="Al_Bhed.otf" crossorigin>
+<style>
+@font-face{font-family:Outfit;font-weight:400;src:url(../../outfit-latin-400-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:600;src:url(../../outfit-latin-600-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:700;src:url(../../outfit-latin-700-normal.woff2)}
+@font-face{font-family:Anton;src:url(../../anton-latin-400-normal.woff2)}
+@font-face{font-family:AlBhed;src:url(Al_Bhed.otf);font-display:block}
+:root{--bg:#0b1322;--panel:#121d33;--line:#24345a;--text:#e9eef8;--muted:#9aa8c4;--teal:#25d6c8;--teal2:#0f8f93;--glow:#ecf2ff}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) url(../../img/pagebg.jpg) center top/cover fixed;color:var(--text);font:15px/1.45 Outfit,system-ui,sans-serif}
+a{color:var(--teal)}
+.wrap{max-width:920px;margin:0 auto;padding:0 16px 40px}
+header{padding:18px 0 6px;display:flex;align-items:center;gap:14px}
+header img{height:34px;display:block}
+header .back{margin-left:auto;font-family:Anton;letter-spacing:.06em;text-transform:uppercase;font-size:14px;color:#8ea0c2;text-decoration:none;
+  padding:7px 12px 6px;border:1px solid var(--line);border-radius:8px}
+header .back:hover,header .back:focus-visible{color:#081320;background:var(--teal);border-color:var(--teal)}
+h1{font-family:Anton;font-weight:400;font-size:clamp(36px,6.5vw,58px);line-height:1;margin:14px 0 8px;letter-spacing:.01em;text-transform:uppercase}
+h2{font-family:Anton;font-weight:400;font-size:24px;letter-spacing:.02em;margin:26px 0 10px}
+.lead{margin:0 0 18px;color:#c9d3e6;max-width:68ch}
+.lead b,.lead code{color:#fff}
+code{font:600 .95em Outfit,system-ui,sans-serif;background:#16233f;border:1px solid var(--line);border-radius:6px;padding:1px 6px}
+
+/* the translator: a dark screen that writes the word the way it flashes on stream */
+.tr{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:14px;box-shadow:0 18px 50px rgba(0,0,0,.35)}
+.tr label{display:block;font-weight:600;font-size:14px;color:var(--muted);margin:0 0 6px}
+.row{display:flex;gap:8px}
+#word{flex:1 1 auto;min-width:0;height:46px;padding:0 14px;border-radius:10px;border:1px solid #2f4572;background:#0a1529;color:#fff;
+  font:600 20px/1 Outfit,system-ui,sans-serif;letter-spacing:.08em;text-transform:uppercase}
+#word::placeholder{color:#5d6d8f;letter-spacing:0;text-transform:none;font-weight:400}
+#word:focus{outline:2px solid var(--teal);outline-offset:1px;border-color:var(--teal)}
+.row button{flex:0 0 auto;height:46px;padding:0 14px;border-radius:10px;border:1px solid #2f4572;background:#0a1529;color:var(--muted);font:600 14px Outfit,system-ui,sans-serif;cursor:pointer}
+.row button:hover{color:#fff;border-color:#4a6aa5}
+.row button:focus-visible{outline:2px solid var(--teal);outline-offset:1px}
+.screen{position:relative;margin-top:12px;min-height:190px;border-radius:12px;overflow:hidden;display:flex;align-items:center;justify-content:center;padding:18px 12px;
+  background:radial-gradient(120% 140% at 50% 40%,#132242 0%,#070d1a 70%);border:1px solid #1d2d4f}
+.screen::after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,rgba(0,0,0,.22) 0 2px,transparent 2px 4px)}
+.glyphs{position:relative;font:400 clamp(54px,11vw,104px)/1.1 AlBhed;letter-spacing:.06em;color:rgba(236,242,255,.94);text-align:center;word-break:break-all;
+  text-shadow:0 0 5px rgba(200,225,255,.85),0 0 16px rgba(140,190,255,.55),0 0 30px rgba(90,150,255,.35)}
+.glyphs::before,.glyphs::after{content:attr(data-w);position:absolute;left:0;right:0;top:0;opacity:.3;text-shadow:none}
+.glyphs::before{color:#ff5a5a;transform:translateX(-3px)}
+.glyphs::after{color:#5ae6ff;transform:translateX(3px)}
+.glyphs.pop{animation:pop .45s cubic-bezier(.12,.75,.3,1)}
+@keyframes pop{0%{filter:brightness(2.2)}100%{filter:none}}
+.empty{position:relative;color:#5d6d8f;font-size:15px}
+.strip{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px;min-height:10px}
+.strip span{display:flex;flex-direction:column;align-items:center;width:46px;padding:6px 0 4px;border-radius:9px;background:#0a1529;border:1px solid #22355a}
+.strip i{font:400 28px/1.35 AlBhed;font-style:normal;color:var(--glow);margin-bottom:3px}
+.strip b{font-size:13px;color:var(--teal)}
+.strip .gap{width:14px;background:none;border:0}
+
+/* the alphabet */
+.abc{display:grid;grid-template-columns:repeat(13,minmax(0,1fr));gap:8px;margin:0;padding:0;list-style:none}
+.abc button{width:100%;display:flex;flex-direction:column;align-items:center;gap:2px;padding:10px 0 7px;border-radius:12px;cursor:pointer;
+  background:var(--panel);border:1px solid var(--line);color:var(--text);font:inherit;transition:border-color .12s,transform .12s}
+.abc button:hover{border-color:var(--teal);transform:translateY(-2px)}
+.abc button:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.abc button:active{transform:none}
+.abc i{font:400 44px/1.1 AlBhed;font-style:normal;color:var(--glow);text-shadow:0 0 8px rgba(140,190,255,.35)}
+.abc b{font:400 20px/1 Anton;letter-spacing:.04em;color:var(--teal)}
+.hint{color:var(--muted);font-size:14px;margin:0 0 12px;max-width:68ch}
+.hint b{color:var(--text)}
+footer{margin-top:28px;color:#6f7f9f;font-size:13px}
+@media (max-width:760px){.abc{grid-template-columns:repeat(7,minmax(0,1fr))}.abc i{font-size:38px}}
+@media (max-width:420px){.abc{gap:6px}.abc i{font-size:32px}.row button{padding:0 11px}}
+@media (prefers-reduced-motion:reduce){.glyphs.pop{animation:none}.abc button{transition:none}.abc button:hover{transform:none}}
+</style></head><body>
+<div class="wrap">
+<header><a href="../../"><img src="../../img/logo_nav.png" alt="Droogle Dashboard"></a><a class="back" href="../">Back to the quests</a></header>
+<h1>Al Bhed Cheat Sheet</h1>
+<p class="lead">During the <b>Temple Password</b> quest, a password flashes on stream in Al Bhed for about a second. Match the symbols to their letters below, then type <code>!password</code> and the word in chat.</p>
+
+<section class="tr" aria-label="Write a word in Al Bhed">
+ <label for="word">Type a word to see it in Al Bhed</label>
+ <div class="row"><input id="word" type="text" maxlength="20" autocomplete="off" autocapitalize="characters" spellcheck="false" placeholder="Type a word, or tap the letters below">
+  <button type="button" id="del" aria-label="Delete the last letter">&#9003;</button><button type="button" id="clr">Clear</button></div>
+ <div class="screen" id="screen" role="img" aria-label="Nothing typed yet"><div class="empty" id="empty">Your word appears here, the way it flashes on stream.</div><div class="glyphs" id="glyphs" aria-hidden="true" hidden></div></div>
+ <div class="strip" id="strip" aria-hidden="true"></div>
+</section>
+
+<h2>The Al Bhed alphabet</h2>
+<p class="hint">Each symbol stands for one letter. <b>Tap a symbol</b> to add its letter to the box above, so you can spell out a password from the symbols you saw.</p>
+<ul class="abc" id="abc"></ul>
+
+<footer>Passwords are Final Fantasy names: characters, spells, items, monsters and places. Capital letters are all you need.</footer>
+</div>
+<script>
+(function(){
+  var $=function(id){return document.getElementById(id)};
+  var inp=$('word'),gl=$('glyphs'),st=$('strip'),em=$('empty'),sc=$('screen');
+  var L='ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
+  $('abc').innerHTML=L.map(function(c){return '<li><button type="button" data-c="'+c+'" aria-label="'+c+'"><i aria-hidden="true">'+c+'</i><b>'+c+'</b></button></li>'}).join('');
+  function clean(s){return String(s).toUpperCase().replace(/[^A-Z ]+/g,'').replace(/ {2,}/g,' ').slice(0,20)}
+  function draw(pop){
+    var w=clean(inp.value).trim();
+    gl.hidden=!w; em.hidden=!!w;
+    gl.textContent=w; gl.setAttribute('data-w',w);
+    sc.setAttribute('aria-label',w?w+' written in Al Bhed':'Nothing typed yet');
+    st.innerHTML=w.split('').map(function(c){return c===' '?'<span class="gap"></span>':'<span><i>'+c+'</i><b>'+c+'</b></span>'}).join('');
+    if(pop&&w){gl.classList.remove('pop');void gl.offsetWidth;gl.classList.add('pop')}
+  }
+  inp.addEventListener('input',function(){var p=inp.selectionStart,v=clean(inp.value);if(v!==inp.value.toUpperCase()){inp.value=v;try{inp.setSelectionRange(p,p)}catch(e){}}draw(false)});
+  $('abc').addEventListener('click',function(e){var b=e.target.closest('button');if(!b)return;if(clean(inp.value).length>=20)return;inp.value=clean(inp.value)+b.getAttribute('data-c');draw(true)});
+  $('del').addEventListener('click',function(){inp.value=clean(inp.value).slice(0,-1);draw(false);inp.focus()});
+  $('clr').addEventListener('click',function(){inp.value='';draw(false);inp.focus()});
+  var q=new URLSearchParams(location.search).get('w');if(q){inp.value=clean(q);}
+  draw(false);
+})();
+</script>
+</body></html>

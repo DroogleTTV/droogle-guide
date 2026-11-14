@@ -108,6 +108,8 @@ svg .ic{color:#0b1424}
 .pips i{width:9px;height:9px;transform:rotate(45deg);background:#2a3a5c;border-radius:2px}
 .pips i.f{background:var(--gold)}
 .ddesc{font-size:15px;color:#dbe3f2;margin:0 0 14px}
+.cheat{display:block;margin:-4px 0 14px;padding:10px 12px;border-radius:10px;border:1px solid #ff9f5a;background:rgba(255,159,90,.10);color:#ffd2b0;font-weight:700;font-size:14px;text-decoration:none}
+.cheat:hover,.cheat:focus-visible{background:#ff9f5a;color:#1a0d04}
 .box{background:#0f1a30;border:1px solid #22355a;border-radius:12px;padding:11px 12px;margin-bottom:10px}
 .box .k{font-size:12px;color:var(--muted);font-weight:600;letter-spacing:.03em;margin-bottom:5px;display:flex;justify-content:space-between;gap:8px}
 .big{height:12px;border-radius:9px;background:#22314f;overflow:hidden}
@@ -352,6 +354,7 @@ function detail(id,quiet){
    '<div class="dname">'+esc(q.name)+'</div>'+
    '<div class="lvl"><span class="pips">'+[1,2,3,4,5].map(function(i){return '<i class="'+(i<=(q.lvl||1)?'f':'')+'"></i>'}).join('')+'</span>Level '+(q.lvl||1)+' of 5</div>'+
    '<p class="ddesc">'+emo(esc(cap(q.desc)))+'.</p>'+
+   (q.id==='temple_password'?'<a class="cheat" href="albhed/" target="_blank" rel="noopener">Open the Al Bhed cheat sheet<span aria-hidden="true"> &#8599;</span></a>':'')+
    '<div class="box '+(q.status==='done'?'done':q.status==='fail'?'fail':'')+'" style="--c:'+(q.status==='done'?'#5ee08a':q.status==='fail'?'#ff6b7d':t.c)+'">'+
    '<div class="k"><span>'+(q.status==='done'?'Cleared':q.status==='fail'?'Failed this week':'Progress')+'</span><span>'+Math.round(p*100)+'%</span></div>'+
    '<div class="big"><i style="width:'+(p*100).toFixed(1)+'%"></i></div>'+
