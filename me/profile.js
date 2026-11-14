@@ -42,6 +42,9 @@
     var SITE = cfg.site, IMG = cfg.img, CLS = cfg.cls || {};
     var RARITY_URL = SITE + 'data/medal_rarity.json';   /* live data, copied onto the Dashboard site by its publish workflow */
     var ME = null, MEDALS = null, RAR = null, QBCARDS = null, showAllCards = false, MEVIEW = 'profile', MFILTER = 'all';
+    var MTIER = { b: 1, s: 1, g: 1, p: 1 }, MTOPEN = false;   /* tier dropdown (Dashboard only, cfg.tierFilter; Andrew 2026-11-14) */
+    function tierOk(m) { return !cfg.tierFilter || !!MTIER[m.t]; }
+    function tiersOn() { return ['b', 's', 'g', 'p'].filter(function (t) { return MTIER[t]; }); }
     try { if (sessionStorage.getItem('droogleMeView') === 'medals') MEVIEW = 'medals'; } catch (e) {}
 
     function section(title, extra, cls) { var s = h('section', 'msec' + (cls ? ' ' + cls : '')), hd = h('div', 'mh'); add(hd, h('h3', null, title), extra ? h('span', null, extra) : null); s.appendChild(hd); return s; }
@@ -343,6 +346,38 @@
       box.appendChild(qs);
     }
 
+    /* ---------- tier dropdown: a chip like the others; its menu has a checkbox per tier (Dashboard only) ---------- */
+    function tierNames() { var on = tiersOn(); return on.map(function (t) { return TIER[t][1]; }).join(on.length === 2 ? ' and ' : ', ').replace(/, ([^,]*)$/, ' and $1'); }
+    function tierDrop() {
+      var on = tiersOn(), w = h('div', 'mtdd' + (MTOPEN ? ' open' : '')), b = h('button', on.length < 4 ? 'on' : '');
+      b.type = 'button'; b.setAttribute('aria-haspopup', 'true'); b.setAttribute('aria-expanded', MTOPEN ? 'true' : 'false');
+      b.setAttribute('aria-label', 'Medal tiers: ' + (on.length === 4 ? 'all' : tierNames()));
+      add(b, h('span', null, on.length === 4 ? 'Tiers' : on.length === 1 ? TIER[on[0]][1] : on.length + ' tiers'), h('i', 'mtcaret'));
+      b.addEventListener('click', function (e) { e.stopPropagation(); MTOPEN = !MTOPEN; redraw(); if (MTOPEN) focusTier(on[0] || 'b'); });
+      w.appendChild(b);
+      if (MTOPEN) {
+        var m = h('div', 'mtmenu'); m.setAttribute('role', 'group'); m.setAttribute('aria-label', 'Show these medal tiers');
+        ['b', 's', 'g', 'p'].forEach(function (t) {
+          var l = h('label', 'mtopt ' + TIER[t][0]), c = h('input'); c.type = 'checkbox'; c.checked = !!MTIER[t]; c.setAttribute('data-t', t);
+          if (MTIER[t] && on.length === 1) { c.disabled = true; l.title = 'At least one tier stays on'; }
+          c.addEventListener('change', function () { MTIER[t] = c.checked ? 1 : 0; if (!tiersOn().length) MTIER[t] = 1; redraw(); focusTier(t); });
+          add(l, c, medalImg(t, 'mtimg'), h('span', null, TIER[t][1])); m.appendChild(l);
+        });
+        var all = h('button', 'mtall', 'Show all tiers'); all.type = 'button'; all.disabled = on.length === 4;
+        all.addEventListener('click', function () { MTIER = { b: 1, s: 1, g: 1, p: 1 }; redraw(); focusTier('b'); });
+        m.appendChild(all);
+        m.addEventListener('click', function (e) { e.stopPropagation(); });
+        w.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); MTOPEN = false; redraw(); var bb = document.querySelector('.mtdd > button'); if (bb) bb.focus(); } });   /* Esc closes the menu, not the card */
+        w.appendChild(m);
+      }
+      if (!tierDrop.hooked) {      /* a click anywhere else closes the menu */
+        tierDrop.hooked = 1;
+        document.addEventListener('click', function (e) { if (MTOPEN && !(e.target.closest && e.target.closest('.mtdd'))) { MTOPEN = false; redraw(); } });
+      }
+      return w;
+    }
+    function focusTier(t) { var c = document.querySelector('.mtmenu input[data-t="' + t + '"]'); if (c && !c.disabled) c.focus(); else { c = document.querySelector('.mtmenu input:not([disabled])'); if (c) c.focus(); } }
+
     /* ---------- medals view ---------- */
     function drawMedals(box, P, states) {
       if (!MEDALS) { box.appendChild(h('p', 'mnone', 'Loading the Moogle Medals…')); return; }
@@ -360,6 +395,7 @@
         var b = h('button', MFILTER === x[0] ? 'on' : '', x[1]); b.type = 'button'; b.setAttribute('aria-pressed', MFILTER === x[0] ? 'true' : 'false');
         b.addEventListener('click', function () { MFILTER = x[0]; redraw(); }); ch.appendChild(b);
       });
+      if (cfg.tierFilter) ch.appendChild(tierDrop());
       box.appendChild(ch);
       var shown = 0;
       var row = function (m) {
@@ -385,15 +421,15 @@
         if (!list.length) sec.appendChild(h('p', 'mempty', empty)); box.appendChild(sec);
       };
       if (MFILTER === 'next') {
-        flat('Closest to earning', all.filter(function (m) { return !states[m.id].earned && states[m.id].p > 0; }).sort(function (a, b) { return states[b.id].p - states[a.id].p; }).slice(0, 12),
+        flat('Closest to earning', all.filter(function (m) { return tierOk(m) && !states[m.id].earned && states[m.id].p > 0; }).sort(function (a, b) { return states[b.id].p - states[a.id].p; }).slice(0, 12),
           'Nothing in progress yet. Chat, play the mini-games and join in on stream to start earning!');
       } else if (MFILTER === 'rare') {
         if (!RAR || RAR.none) { box.appendChild(h('p', 'mnone', RAR ? 'Medal rarity isn’t available yet. It appears once the community has been tracked for a stream or two.' : 'Loading medal rarity…')); return; }
-        flat('Rarest medals in the community', all.filter(function (m) { var r = rarity(m); return r && r.n > 0; }).sort(function (a, b) { return rarity(a).pc - rarity(b).pc || TORD[b.t] - TORD[a.t]; }).slice(0, 20), '');
+        flat('Rarest medals in the community', all.filter(function (m) { var r = rarity(m); return tierOk(m) && r && r.n > 0; }).sort(function (a, b) { return rarity(a).pc - rarity(b).pc || TORD[b.t] - TORD[a.t]; }).slice(0, 20), '');
       } else {
         MEDALS.cats.forEach(function (c) {
           var full = all.filter(function (m) { return m.c === c.id; }), got = full.filter(function (m) { return states[m.id].earned; }).length;
-          var list = full.filter(function (m) { return MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned; })
+          var list = full.filter(function (m) { return tierOk(m) && (MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned); })
             .sort(function (a, b) { return TORD[a.t] - TORD[b.t]; });
           if (!list.length) return;
           if (c.id === 'season' || full.every(function (m) { return m.s; })) {      // seasonal: extra to the 100, no completion bar
@@ -407,7 +443,8 @@
           list.forEach(function (m) { sec.appendChild(row(m)); }); shown += list.length;
           box.appendChild(sec);
         });
-        if (!shown) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No medals yet. Every medal is free to earn; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
+        if (!shown) box.appendChild(h('p', 'mnone', tiersOn().length < 4 ? (MFILTER === 'earned' ? 'No ' + tierNames() + ' medals earned yet.' : MFILTER === 'locked' ? 'Every ' + tierNames() + ' medal earned!' : 'No ' + tierNames() + ' medals here.')
+          : MFILTER === 'earned' ? 'No medals yet. Every medal is free to earn; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
       }
       box.appendChild(h('p', CLS.foot || 'foot', 'Moogle Medals are free to earn and never go away once you have them. Rarity counts members who were at a stream in each of the last 3 months. Progress updates about every 20 minutes while Droogle is live.'));
     }

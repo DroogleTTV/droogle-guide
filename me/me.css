@@ -148,6 +148,23 @@ body.twm-open{overflow:hidden}
 .twm .mchips button{flex:0 0 auto;height:26px;padding:0 9px;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:var(--muted);font-size:12px;font-weight:600;white-space:nowrap}
 .twm .mchips button:hover{color:var(--text);border-color:#3d5a8f}
 .twm .mchips button.on{background:var(--c,var(--teal));border-color:var(--c,var(--teal));color:#071220}
+/* medal tier dropdown (Andrew 2026-11-14): a chip like the others; its menu has a checkbox per tier */
+.twm .mtdd{position:relative;flex:0 0 auto}
+.twm .mchips .mtdd>button{display:inline-flex;align-items:center;gap:6px}
+.twm .mtcaret{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform .15s}
+.twm .mtdd.open .mtcaret{transform:rotate(180deg)}
+.twm .mtmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:5;min-width:170px;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
+.twm .mtopt{display:flex;align-items:center;gap:8px;padding:5px 8px;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;user-select:none}
+.twm .mtopt:hover{background:#13234a}
+.twm .mtopt input{accent-color:var(--teal);width:15px;height:15px;margin:0;cursor:pointer}
+.twm .mtopt input:disabled{cursor:default}
+.twm .mtopt input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.twm .mtimg{width:22px;height:22px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.twm .mtopt input:not(:checked)~.mtimg{filter:grayscale(1) brightness(.55)}
+.twm .mtopt input:not(:checked)~span{color:var(--muted)}
+.twm .mchips .mtmenu .mtall{display:block;width:100%;height:28px;margin-top:4px;padding:0;border:0;border-top:1px solid #1f3256;border-radius:0 0 7px 7px;background:none;color:var(--teal);font-size:12px;font-weight:600}
+.twm .mchips .mtmenu .mtall:hover{color:var(--text)}
+.twm .mchips .mtmenu .mtall:disabled{color:var(--dim);cursor:default}
 /* Big screens: the whole card at 1.5x (Andrew 2026-11-12 21:20). zoom scales layout too, so the height cap is divided by 1.5
    to keep the card inside the window; it still scrolls inside. Phones and small windows keep the normal size. */
 @media (min-width:900px) and (min-height:700px){.twm-card{zoom:1.5;max-height:min(760px,calc((100vh - 32px) / 1.5))}}
