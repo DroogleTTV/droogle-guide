@@ -1777,7 +1777,7 @@
 "c":"events",
 "t":"b",
 "n":"Sphere Hunter",
-"d":"Clip the stream with !clip 5 times",
+"d":"Clip the stream 5 times (!clip or the Twitch Clip button)",
 "r":[
 [
 "clips",
