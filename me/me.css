@@ -153,7 +153,7 @@ body.twm-open{overflow:hidden}
 .twm .mchips .mtdd>button{display:inline-flex;align-items:center;gap:6px}
 .twm .mtcaret{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform .15s}
 .twm .mtdd.open .mtcaret{transform:rotate(180deg)}
-.twm .mtmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:5;min-width:170px;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
+.twm .mtmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:5;width:max-content;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
 .twm .mtopt{display:flex;flex-direction:row-reverse;justify-content:flex-start;align-items:center;gap:8px;text-align:right;padding:5px 8px;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;user-select:none}
 .twm .mtopt:hover{background:#13234a}
 .twm .mtopt input{accent-color:var(--teal);width:15px;height:15px;margin:0;cursor:pointer}
