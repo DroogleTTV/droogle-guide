@@ -280,7 +280,7 @@
       if (st.firstChild) box.appendChild(st);
     }
     /* ---------- Attack / Healing levels (SAMMI's RPG: EXP from summons and attacks, !rpglevel in chat) ---------- */
-    var BTL_ICON = { a: 'M14.5 2.5h7v7L10 21l-3 1-1-1 1-3zM5 15l4 4M3 21l3-3', h: 'M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11zM12 9v6M9 12h6' };
+    var BTL_ICON = { a: 'M14.5 17.5L3 6V3h3l11.5 11.5M13 19l6-6M16 16l4 4M19 21l2-2', h: 'M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11zM12 9v6M9 12h6' };
     function btlLevel(x, lv) { var l = 0; for (var i = 1; i < lv.length; i++) if (x >= lv[i]) l = i; return l; }
     function drawBattle(box, P) {
       if (!cfg.rpg || !P.b) return;
