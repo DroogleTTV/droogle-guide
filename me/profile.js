@@ -43,6 +43,7 @@
     var RARITY_URL = SITE + 'data/medal_rarity.json';   /* live data, copied onto the Dashboard site by its publish workflow */
     var ME = null, MEDALS = null, RAR = null, QBCARDS = null, showAllCards = false, MEVIEW = 'profile', MFILTER = 'all';
     var MTIER = { b: 1, s: 1, g: 1, p: 1 }, MTOPEN = false;   /* tier dropdown (Dashboard only, cfg.tierFilter; Andrew 2026-11-14) */
+    var MJUMP = null;   /* a medal to scroll to once the Medals view is drawn (cfg.medalJump; Andrew 2026-11-15) */
     function tierOk(m) { return !cfg.tierFilter || !!MTIER[m.t]; }
     function tiersOn() { return ['b', 's', 'g', 'p'].filter(function (t) { return MTIER[t]; }); }
     try { if (sessionStorage.getItem('droogleMeView') === 'medals') MEVIEW = 'medals'; } catch (e) {}
@@ -180,10 +181,22 @@
       });
       box.appendChild(sw);
     }
+    function jumpToMedal(m) {   /* a Recent Medal: open the Medals view on All (its tier shown) and land on that medal (Andrew 2026-11-15) */
+      MFILTER = 'all'; MTOPEN = false; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1;
+      MJUMP = m.id; setView('medals');
+    }
     function setView(v, filter) {
       if (filter) MFILTER = filter;
       if (MEVIEW !== v) { MEVIEW = v; try { sessionStorage.setItem('droogleMeView', v); } catch (e) {} }
       redraw(); var sc = cfg.scroll && cfg.scroll(); if (sc) sc.scrollTop = 0;
+      if (MJUMP) {
+        var el = document.querySelector('.medal[data-mid="' + MJUMP + '"]'); MJUMP = null;
+        if (el) {
+          el.scrollIntoView({ block: 'center', inline: 'nearest' });
+          el.classList.add('jump'); setTimeout(function () { el.classList.remove('jump'); }, 2400);
+          el.setAttribute('tabindex', '-1'); try { el.focus({ preventScroll: true }); } catch (e) {}
+        }
+      }
     }
 
     /* ---------- profile view: Adventurer Rank, showcase, attendance, recent medals ---------- */
@@ -258,7 +271,11 @@
       var got = MEDALS.medals.filter(function (m) { return states[m.id].day != null; }).sort(function (a, b) { return states[b.id].day - states[a.id].day || TORD[b.t] - TORD[a.t]; }).slice(0, 4);
       if (!got.length) return;
       var s = section('Recent Medals'), l = h('div', 'recent');
-      got.forEach(function (m) { var r = h('div', 'rc ' + TIER[m.t][0]); add(r, medalImg(m.t, 'rci'), h('b', null, m.n), h('span', null, dayText(states[m.id].day))); l.appendChild(r); });
+      got.forEach(function (m) {
+        var r = h(cfg.medalJump ? 'button' : 'div', 'rc ' + TIER[m.t][0]); add(r, medalImg(m.t, 'rci'), h('b', null, m.n), h('span', null, dayText(states[m.id].day)));
+        if (cfg.medalJump) { r.type = 'button'; r.setAttribute('aria-label', m.n + ', ' + TIER[m.t][1] + ', earned ' + dayText(states[m.id].day, true) + '. Show in Medals'); r.addEventListener('click', function () { jumpToMedal(m); }); }
+        l.appendChild(r);
+      });
       s.appendChild(l); box.appendChild(s);
     }
 
@@ -430,7 +447,7 @@
       box.appendChild(ch);
       var shown = 0;
       var row = function (m) {
-        var s = states[m.id], rr = rarity(m), r = h('div', 'medal ' + (s.earned ? 'got ' : 'locked ') + TIER[m.t][0] + (s.lim ? ' lim' : ''));
+        var s = states[m.id], rr = rarity(m), r = h('div', 'medal ' + (s.earned ? 'got ' : 'locked ') + TIER[m.t][0] + (s.lim ? ' lim' : '')); r.setAttribute('data-mid', m.id);
         r.appendChild(medalImg(m.t, 'mimg'));
         var b = h('div', 'mb'), top = h('div', 'mn'); add(top, h('b', null, m.n), h('span', 'mt', TIER[m.t][1]));
         add(b, top, h('div', 'md', m.d));

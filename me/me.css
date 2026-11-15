@@ -173,3 +173,11 @@ body.twm-open{overflow:hidden}
 /* Big screens: the whole card at 1.5x (Andrew 2026-11-12 21:20). zoom scales layout too, so the height cap is divided by 1.5
    to keep the card inside the window; it still scrolls inside. Phones and small windows keep the normal size. */
 @media (min-width:900px) and (min-height:700px){.twm-card{zoom:1.5;max-height:min(760px,calc((100vh - 32px) / 1.5))}}
+/* Recent Medals are buttons on the Dashboard: a click opens Medals at that medal, which glows for a moment (2026-11-15) */
+.twm button.rc{width:100%;font:inherit;color:inherit;text-align:left;cursor:pointer;transition:background .15s,border-color .15s}
+.twm button.rc:hover{background:#18284a}
+.twm button.rc:focus-visible{outline:2px solid var(--teal,#2ee6d6);outline-offset:2px}
+.twm .medal.jump{animation:mjump 2.2s ease-out}
+.twm .medal:focus{outline:none}
+@keyframes mjump{0%,30%{box-shadow:0 0 0 2px #ffe36a,0 0 22px rgba(255,214,90,.55)}100%{box-shadow:0 0 0 0 rgba(255,227,106,0)}}
+@media (prefers-reduced-motion:reduce){.twm .medal.jump{animation:none;box-shadow:0 0 0 2px #ffe36a}}
