@@ -70,7 +70,7 @@
 "Dragoon"
 ],
 [
-90,
+100,
 "Paladin"
 ],
 [
@@ -78,23 +78,23 @@
 "Sage"
 ],
 [
-210,
+230,
 "Dark Knight"
 ],
 [
-310,
+340,
 "Holy Knight"
 ],
 [
-450,
+500,
 "Mystic Knight"
 ],
 [
-680,
+750,
 "Champion of Light"
 ],
 [
-1020,
+1160,
 "Moogle Monarch"
 ]
 ],
@@ -108,11 +108,11 @@
 "s"
 ],
 [
-210,
+230,
 "g"
 ],
 [
-560,
+620,
 "p"
 ]
 ],
@@ -2609,6 +2609,19 @@
 ]
 },
 {
+"id":"mirror",
+"c":"riddle",
+"t":"b",
+"n":"Mirror, Mirror",
+"d":"Admire yourself",
+"r":[
+[
+"mirror",
+1
+]
+]
+},
+{
 "id":"palindrome",
 "c":"riddle",
 "t":"s",
@@ -2674,6 +2687,19 @@
 ]
 },
 {
+"id":"clutchheal",
+"c":"riddle",
+"t":"s",
+"n":"Clutch Heal",
+"d":"Save the day just in time",
+"r":[
+[
+"clutch_heal",
+1
+]
+]
+},
+{
 "id":"thread",
 "c":"riddle",
 "t":"g",
@@ -2717,5 +2743,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1284
+"max":1288
 }
