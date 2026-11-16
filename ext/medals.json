@@ -352,6 +352,19 @@
 ]
 },
 {
+"id":"lucky7",
+"c":"rpg",
+"t":"p",
+"n":"All Lucky 7s",
+"d":"Find the luck in Droogle’s HP",
+"r":[
+[
+"lucky7",
+1
+]
+]
+},
+{
 "id":"kweh",
 "c":"choco",
 "t":"b",
@@ -1015,6 +1028,19 @@
 ]
 },
 {
+"id":"lurkfail",
+"c":"loyal",
+"t":"b",
+"n":"Worst. Lurker. Ever.",
+"d":"Commit to the bit… briefly",
+"r":[
+[
+"lurk_fail",
+1
+]
+]
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -1413,6 +1439,19 @@
 "r":[
 [
 "rude_wake",
+1
+]
+]
+},
+{
+"id":"sleepga",
+"c":"games",
+"t":"b",
+"n":"Sleepga",
+"d":"Make sure he’s really out",
+"r":[
+[
+"sleepga",
 1
 ]
 ]
@@ -2375,5 +2414,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1206
+"max":1233
 }
