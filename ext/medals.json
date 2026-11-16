@@ -1690,11 +1690,11 @@
 "c":"games",
 "t":"p",
 "n":"Kupo Nut Case",
-"d":"Catch 100 Kupo Nuts",
+"d":"Catch 200 Kupo Nuts",
 "r":[
 [
 "kupo",
-100
+200
 ]
 ]
 },
