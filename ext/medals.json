@@ -1890,6 +1890,19 @@
 ]
 },
 {
+"id":"knife",
+"c":"events",
+"t":"b",
+"n":"I’m Sharpening My Knife, Kupo!",
+"d":"Try a sound command 3 times during one Story Mode",
+"r":[
+[
+"story_sass",
+1
+]
+]
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -2219,5 +2232,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1186
+"max":1187
 }
