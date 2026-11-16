@@ -94,7 +94,7 @@
 "Champion of Light"
 ],
 [
-1160,
+1182,
 "Moogle Monarch"
 ]
 ],
@@ -1520,7 +1520,7 @@
 "id":"tt300",
 "c":"games",
 "t":"s",
-"n":"Queen of Cards",
+"n":"Card Shark",
 "d":"Have a Triple Triad card score of 300+",
 "r":[
 [
@@ -1656,6 +1656,19 @@
 [
 "tt_score",
 600
+]
+]
+},
+{
+"id":"tt800",
+"c":"games",
+"t":"p",
+"n":"Queen of Cards",
+"d":"Have a Triple Triad card score of 800+",
+"r":[
+[
+"tt_score",
+800
 ]
 ]
 },
@@ -2743,5 +2756,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1288
+"max":1313
 }
