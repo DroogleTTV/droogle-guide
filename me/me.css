@@ -157,7 +157,10 @@ body.twm-open{overflow:hidden}
 .twm .mdd{position:relative;flex:0 0 auto}   /* View / Category / Tier dropdowns, all left-aligned (Andrew 2026-11-16) */
 .twm .mchips.mdrops{gap:6px;flex-wrap:nowrap;justify-content:flex-end;align-items:center}   /* dropdowns right, search fills the left (Andrew 15:31) */
 .twm .msearch{position:relative;flex:1 1 auto;min-width:0;margin-right:auto;display:flex;align-items:center}
-@media (max-width:520px){.twm .mchips.mdrops{flex-wrap:wrap}.twm .msearch{flex:1 1 100%;margin-right:0}}   /* phones: search on its own row, dropdowns right-aligned under it */
+.twm .msearch{min-width:96px}
+.twm .mchips.mdrops .mdd{max-width:240px;transition:max-width .22s ease,opacity .16s ease,margin .22s ease}
+.twm .mchips.mdrops.sfocus .mdd{max-width:0;opacity:0;margin-left:-6px;overflow:hidden;pointer-events:none;visibility:hidden;transition:max-width .22s ease,opacity .12s ease,margin .22s ease,visibility 0s .22s}   /* search focused: it widens over the dropdowns (Andrew 15:59) */
+@media (prefers-reduced-motion:reduce){.twm .mchips.mdrops .mdd{transition:none}}
 .twm .msearch input{width:100%;height:26px;padding:0 10px 0 28px;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:var(--text);font:600 12px/1 inherit;outline:none;-webkit-appearance:none;appearance:none}
 .twm .msearch input::placeholder{color:var(--dim)}
 .twm .msearch input:hover{border-color:#3d5a8f}

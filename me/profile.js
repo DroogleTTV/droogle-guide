@@ -44,7 +44,8 @@
     var ME = null, MEDALS = null, RAR = null, QBCARDS = null, showAllCards = false, MEVIEW = 'profile', MFILTER = 'all';
     var MTIER = { b: 1, s: 1, g: 1, p: 1 }, MOPEN = '';   /* tier dropdown (Dashboard only, cfg.tierFilter; Andrew 2026-11-14) */
     var MCAT = '';   /* Dashboard: View / Category / Tier dropdowns, left-aligned; MOPEN = the open one (Andrew 2026-11-16) */
-    var MQ = '';     /* Dashboard: search box for medal names, left of the dropdowns (Andrew 2026-11-16 15:31) */
+    var MQ = '', MSF = false;   /* Dashboard: search box for medal names, left of the dropdowns (Andrew 15:31); MSF = it has focus:
+                                   the box then widens over the dropdowns, which come back when you click away (Andrew 15:59) */
     function qOk(m) { return !MQ || m.n.toLowerCase().indexOf(MQ.toLowerCase()) >= 0; }
     function catOk(m) { return (!MCAT || m.c === MCAT) && qOk(m); }
     var MJUMP = null;   /* a medal to scroll to once the Medals view is drawn (cfg.medalJump; Andrew 2026-11-15) */
@@ -471,16 +472,23 @@
         d.setAttribute('aria-label', TIER[t][1] + ': ' + per[t][0] + ' of ' + per[t][1] + ' earned'); tiers.appendChild(d);
       });
       box.appendChild(tiers);
-      var ch = h('div', (CLS.chips || 'chips') + ' mfilter' + (cfg.tierFilter ? ' mdrops' : '')); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
+      var ch = h('div', (CLS.chips || 'chips') + ' mfilter' + (cfg.tierFilter ? ' mdrops' + (MSF ? ' sfocus' : '') : '')); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
       var VIEWS = [['all', 'All'], ['earned', 'Earned'], ['next', 'Closest'], ['rare', 'Rarest'], ['locked', 'Locked']];
       if (cfg.tierFilter) {      /* Dashboard: search on the left, the three dropdowns right-aligned (Andrew 2026-11-16 15:31) */
-        var sl = h('label', 'msearch'), si = h('input'); si.type = 'search'; si.placeholder = 'Search medals'; si.value = MQ;
+        var sl = h('label', 'msearch'), si = h('input'); si.type = 'search'; si.placeholder = 'Search'; si.value = MQ;
         si.setAttribute('aria-label', 'Search medal names'); si.autocomplete = 'off'; si.spellcheck = false;
         si.addEventListener('input', function () {
           var pos = si.selectionStart; MQ = si.value; redraw();
           var ni = document.querySelector('.msearch input'); if (ni) { ni.focus(); try { ni.setSelectionRange(pos, pos); } catch (e) {} }
         });
         si.addEventListener('keydown', function (e) { if (e.key === 'Escape' && MQ) { e.stopPropagation(); MQ = ''; redraw(); var ni = document.querySelector('.msearch input'); if (ni) ni.focus(); } });
+        si.addEventListener('focus', function () { MSF = true; MOPEN = ''; var r = document.querySelector('.mdrops'); if (r) r.classList.add('sfocus'); [].forEach.call(document.querySelectorAll('.mdd.open'), function (d) { d.classList.remove('open'); }); });
+        si.addEventListener('blur', function () {      /* typing redraws the row, so only let go once focus has really left the box */
+          setTimeout(function () {
+            var a = document.activeElement; if (a && a.closest && a.closest('.msearch')) return;
+            MSF = false; var r = document.querySelector('.mdrops'); if (r) r.classList.remove('sfocus');
+          }, 0);
+        });
         add(sl, h('i', 'msicon'), si); ch.appendChild(sl);
         ch.appendChild(pickDrop('view', 'View', MFILTER, VIEWS, MFILTER === 'all', function (v) { MFILTER = v; }));
         var copts = [['', 'All categories']].concat(MEDALS.cats.filter(function (c) { return all.some(function (m) { return m.c === c.id; }); }).map(function (c) {
