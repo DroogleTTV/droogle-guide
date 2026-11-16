@@ -492,8 +492,8 @@
           }, 0);
         });
         add(sl, h('i', 'msicon'), si); ch.appendChild(sl);
-        ch.appendChild(pickDrop('view', 'View', MFILTER, VIEWS, MFILTER === 'all', function (v) { MFILTER = v; }));
-        var copts = [['', 'All categories']].concat(MEDALS.cats.filter(function (c) { return all.some(function (m) { return m.c === c.id; }); }).map(function (c) {
+        ch.appendChild(pickDrop('view', 'View', MFILTER, [['all', 'All Views']].concat(VIEWS.slice(1)), MFILTER === 'all', function (v) { MFILTER = v; }));
+        var copts = [['', 'All Categories']].concat(MEDALS.cats.filter(function (c) { return all.some(function (m) { return m.c === c.id; }); }).map(function (c) {
           var l = all.filter(function (m) { return m.c === c.id; }); return [c.id, c.n, l.filter(function (m) { return states[m.id].earned; }).length + '/' + l.length];
         }));
         ch.appendChild(pickDrop('cat', 'Category', MCAT, copts, !MCAT, function (v) { MCAT = v; }));
