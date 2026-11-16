@@ -155,19 +155,25 @@ body.twm-open{overflow:hidden}
 .twm .mchips button.on{background:var(--c,var(--teal));border-color:var(--c,var(--teal));color:#071220}
 /* medal tier dropdown (Andrew 2026-11-14): a chip like the others; its menu has a checkbox per tier */
 .twm .mdd{position:relative;flex:0 0 auto}   /* View / Category / Tier dropdowns, all left-aligned (Andrew 2026-11-16) */
-.twm .mchips.mdrops{gap:6px;flex-wrap:nowrap;justify-content:flex-end;align-items:center}   /* dropdowns right, search fills the left (Andrew 15:31) */
-.twm .msearch{position:relative;flex:1 1 auto;min-width:0;margin-right:auto;display:flex;align-items:center}
-.twm .msearch{min-width:96px}
-.twm .mchips.mdrops .mdd{max-width:240px;transition:max-width .22s ease,opacity .16s ease,margin .22s ease}
-.twm .mchips.mdrops.sfocus .mdd{max-width:0;opacity:0;margin-left:-6px;overflow:hidden;pointer-events:none;visibility:hidden;transition:max-width .22s ease,opacity .12s ease,margin .22s ease,visibility 0s .22s}   /* search focused: it widens over the dropdowns (Andrew 15:59) */
-@media (prefers-reduced-motion:reduce){.twm .mchips.mdrops .mdd{transition:none}}
-.twm .msearch input{width:100%;height:26px;padding:0 10px 0 28px;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:var(--text);font:600 12px/1 inherit;outline:none;-webkit-appearance:none;appearance:none}
-.twm .msearch input::placeholder{color:var(--dim)}
-.twm .msearch input:hover{border-color:#3d5a8f}
-.twm .msearch input:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(37,214,200,.18)}
-.twm .msearch input::-webkit-search-cancel-button{-webkit-appearance:none;width:12px;height:12px;cursor:pointer;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3l6 6M9 3L3 9' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
-.twm .msicon{position:absolute;left:10px;top:50%;width:12px;height:12px;margin-top:-6px;pointer-events:none;background:var(--dim);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.7 7.7L10.6 10.6' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.7 7.7L10.6 10.6' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
-.twm .msearch:focus-within .msicon{background:var(--teal)}
+.twm .mchips.mdrops{gap:6px;flex-wrap:nowrap;justify-content:flex-end;align-items:center}   /* search button left, dropdowns right (Andrew 15:31 / 16:00) */
+/* the search: a round magnifying-glass button; clicked, it grows to the right over the three dropdowns (Andrew 16:00) */
+.twm .msearch{position:relative;flex:0 0 26px;min-width:26px;margin-right:auto;display:flex;align-items:center;cursor:pointer;transition:flex-grow .24s ease}
+.twm .msearch input{width:100%;height:26px;padding:0;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:transparent;font:600 12px/1 inherit;outline:none;cursor:pointer;-webkit-appearance:none;appearance:none}
+.twm .msearch input::placeholder{color:transparent}
+.twm .msearch input::-webkit-search-cancel-button{display:none}
+.twm .msearch:hover input{border-color:#3d5a8f}
+.twm .msearch.has input{background:var(--teal);border-color:var(--teal)}   /* a search is active while it's folded up */
+.twm .msicon{position:absolute;left:7px;top:50%;width:12px;height:12px;margin-top:-6px;pointer-events:none;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.7 7.7L10.6 10.6' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.7 7.7L10.6 10.6' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.twm .msearch:hover .msicon{background:var(--text)}
+.twm .msearch.has .msicon{background:#071220}
+.twm .mdrops.sfocus .msearch{flex-grow:1;cursor:text}
+.twm .mdrops.sfocus .msearch input{padding:0 10px 0 28px;color:var(--text);background:#0a1529;border-color:var(--teal);box-shadow:0 0 0 2px rgba(37,214,200,.18);cursor:text}
+.twm .mdrops.sfocus .msearch input::placeholder{color:var(--dim)}
+.twm .mdrops.sfocus .msicon{left:10px;background:var(--teal)}
+.twm .mdrops.sfocus .msearch input::-webkit-search-cancel-button{display:block;-webkit-appearance:none;width:12px;height:12px;cursor:pointer;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3l6 6M9 3L3 9' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.twm .mchips.mdrops .mdd{max-width:240px;transition:max-width .24s ease,opacity .16s ease,margin .24s ease}
+.twm .mchips.mdrops.sfocus .mdd{max-width:0;opacity:0;margin-left:-6px;overflow:hidden;pointer-events:none;visibility:hidden;transition:max-width .24s ease,opacity .12s ease,margin .24s ease,visibility 0s .24s}
+@media (prefers-reduced-motion:reduce){.twm .mchips.mdrops .mdd,.twm .msearch{transition:none}}
 .twm .mchips .mdd>button{display:inline-flex;align-items:center;gap:6px}
 .twm .mdd.open>button{color:var(--text);border-color:#3d5a8f}
 .twm .mdd.open>button.on{color:#071220;border-color:var(--c,var(--teal))}

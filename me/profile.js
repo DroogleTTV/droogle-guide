@@ -475,7 +475,9 @@
       var ch = h('div', (CLS.chips || 'chips') + ' mfilter' + (cfg.tierFilter ? ' mdrops' + (MSF ? ' sfocus' : '') : '')); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
       var VIEWS = [['all', 'All'], ['earned', 'Earned'], ['next', 'Closest'], ['rare', 'Rarest'], ['locked', 'Locked']];
       if (cfg.tierFilter) {      /* Dashboard: search on the left, the three dropdowns right-aligned (Andrew 2026-11-16 15:31) */
-        var sl = h('label', 'msearch'), si = h('input'); si.type = 'search'; si.placeholder = 'Search'; si.value = MQ;
+        /* a magnifying-glass button; clicking it widens it into the search box over the dropdowns (Andrew 16:00) */
+        var sl = h('label', 'msearch' + (MQ ? ' has' : '')), si = h('input'); si.type = 'search'; si.placeholder = 'Search medals'; si.value = MQ;
+        sl.title = MQ ? 'Searching: ' + MQ : 'Search medals';
         si.setAttribute('aria-label', 'Search medal names'); si.autocomplete = 'off'; si.spellcheck = false;
         si.addEventListener('input', function () {
           var pos = si.selectionStart; MQ = si.value; redraw();
