@@ -205,6 +205,19 @@
 ]
 },
 {
+"id":"holdpotion",
+"c":"rpg",
+"t":"b",
+"n":"Hold My Potion",
+"d":"Help when no help is needed",
+"r":[
+[
+"hold_potion",
+1
+]
+]
+},
+{
 "id":"atk10",
 "c":"rpg",
 "t":"s",
@@ -308,6 +321,19 @@
 "r":[
 [
 "overkills",
+1
+]
+]
+},
+{
+"id":"alreadydead",
+"c":"rpg",
+"t":"s",
+"n":"He’s Already Dead, Kupo",
+"d":"Kick him while he’s down",
+"r":[
+[
+"already_dead",
 1
 ]
 ]
@@ -963,6 +989,32 @@
 ]
 },
 {
+"id":"postcredits",
+"c":"loyal",
+"t":"b",
+"n":"Post-Credits Scene",
+"d":"Save your entrance for the very end",
+"r":[
+[
+"post_credits",
+1
+]
+]
+},
+{
+"id":"brb",
+"c":"loyal",
+"t":"b",
+"n":"We’ll Be Right Back",
+"d":"Keep the conversation going when the show stops",
+"r":[
+[
+"brb_streams",
+3
+]
+]
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -1036,6 +1088,19 @@
 "r":[
 [
 "hello",
+1
+]
+]
+},
+{
+"id":"lastwords",
+"c":"loyal",
+"t":"s",
+"n":"Famous Last Words",
+"d":"Have the last word",
+"r":[
+[
+"last_words",
 1
 ]
 ]
@@ -1327,6 +1392,32 @@
 ]
 },
 {
+"id":"phantomnut",
+"c":"games",
+"t":"b",
+"n":"Phantom Nut",
+"d":"Reach for a nut that was never there",
+"r":[
+[
+"phantom_nut",
+1
+]
+]
+},
+{
+"id":"rudewake",
+"c":"games",
+"t":"b",
+"n":"Rude Awakening",
+"d":"Wake Droogle the hard way",
+"r":[
+[
+"rude_wake",
+1
+]
+]
+},
+{
 "id":"kupo25",
 "c":"games",
 "t":"s",
@@ -1444,6 +1535,19 @@
 [
 "bomb_last",
 5
+]
+]
+},
+{
+"id":"splashzone",
+"c":"games",
+"t":"s",
+"n":"Splash Zone",
+"d":"There’s more than one way to wake a sleeping Droogle",
+"r":[
+[
+"splash",
+1
 ]
 ]
 },
@@ -1903,6 +2007,32 @@
 ]
 },
 {
+"id":"pressf",
+"c":"events",
+"t":"b",
+"n":"Press F",
+"d":"Pay your respects",
+"r":[
+[
+"press_f",
+1
+]
+]
+},
+{
+"id":"moglove",
+"c":"events",
+"t":"b",
+"n":"Mog Needs Love Too",
+"d":"Show the bot some love",
+"r":[
+[
+"mog_love",
+1
+]
+]
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -2029,6 +2159,19 @@
 [
 "zelda_entry",
 10
+]
+]
+},
+{
+"id":"randomenc",
+"c":"events",
+"t":"s",
+"n":"Random Encounter",
+"d":"Roll every !random sound command",
+"r":[
+[
+"rnd_sfx",
+15
 ]
 ]
 },
@@ -2232,5 +2375,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1187
+"max":1206
 }
