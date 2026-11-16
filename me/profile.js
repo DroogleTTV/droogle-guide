@@ -44,7 +44,9 @@
     var ME = null, MEDALS = null, RAR = null, QBCARDS = null, showAllCards = false, MEVIEW = 'profile', MFILTER = 'all';
     var MTIER = { b: 1, s: 1, g: 1, p: 1 }, MOPEN = '';   /* tier dropdown (Dashboard only, cfg.tierFilter; Andrew 2026-11-14) */
     var MCAT = '';   /* Dashboard: View / Category / Tier dropdowns, left-aligned; MOPEN = the open one (Andrew 2026-11-16) */
-    function catOk(m) { return !MCAT || m.c === MCAT; }
+    var MQ = '';     /* Dashboard: search box for medal names, left of the dropdowns (Andrew 2026-11-16 15:31) */
+    function qOk(m) { return !MQ || m.n.toLowerCase().indexOf(MQ.toLowerCase()) >= 0; }
+    function catOk(m) { return (!MCAT || m.c === MCAT) && qOk(m); }
     var MJUMP = null;   /* a medal to scroll to once the Medals view is drawn (cfg.medalJump; Andrew 2026-11-15) */
     function tierOk(m) { return !cfg.tierFilter || !!MTIER[m.t]; }
     function tiersOn() { return ['b', 's', 'g', 'p'].filter(function (t) { return MTIER[t]; }); }
@@ -184,7 +186,7 @@
       box.appendChild(sw);
     }
     function jumpToMedal(m) {   /* a Recent Medal: open the Medals view on All (its tier shown) and land on that medal (Andrew 2026-11-15) */
-      MFILTER = 'all'; MOPEN = ''; if (MCAT && MCAT !== m.c) MCAT = ''; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1;
+      MFILTER = 'all'; MOPEN = ''; MQ = ''; if (MCAT && MCAT !== m.c) MCAT = ''; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1;
       MJUMP = m.id; setView('medals');
     }
     function setView(v, filter) {
@@ -471,7 +473,15 @@
       box.appendChild(tiers);
       var ch = h('div', (CLS.chips || 'chips') + ' mfilter' + (cfg.tierFilter ? ' mdrops' : '')); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
       var VIEWS = [['all', 'All'], ['earned', 'Earned'], ['next', 'Closest'], ['rare', 'Rarest'], ['locked', 'Locked']];
-      if (cfg.tierFilter) {      /* Dashboard: three dropdowns, left-aligned (Andrew 2026-11-16) */
+      if (cfg.tierFilter) {      /* Dashboard: search on the left, the three dropdowns right-aligned (Andrew 2026-11-16 15:31) */
+        var sl = h('label', 'msearch'), si = h('input'); si.type = 'search'; si.placeholder = 'Search medals'; si.value = MQ;
+        si.setAttribute('aria-label', 'Search medal names'); si.autocomplete = 'off'; si.spellcheck = false;
+        si.addEventListener('input', function () {
+          var pos = si.selectionStart; MQ = si.value; redraw();
+          var ni = document.querySelector('.msearch input'); if (ni) { ni.focus(); try { ni.setSelectionRange(pos, pos); } catch (e) {} }
+        });
+        si.addEventListener('keydown', function (e) { if (e.key === 'Escape' && MQ) { e.stopPropagation(); MQ = ''; redraw(); var ni = document.querySelector('.msearch input'); if (ni) ni.focus(); } });
+        add(sl, h('i', 'msicon'), si); ch.appendChild(sl);
         ch.appendChild(pickDrop('view', 'View', MFILTER, VIEWS, MFILTER === 'all', function (v) { MFILTER = v; }));
         var copts = [['', 'All categories']].concat(MEDALS.cats.filter(function (c) { return all.some(function (m) { return m.c === c.id; }); }).map(function (c) {
           var l = all.filter(function (m) { return m.c === c.id; }); return [c.id, c.n, l.filter(function (m) { return states[m.id].earned; }).length + '/' + l.length];
@@ -506,7 +516,7 @@
       };
       var flat = function (title, list, empty) {
         var sec = section(title); list.forEach(function (m) { sec.appendChild(row(m)); }); shown = list.length;
-        if (!list.length) sec.appendChild(h('p', 'mempty', empty)); box.appendChild(sec);
+        if (!list.length) sec.appendChild(h('p', 'mempty', MQ ? 'No medals match “' + MQ + '”.' : empty)); box.appendChild(sec);
       };
       if (MFILTER === 'next') {
         flat('Closest to earning', all.filter(function (m) { return tierOk(m) && catOk(m) && !states[m.id].earned && states[m.id].p > 0; }).sort(function (a, b) { return states[b.id].p - states[a.id].p; }).slice(0, 12),
@@ -518,7 +528,7 @@
         MEDALS.cats.forEach(function (c) {
           if (MCAT && c.id !== MCAT) return;
           var full = all.filter(function (m) { return m.c === c.id; }), got = full.filter(function (m) { return states[m.id].earned; }).length;
-          var list = full.filter(function (m) { return tierOk(m) && (MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned); })
+          var list = full.filter(function (m) { return tierOk(m) && qOk(m) && (MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned); })
             .sort(function (a, b) { return TORD[a.t] - TORD[b.t]; });
           if (!list.length) return;
           if (c.id === 'season' || full.every(function (m) { return m.s; })) {      // seasonal: extra to the 100, no completion bar
@@ -533,7 +543,8 @@
           box.appendChild(sec);
         });
         var cname = MCAT ? (MEDALS.cats.filter(function (c) { return c.id === MCAT; })[0] || { n: '' }).n : '';
-        if (!shown && cname) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No ' + cname + ' medals earned yet' + (tiersOn().length < 4 ? ' in these tiers.' : '. Every medal is free to earn!') : MFILTER === 'locked' ? 'Every ' + cname + ' medal' + (tiersOn().length < 4 ? ' in these tiers' : '') + ' earned!' : 'No ' + cname + ' medals here.'));
+        if (!shown && MQ) box.appendChild(h('p', 'mnone', 'No medals match “' + MQ + '”' + (MCAT || MFILTER !== 'all' || tiersOn().length < 4 ? ' with these filters.' : '.')));
+        else if (!shown && cname) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No ' + cname + ' medals earned yet' + (tiersOn().length < 4 ? ' in these tiers.' : '. Every medal is free to earn!') : MFILTER === 'locked' ? 'Every ' + cname + ' medal' + (tiersOn().length < 4 ? ' in these tiers' : '') + ' earned!' : 'No ' + cname + ' medals here.'));
         else if (!shown) box.appendChild(h('p', 'mnone', tiersOn().length < 4 ? (MFILTER === 'earned' ? 'No ' + tierNames() + ' medals earned yet.' : MFILTER === 'locked' ? 'Every ' + tierNames() + ' medal earned!' : 'No ' + tierNames() + ' medals here.')
           : MFILTER === 'earned' ? 'No medals yet. Every medal is free to earn; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
       }

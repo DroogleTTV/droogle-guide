@@ -155,11 +155,20 @@ body.twm-open{overflow:hidden}
 .twm .mchips button.on{background:var(--c,var(--teal));border-color:var(--c,var(--teal));color:#071220}
 /* medal tier dropdown (Andrew 2026-11-14): a chip like the others; its menu has a checkbox per tier */
 .twm .mdd{position:relative;flex:0 0 auto}   /* View / Category / Tier dropdowns, all left-aligned (Andrew 2026-11-16) */
-.twm .mchips.mdrops{gap:6px;flex-wrap:wrap}
+.twm .mchips.mdrops{gap:6px;flex-wrap:nowrap;justify-content:flex-end;align-items:center}   /* dropdowns right, search fills the left (Andrew 15:31) */
+.twm .msearch{position:relative;flex:1 1 auto;min-width:0;margin-right:auto;display:flex;align-items:center}
+@media (max-width:520px){.twm .mchips.mdrops{flex-wrap:wrap}.twm .msearch{flex:1 1 100%;margin-right:0}}   /* phones: search on its own row, dropdowns right-aligned under it */
+.twm .msearch input{width:100%;height:26px;padding:0 10px 0 28px;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:var(--text);font:600 12px/1 inherit;outline:none;-webkit-appearance:none;appearance:none}
+.twm .msearch input::placeholder{color:var(--dim)}
+.twm .msearch input:hover{border-color:#3d5a8f}
+.twm .msearch input:focus{border-color:var(--teal);box-shadow:0 0 0 2px rgba(37,214,200,.18)}
+.twm .msearch input::-webkit-search-cancel-button{-webkit-appearance:none;width:12px;height:12px;cursor:pointer;background:var(--muted);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M3 3l6 6M9 3L3 9' stroke='%23000' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.twm .msicon{position:absolute;left:10px;top:50%;width:12px;height:12px;margin-top:-6px;pointer-events:none;background:var(--dim);-webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.7 7.7L10.6 10.6' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat;mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Ccircle cx='5' cy='5' r='3.6' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3Cpath d='M7.7 7.7L10.6 10.6' stroke='%23000' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E") center/contain no-repeat}
+.twm .msearch:focus-within .msicon{background:var(--teal)}
 .twm .mchips .mdd>button{display:inline-flex;align-items:center;gap:6px}
 .twm .mdd.open>button{color:var(--text);border-color:#3d5a8f}
 .twm .mdd.open>button.on{color:#071220;border-color:var(--c,var(--teal))}
-.twm .mdmenu{position:absolute;left:0;top:calc(100% + 6px);z-index:5;width:max-content;min-width:100%;max-height:min(60vh,380px);overflow-y:auto;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
+.twm .mdmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:5;width:max-content;min-width:100%;max-height:min(60vh,380px);overflow-y:auto;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
 .twm .mchips .mdmenu .mdopt{display:flex;width:100%;height:30px;align-items:center;gap:8px;padding:0 10px 0 8px;border:0;border-radius:7px;background:none;color:var(--text);font-size:12.5px;font-weight:600;text-align:left}
 .twm .mchips .mdmenu .mdopt:hover,.twm .mchips .mdmenu .mdopt:focus-visible{background:#13234a;outline:none}
 .twm .mdopt .mdchk{flex:0 0 12px;width:12px;height:12px}
@@ -169,7 +178,7 @@ body.twm-open{overflow:hidden}
 .twm .mdopt .mdx{flex:0 0 auto;margin-left:14px;font:12px/1 Pixel,monospace;color:var(--muted)}
 .twm .mtcaret{width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid currentColor;transition:transform .15s}
 .twm .mdd.open .mtcaret{transform:rotate(180deg)}
-.twm .mtmenu{position:absolute;left:0;top:calc(100% + 6px);z-index:5;width:max-content;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
+.twm .mtmenu{position:absolute;right:0;top:calc(100% + 6px);z-index:5;width:max-content;padding:5px;border-radius:11px;background:#0b1730;border:1px solid #2a416c;box-shadow:0 12px 28px rgba(0,0,0,.6)}
 .twm .mtopt{display:flex;flex-direction:row;justify-content:flex-start;align-items:center;gap:8px;text-align:left;padding:5px 8px;border-radius:7px;font-size:12.5px;font-weight:600;color:var(--text);cursor:pointer;user-select:none}
 .twm .mtopt:hover{background:#13234a}
 .twm .mtopt input{accent-color:var(--teal);width:15px;height:15px;margin:0;cursor:pointer}
