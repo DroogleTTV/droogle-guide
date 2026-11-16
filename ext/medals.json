@@ -1002,6 +1002,19 @@
 ]
 },
 {
+"id":"hello",
+"c":"loyal",
+"t":"s",
+"n":"You Had Me at Hello",
+"d":"Cheer, sub, gift a sub or tip before your first chat message of a stream",
+"r":[
+[
+"hello",
+1
+]
+]
+},
+{
 "id":"follow5",
 "c":"loyal",
 "t":"g",
@@ -1080,6 +1093,19 @@
 ]
 },
 {
+"id":"streak50",
+"c":"loyal",
+"t":"g",
+"n":"Chain of Memories",
+"d":"Attend 50 streams in a row",
+"r":[
+[
+"att_best",
+50
+]
+]
+},
+{
 "id":"follow10",
 "c":"loyal",
 "t":"p",
@@ -1127,6 +1153,19 @@
 "r":[
 [
 "medals_n",
+100
+]
+]
+},
+{
+"id":"streak100",
+"c":"loyal",
+"t":"p",
+"n":"Chains of Promathia",
+"d":"Attend 100 streams in a row",
+"r":[
+[
+"att_best",
 100
 ]
 ]
@@ -1799,6 +1838,32 @@
 ]
 },
 {
+"id":"fangs",
+"c":"events",
+"t":"b",
+"n":"Fangs for the Darkness",
+"d":"Type !lightsoff while Nosferatu is on screen",
+"r":[
+[
+"fangs",
+1
+]
+]
+},
+{
+"id":"slice",
+"c":"events",
+"t":"b",
+"n":"Slice of the Pie",
+"d":"Be at the stream when a daily goal is met",
+"r":[
+[
+"goal_seen",
+1
+]
+]
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -1899,6 +1964,32 @@
 [
 "snap_survive",
 1
+]
+]
+},
+{
+"id":"topping",
+"c":"events",
+"t":"s",
+"n":"Topping It Off",
+"d":"Be the one whose follow, sub, cheer or tip completes a daily goal",
+"r":[
+[
+"goal_push",
+1
+]
+]
+},
+{
+"id":"zelda10",
+"c":"events",
+"t":"s",
+"n":"Hey! Listen!",
+"d":"Enter 10 Hero of Time draws",
+"r":[
+[
+"zelda_entry",
+10
 ]
 ]
 },
@@ -2033,6 +2124,19 @@
 ]
 },
 {
+"id":"pizzatime",
+"c":"events",
+"t":"g",
+"n":"It’s Pizza Time!",
+"d":"Be at the stream when all 4 daily goals are met",
+"r":[
+[
+"pizza_time",
+1
+]
+]
+},
+{
 "id":"ffb50",
 "c":"events",
 "t":"p",
@@ -2089,5 +2193,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1126
+"max":1182
 }
