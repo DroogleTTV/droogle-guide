@@ -42,7 +42,9 @@
     var SITE = cfg.site, IMG = cfg.img, CLS = cfg.cls || {};
     var RARITY_URL = SITE + 'data/medal_rarity.json';   /* live data, copied onto the Dashboard site by its publish workflow */
     var ME = null, MEDALS = null, RAR = null, QBCARDS = null, showAllCards = false, MEVIEW = 'profile', MFILTER = 'all';
-    var MTIER = { b: 1, s: 1, g: 1, p: 1 }, MTOPEN = false;   /* tier dropdown (Dashboard only, cfg.tierFilter; Andrew 2026-11-14) */
+    var MTIER = { b: 1, s: 1, g: 1, p: 1 }, MOPEN = '';   /* tier dropdown (Dashboard only, cfg.tierFilter; Andrew 2026-11-14) */
+    var MCAT = '';   /* Dashboard: View / Category / Tier dropdowns, left-aligned; MOPEN = the open one (Andrew 2026-11-16) */
+    function catOk(m) { return !MCAT || m.c === MCAT; }
     var MJUMP = null;   /* a medal to scroll to once the Medals view is drawn (cfg.medalJump; Andrew 2026-11-15) */
     function tierOk(m) { return !cfg.tierFilter || !!MTIER[m.t]; }
     function tiersOn() { return ['b', 's', 'g', 'p'].filter(function (t) { return MTIER[t]; }); }
@@ -182,7 +184,7 @@
       box.appendChild(sw);
     }
     function jumpToMedal(m) {   /* a Recent Medal: open the Medals view on All (its tier shown) and land on that medal (Andrew 2026-11-15) */
-      MFILTER = 'all'; MTOPEN = false; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1;
+      MFILTER = 'all'; MOPEN = ''; if (MCAT && MCAT !== m.c) MCAT = ''; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1;
       MJUMP = m.id; setView('medals');
     }
     function setView(v, filter) {
@@ -397,13 +399,13 @@
     /* ---------- tier dropdown: a chip like the others; its menu has a checkbox per tier (Dashboard only) ---------- */
     function tierNames() { var on = tiersOn(); return on.map(function (t) { return TIER[t][1]; }).join(on.length === 2 ? ' and ' : ', ').replace(/, ([^,]*)$/, ' and $1'); }
     function tierDrop() {
-      var on = tiersOn(), w = h('div', 'mtdd' + (MTOPEN ? ' open' : '')), b = h('button', on.length < 4 ? 'on' : '');
-      b.type = 'button'; b.setAttribute('aria-haspopup', 'true'); b.setAttribute('aria-expanded', MTOPEN ? 'true' : 'false');
+      var open = MOPEN === 'tier', on = tiersOn(), w = h('div', 'mdd mtdd' + (open ? ' open' : '')), b = h('button', on.length < 4 ? 'on' : '');
+      b.type = 'button'; b.setAttribute('aria-haspopup', 'true'); b.setAttribute('aria-expanded', open ? 'true' : 'false');
       b.setAttribute('aria-label', 'Medal tiers: ' + (on.length === 4 ? 'all' : tierNames()));
       add(b, h('span', null, on.length === 4 ? 'Tiers' : on.length === 1 ? TIER[on[0]][1] : on.length + ' tiers'), h('i', 'mtcaret'));
-      b.addEventListener('click', function (e) { e.stopPropagation(); MTOPEN = !MTOPEN; redraw(); if (MTOPEN) focusTier(on[0] || 'b'); });
+      b.addEventListener('click', function (e) { e.stopPropagation(); MOPEN = open ? '' : 'tier'; redraw(); if (MOPEN) focusTier(on[0] || 'b'); });
       w.appendChild(b);
-      if (MTOPEN) {
+      if (open) {
         var m = h('div', 'mtmenu'); m.setAttribute('role', 'group'); m.setAttribute('aria-label', 'Show these medal tiers');
         ['b', 's', 'g', 'p'].forEach(function (t) {
           var l = h('label', 'mtopt ' + TIER[t][0]), c = h('input'); c.type = 'checkbox'; c.checked = !!MTIER[t]; c.setAttribute('data-t', t);
@@ -415,15 +417,44 @@
         all.addEventListener('click', function () { MTIER = { b: 1, s: 1, g: 1, p: 1 }; redraw(); focusTier('b'); });
         m.appendChild(all);
         m.addEventListener('click', function (e) { e.stopPropagation(); });
-        w.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); MTOPEN = false; redraw(); var bb = document.querySelector('.mtdd > button'); if (bb) bb.focus(); } });   /* Esc closes the menu, not the card */
+        w.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); MOPEN = ''; redraw(); var bb = document.querySelector('.mtdd > button'); if (bb) bb.focus(); } });   /* Esc closes the menu, not the card */
         w.appendChild(m);
       }
-      if (!tierDrop.hooked) {      /* a click anywhere else closes the menu */
-        tierDrop.hooked = 1;
-        document.addEventListener('click', function (e) { if (MTOPEN && !(e.target.closest && e.target.closest('.mtdd'))) { MTOPEN = false; redraw(); } });
-      }
+      hookDrops();
       return w;
     }
+    function hookDrops() {      /* a click anywhere else closes the open menu */
+      if (hookDrops.done) return; hookDrops.done = 1;
+      document.addEventListener('click', function (e) { if (MOPEN && !(e.target.closest && e.target.closest('.mdd'))) { MOPEN = ''; redraw(); } });
+    }
+    /* a single-choice dropdown (View, Category): key = its MOPEN name; opts = [[value, label, extra]] */
+    function pickDrop(key, aria, cur, opts, isDefault, onPick) {
+      var open = MOPEN === key, w = h('div', 'mdd' + (open ? ' open' : '')), sel = opts.filter(function (o) { return o[0] === cur; })[0] || opts[0];
+      var b = h('button', isDefault ? '' : 'on'); b.type = 'button'; b.setAttribute('aria-haspopup', 'true'); b.setAttribute('aria-expanded', open ? 'true' : 'false');
+      b.setAttribute('aria-label', aria + ': ' + sel[1]); b.setAttribute('data-dd', key);
+      add(b, h('span', null, sel[1]), h('i', 'mtcaret'));
+      b.addEventListener('click', function (e) { e.stopPropagation(); MOPEN = open ? '' : key; redraw(); if (MOPEN) focusPick(key); });
+      w.appendChild(b);
+      if (open) {
+        var m = h('div', 'mdmenu'); m.setAttribute('role', 'menu'); m.setAttribute('aria-label', aria);
+        opts.forEach(function (o) {
+          var it = h('button', 'mdopt' + (o[0] === cur ? ' sel' : '')); it.type = 'button'; it.setAttribute('role', 'menuitemradio'); it.setAttribute('aria-checked', o[0] === cur ? 'true' : 'false');
+          add(it, h('i', 'mdchk'), h('span', 'mdn', o[1]), o[2] ? h('span', 'mdx', o[2]) : null);
+          it.addEventListener('click', function (e) { e.stopPropagation(); MOPEN = ''; onPick(o[0]); redraw(); var bb = document.querySelector('.mdd > button[data-dd="' + key + '"]'); if (bb) bb.focus(); });
+          m.appendChild(it);
+        });
+        m.addEventListener('keydown', function (e) {    /* arrow keys move through the options */
+          if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return; e.preventDefault();
+          var its = [].slice.call(m.querySelectorAll('.mdopt')), i = its.indexOf(document.activeElement);
+          its[(i + (e.key === 'ArrowDown' ? 1 : its.length - 1)) % its.length].focus();
+        });
+        w.addEventListener('keydown', function (e) { if (e.key === 'Escape') { e.stopPropagation(); MOPEN = ''; redraw(); var bb = document.querySelector('.mdd > button[data-dd="' + key + '"]'); if (bb) bb.focus(); } });
+        w.appendChild(m);
+      }
+      hookDrops();
+      return w;
+    }
+    function focusPick(key) { var c = document.querySelector('.mdd.open .mdopt.sel') || document.querySelector('.mdd.open .mdopt'); if (c) c.focus(); }
     function focusTier(t) { var c = document.querySelector('.mtmenu input[data-t="' + t + '"]'); if (c && !c.disabled) c.focus(); else { c = document.querySelector('.mtmenu input:not([disabled])'); if (c) c.focus(); } }
 
     /* ---------- medals view ---------- */
@@ -438,12 +469,21 @@
         d.setAttribute('aria-label', TIER[t][1] + ': ' + per[t][0] + ' of ' + per[t][1] + ' earned'); tiers.appendChild(d);
       });
       box.appendChild(tiers);
-      var ch = h('div', (CLS.chips || 'chips') + ' mfilter'); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
-      [['all', 'All'], ['earned', 'Earned'], ['next', 'Closest'], ['rare', 'Rarest'], ['locked', 'Locked']].forEach(function (x) {
-        var b = h('button', MFILTER === x[0] ? 'on' : '', x[1]); b.type = 'button'; b.setAttribute('aria-pressed', MFILTER === x[0] ? 'true' : 'false');
-        b.addEventListener('click', function () { MFILTER = x[0]; redraw(); }); ch.appendChild(b);
-      });
-      if (cfg.tierFilter) ch.appendChild(tierDrop());
+      var ch = h('div', (CLS.chips || 'chips') + ' mfilter' + (cfg.tierFilter ? ' mdrops' : '')); ch.setAttribute('role', 'group'); ch.setAttribute('aria-label', 'Show medals');
+      var VIEWS = [['all', 'All'], ['earned', 'Earned'], ['next', 'Closest'], ['rare', 'Rarest'], ['locked', 'Locked']];
+      if (cfg.tierFilter) {      /* Dashboard: three dropdowns, left-aligned (Andrew 2026-11-16) */
+        ch.appendChild(pickDrop('view', 'View', MFILTER, VIEWS, MFILTER === 'all', function (v) { MFILTER = v; }));
+        var copts = [['', 'All categories']].concat(MEDALS.cats.filter(function (c) { return all.some(function (m) { return m.c === c.id; }); }).map(function (c) {
+          var l = all.filter(function (m) { return m.c === c.id; }); return [c.id, c.n, l.filter(function (m) { return states[m.id].earned; }).length + '/' + l.length];
+        }));
+        ch.appendChild(pickDrop('cat', 'Category', MCAT, copts, !MCAT, function (v) { MCAT = v; }));
+        ch.appendChild(tierDrop());
+      } else {
+        VIEWS.forEach(function (x) {
+          var b = h('button', MFILTER === x[0] ? 'on' : '', x[1]); b.type = 'button'; b.setAttribute('aria-pressed', MFILTER === x[0] ? 'true' : 'false');
+          b.addEventListener('click', function () { MFILTER = x[0]; redraw(); }); ch.appendChild(b);
+        });
+      }
       box.appendChild(ch);
       var shown = 0;
       var row = function (m) {
@@ -469,13 +509,14 @@
         if (!list.length) sec.appendChild(h('p', 'mempty', empty)); box.appendChild(sec);
       };
       if (MFILTER === 'next') {
-        flat('Closest to earning', all.filter(function (m) { return tierOk(m) && !states[m.id].earned && states[m.id].p > 0; }).sort(function (a, b) { return states[b.id].p - states[a.id].p; }).slice(0, 12),
+        flat('Closest to earning', all.filter(function (m) { return tierOk(m) && catOk(m) && !states[m.id].earned && states[m.id].p > 0; }).sort(function (a, b) { return states[b.id].p - states[a.id].p; }).slice(0, 12),
           'Nothing in progress yet. Chat, play the mini-games and join in on stream to start earning!');
       } else if (MFILTER === 'rare') {
         if (!RAR || RAR.none) { box.appendChild(h('p', 'mnone', RAR ? 'Medal rarity isn’t available yet. It appears once the community has been tracked for a stream or two.' : 'Loading medal rarity…')); return; }
-        flat('Rarest medals in the community', all.filter(function (m) { var r = rarity(m); return tierOk(m) && r && r.n > 0; }).sort(function (a, b) { return rarity(a).pc - rarity(b).pc || TORD[b.t] - TORD[a.t]; }).slice(0, 20), '');
+        flat('Rarest medals in the community', all.filter(function (m) { var r = rarity(m); return tierOk(m) && catOk(m) && r && r.n > 0; }).sort(function (a, b) { return rarity(a).pc - rarity(b).pc || TORD[b.t] - TORD[a.t]; }).slice(0, 20), '');
       } else {
         MEDALS.cats.forEach(function (c) {
+          if (MCAT && c.id !== MCAT) return;
           var full = all.filter(function (m) { return m.c === c.id; }), got = full.filter(function (m) { return states[m.id].earned; }).length;
           var list = full.filter(function (m) { return tierOk(m) && (MFILTER === 'all' || (MFILTER === 'earned') === states[m.id].earned); })
             .sort(function (a, b) { return TORD[a.t] - TORD[b.t]; });
@@ -491,7 +532,9 @@
           list.forEach(function (m) { sec.appendChild(row(m)); }); shown += list.length;
           box.appendChild(sec);
         });
-        if (!shown) box.appendChild(h('p', 'mnone', tiersOn().length < 4 ? (MFILTER === 'earned' ? 'No ' + tierNames() + ' medals earned yet.' : MFILTER === 'locked' ? 'Every ' + tierNames() + ' medal earned!' : 'No ' + tierNames() + ' medals here.')
+        var cname = MCAT ? (MEDALS.cats.filter(function (c) { return c.id === MCAT; })[0] || { n: '' }).n : '';
+        if (!shown && cname) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No ' + cname + ' medals earned yet' + (tiersOn().length < 4 ? ' in these tiers.' : '. Every medal is free to earn!') : MFILTER === 'locked' ? 'Every ' + cname + ' medal' + (tiersOn().length < 4 ? ' in these tiers' : '') + ' earned!' : 'No ' + cname + ' medals here.'));
+        else if (!shown) box.appendChild(h('p', 'mnone', tiersOn().length < 4 ? (MFILTER === 'earned' ? 'No ' + tierNames() + ' medals earned yet.' : MFILTER === 'locked' ? 'Every ' + tierNames() + ' medal earned!' : 'No ' + tierNames() + ' medals here.')
           : MFILTER === 'earned' ? 'No medals yet. Every medal is free to earn; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
       }
       box.appendChild(h('p', CLS.foot || 'foot', 'Moogle Medals are free to earn and never go away once you have them. Rarity counts members who were at a stream in each of the last 3 months. Progress updates about every 20 minutes while Droogle is live.'));

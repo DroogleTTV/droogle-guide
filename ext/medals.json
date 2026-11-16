@@ -34,6 +34,10 @@
 "n":"Events"
 },
 {
+"id":"riddle",
+"n":"Riddle Me Kupo"
+},
+{
 "id":"season",
 "n":"Seasonal"
 }
@@ -206,7 +210,7 @@
 },
 {
 "id":"holdpotion",
-"c":"rpg",
+"c":"riddle",
 "t":"b",
 "n":"Hold My Potion",
 "d":"Help when no help is needed",
@@ -327,7 +331,7 @@
 },
 {
 "id":"alreadydead",
-"c":"rpg",
+"c":"riddle",
 "t":"s",
 "n":"He’s Already Dead, Kupo",
 "d":"Kick him while he’s down",
@@ -353,7 +357,7 @@
 },
 {
 "id":"lucky7",
-"c":"rpg",
+"c":"riddle",
 "t":"p",
 "n":"All Lucky 7s",
 "d":"Find the luck in Droogle’s HP",
@@ -1003,7 +1007,7 @@
 },
 {
 "id":"postcredits",
-"c":"loyal",
+"c":"riddle",
 "t":"b",
 "n":"Post-Credits Scene",
 "d":"Save your entrance for the very end",
@@ -1016,7 +1020,7 @@
 },
 {
 "id":"brb",
-"c":"loyal",
+"c":"riddle",
 "t":"b",
 "n":"We’ll Be Right Back",
 "d":"Keep the conversation going when the show stops",
@@ -1029,7 +1033,7 @@
 },
 {
 "id":"lurkfail",
-"c":"loyal",
+"c":"riddle",
 "t":"b",
 "n":"Worst. Lurker. Ever.",
 "d":"Commit to the bit… briefly",
@@ -1120,7 +1124,7 @@
 },
 {
 "id":"lastwords",
-"c":"loyal",
+"c":"riddle",
 "t":"s",
 "n":"Famous Last Words",
 "d":"Have the last word",
@@ -1201,7 +1205,7 @@
 "c":"loyal",
 "t":"g",
 "n":"Job Master",
-"d":"Earn a medal in all 8 categories",
+"d":"Earn a medal in 8 different categories",
 "r":[
 [
 "cats_n",
@@ -1419,7 +1423,7 @@
 },
 {
 "id":"phantomnut",
-"c":"games",
+"c":"riddle",
 "t":"b",
 "n":"Phantom Nut",
 "d":"Reach for a nut that was never there",
@@ -1432,7 +1436,7 @@
 },
 {
 "id":"rudewake",
-"c":"games",
+"c":"riddle",
 "t":"b",
 "n":"Rude Awakening",
 "d":"Wake Droogle the hard way",
@@ -1445,7 +1449,7 @@
 },
 {
 "id":"sleepga",
-"c":"games",
+"c":"riddle",
 "t":"b",
 "n":"Sleepga",
 "d":"Make sure he’s really out",
@@ -1579,7 +1583,7 @@
 },
 {
 "id":"splashzone",
-"c":"games",
+"c":"riddle",
 "t":"s",
 "n":"Splash Zone",
 "d":"There’s more than one way to wake a sleeping Droogle",
@@ -2034,7 +2038,7 @@
 },
 {
 "id":"knife",
-"c":"events",
+"c":"riddle",
 "t":"b",
 "n":"I’m Sharpening My Knife, Kupo!",
 "d":"Anger the Moogle during Story Mode",
@@ -2047,7 +2051,7 @@
 },
 {
 "id":"pressf",
-"c":"events",
+"c":"riddle",
 "t":"b",
 "n":"Press F",
 "d":"Pay your respects",
@@ -2060,7 +2064,7 @@
 },
 {
 "id":"moglove",
-"c":"events",
+"c":"riddle",
 "t":"b",
 "n":"Mog Needs Love Too",
 "d":"Show the bot some love",
@@ -2397,6 +2401,305 @@
 ]
 },
 {
+"id":"echo",
+"c":"riddle",
+"t":"b",
+"n":"Echo Chamber",
+"d":"Great minds think alike",
+"r":[
+[
+"echo",
+1
+]
+]
+},
+{
+"id":"talkself",
+"c":"riddle",
+"t":"b",
+"n":"Is This Thing On?",
+"d":"Talk amongst yourself",
+"r":[
+[
+"talk_self",
+1
+]
+]
+},
+{
+"id":"insidevoice",
+"c":"riddle",
+"t":"b",
+"n":"Inside Voice",
+"d":"Use your inside voice",
+"r":[
+[
+"inside_voice",
+1
+]
+]
+},
+{
+"id":"midnight",
+"c":"riddle",
+"t":"b",
+"n":"Midnight Snack",
+"d":"Watch the clock",
+"r":[
+[
+"midnight",
+1
+]
+]
+},
+{
+"id":"fashlate",
+"c":"riddle",
+"t":"b",
+"n":"Fashionably Late",
+"d":"Better late than never",
+"r":[
+[
+"late_entry",
+1
+]
+]
+},
+{
+"id":"coldopen",
+"c":"riddle",
+"t":"b",
+"n":"Cold Open",
+"d":"Get here before the show does",
+"r":[
+[
+"cold_open",
+1
+]
+]
+},
+{
+"id":"longstory",
+"c":"riddle",
+"t":"b",
+"n":"Long Story Short",
+"d":"Brevity is not your strength",
+"r":[
+[
+"long_story",
+1
+]
+]
+},
+{
+"id":"speechless",
+"c":"riddle",
+"t":"b",
+"n":"Speechless",
+"d":"Say nothing at all",
+"r":[
+[
+"speechless",
+1
+]
+]
+},
+{
+"id":"fluentmoogle",
+"c":"riddle",
+"t":"b",
+"n":"Fluent in Moogle",
+"d":"Speak the language",
+"r":[
+[
+"kupo5",
+1
+]
+]
+},
+{
+"id":"manners",
+"c":"riddle",
+"t":"b",
+"n":"Mind Your Manners",
+"d":"Say the magic word",
+"r":[
+[
+"manners",
+1
+]
+]
+},
+{
+"id":"goodbot",
+"c":"riddle",
+"t":"b",
+"n":"Good Bot",
+"d":"Positive reinforcement",
+"r":[
+[
+"good_bot",
+1
+]
+]
+},
+{
+"id":"badbot",
+"c":"riddle",
+"t":"b",
+"n":"Bad Bot",
+"d":"Negative reinforcement",
+"r":[
+[
+"bad_bot",
+1
+]
+]
+},
+{
+"id":"jumpgun",
+"c":"riddle",
+"t":"b",
+"n":"Jumped the Gun",
+"d":"Patience, kupo",
+"r":[
+[
+"jump_gun",
+1
+]
+]
+},
+{
+"id":"ettu",
+"c":"riddle",
+"t":"b",
+"n":"Et Tu, Kupo?",
+"d":"Pick a side",
+"r":[
+[
+"et_tu",
+1
+]
+]
+},
+{
+"id":"snooze",
+"c":"riddle",
+"t":"b",
+"n":"Snooze Button",
+"d":"Five more minutes",
+"r":[
+[
+"snooze",
+1
+]
+]
+},
+{
+"id":"magicwords",
+"c":"riddle",
+"t":"b",
+"n":"Made-Up Magic Words",
+"d":"Invent a spell",
+"r":[
+[
+"magic_words",
+1
+]
+]
+},
+{
+"id":"palindrome",
+"c":"riddle",
+"t":"s",
+"n":"Was It a Cat I Saw?",
+"d":"Works both ways",
+"r":[
+[
+"palindrome",
+1
+]
+]
+},
+{
+"id":"pangram",
+"c":"riddle",
+"t":"s",
+"n":"The Quick Brown Moogle",
+"d":"Use every letter you’ve got",
+"r":[
+[
+"pangram",
+1
+]
+]
+},
+{
+"id":"droofacemedal",
+"c":"riddle",
+"t":"s",
+"n":"Say It With Your Face",
+"d":"Let Droo’s face do the talking",
+"r":[
+[
+"droo_face",
+1
+]
+]
+},
+{
+"id":"anykupo",
+"c":"riddle",
+"t":"s",
+"n":"Any% Kupo",
+"d":"Blink and you’ll miss it",
+"r":[
+[
+"kupo_any",
+1
+]
+]
+},
+{
+"id":"groundhog",
+"c":"riddle",
+"t":"s",
+"n":"Groundhog Day",
+"d":"Some things never get old",
+"r":[
+[
+"groundhog",
+5
+]
+]
+},
+{
+"id":"thread",
+"c":"riddle",
+"t":"g",
+"n":"Hanging by a Thread",
+"d":"Find the drama in Droogle’s HP",
+"r":[
+[
+"thread",
+1
+]
+]
+},
+{
+"id":"jackpot",
+"c":"riddle",
+"t":"g",
+"n":"Jackpot Message",
+"d":"Timing is everything",
+"r":[
+[
+"jackpot",
+1
+]
+]
+},
+{
 "id":"santa",
 "c":"season",
 "t":"p",
@@ -2414,5 +2717,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1233
+"max":1284
 }
