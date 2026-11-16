@@ -534,6 +534,19 @@
 ]
 },
 {
+"id":"qblegend",
+"c":"qb",
+"t":"b",
+"n":"Legen—wait for it—dary!",
+"d":"Own a legendary Queen’s Blood card",
+"r":[
+[
+"qb_legend",
+1
+]
+]
+},
+{
 "id":"qb25",
 "c":"qb",
 "t":"s",
@@ -569,6 +582,19 @@
 [
 "qb_packs",
 50
+]
+]
+},
+{
+"id":"qbmain",
+"c":"qb",
+"t":"s",
+"n":"Main Character Syndrome",
+"d":"Own a main party Queen’s Blood card (Cloud, Barret, Tifa, Aerith, Red XIII, Yuffie, Cait Sith, Cid or Vincent)",
+"r":[
+[
+"qb_main",
+1
 ]
 ]
 },
@@ -2193,5 +2219,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1182
+"max":1186
 }
