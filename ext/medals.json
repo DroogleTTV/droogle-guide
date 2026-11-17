@@ -1101,6 +1101,19 @@
 ]
 },
 {
+"id":"raidout",
+"c":"loyal",
+"t":"b",
+"n":"All Aboard the Highwind",
+"d":"Ride along when Droogle raids another channel",
+"r":[
+[
+"raid_out",
+1
+]
+]
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -2249,6 +2262,20 @@
 ]
 },
 {
+"id":"raidin",
+"c":"events",
+"t":"b",
+"n":"Party Crasher",
+"d":"Arrive with a raid into Droogle’s channel",
+"r":[
+[
+"raid_in",
+1
+]
+],
+"ann":"🎉 RAID! The {n} raiders who just stormed in earned the BRONZE Moogle Medal: {name}! Welcome to the party, kupo!"
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -2977,6 +3004,19 @@
 ]
 },
 {
+"id":"welcomewagon",
+"c":"riddle",
+"t":"b",
+"n":"Welcome Wagon",
+"d":"Roll out the red carpet",
+"r":[
+[
+"raid_welcome",
+1
+]
+]
+},
+{
 "id":"palindrome",
 "c":"riddle",
 "t":"s",
@@ -3176,5 +3216,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1434
+"max":1437
 }
