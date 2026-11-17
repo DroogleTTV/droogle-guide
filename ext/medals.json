@@ -187,19 +187,6 @@
 ]
 },
 {
-"id":"badbreath",
-"c":"rpg",
-"t":"b",
-"n":"Bad Breath",
-"d":"Inflict Poison, Petrify, Silence, Confuse, Sleep and Doom on Droogle",
-"r":[
-[
-"ailments",
-6
-]
-]
-},
-{
 "id":"revive",
 "c":"rpg",
 "t":"b",
@@ -290,6 +277,19 @@
 "r":[
 [
 "credits_top",
+1
+]
+]
+},
+{
+"id":"badbreath",
+"c":"rpg",
+"t":"s",
+"n":"Bad Breath",
+"d":"Have Poison, Petrify, Silence, Confuse, Sleep and Doom on Droogle at the same time, all from you",
+"r":[
+[
+"ail_all",
 1
 ]
 ]
@@ -3418,5 +3418,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1530
+"max":1532
 }
