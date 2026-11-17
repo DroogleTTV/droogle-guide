@@ -94,7 +94,11 @@
 "Champion of Light"
 ],
 [
-1182,
+1000,
+"Lifestream Legend"
+],
+[
+1370,
 "Moogle Monarch"
 ]
 ],
@@ -499,6 +503,32 @@
 ]
 },
 {
+"id":"christening",
+"c":"choco",
+"t":"b",
+"n":"Christening",
+"d":"Name your chocobo",
+"r":[
+[
+"christening",
+1
+]
+]
+},
+{
+"id":"underdog",
+"c":"choco",
+"t":"s",
+"n":"Underdog",
+"d":"Never count out the little guy",
+"r":[
+[
+"underdog",
+1
+]
+]
+},
+{
 "id":"black",
 "c":"choco",
 "t":"g",
@@ -690,6 +720,19 @@
 [
 "qb_trades",
 10
+]
+]
+},
+{
+"id":"legendnight",
+"c":"qb",
+"t":"g",
+"n":"Legendary Night",
+"d":"Pull 3 legendary cards in one stream",
+"r":[
+[
+"legend_night",
+1
 ]
 ]
 },
@@ -1045,6 +1088,19 @@
 ]
 },
 {
+"id":"streakparty",
+"c":"loyal",
+"t":"b",
+"n":"Streak Party",
+"d":"Be in chat when someone shares a 5+ year sub streak",
+"r":[
+[
+"streak_party",
+1
+]
+]
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -1132,6 +1188,45 @@
 [
 "last_words",
 1
+]
+]
+},
+{
+"id":"substreak12",
+"c":"loyal",
+"t":"s",
+"n":"Year of the Moogle",
+"d":"Keep your sub going 12 months in a row",
+"r":[
+[
+"sub_streak",
+12
+]
+]
+},
+{
+"id":"substreak24",
+"c":"loyal",
+"t":"s",
+"n":"Kupo Keeper",
+"d":"Keep your sub going 24 months in a row",
+"r":[
+[
+"sub_streak",
+24
+]
+]
+},
+{
+"id":"prepaid",
+"c":"loyal",
+"t":"s",
+"n":"Paid in Advance",
+"d":"Prepay 6 or more months of your sub at once",
+"r":[
+[
+"sub_prepaid",
+6
 ]
 ]
 },
@@ -1227,6 +1322,45 @@
 ]
 },
 {
+"id":"substreak36",
+"c":"loyal",
+"t":"g",
+"n":"Triple Crown",
+"d":"Keep your sub going 36 months in a row",
+"r":[
+[
+"sub_streak",
+36
+]
+]
+},
+{
+"id":"substreak60",
+"c":"loyal",
+"t":"g",
+"n":"Five-Year Phoenix",
+"d":"Keep your sub going 60 months in a row",
+"r":[
+[
+"sub_streak",
+60
+]
+]
+},
+{
+"id":"century",
+"c":"loyal",
+"t":"g",
+"n":"Century Club",
+"d":"Reach 100 total months subscribed",
+"r":[
+[
+"sub_months",
+100
+]
+]
+},
+{
 "id":"follow10",
 "c":"loyal",
 "t":"p",
@@ -1288,6 +1422,19 @@
 [
 "att_best",
 100
+]
+]
+},
+{
+"id":"substreak120",
+"c":"loyal",
+"t":"p",
+"n":"Decade of Droo",
+"d":"Keep your sub going 120 months in a row",
+"r":[
+[
+"sub_streak",
+120
 ]
 ]
 },
@@ -1590,6 +1737,19 @@
 "r":[
 [
 "splash",
+1
+]
+]
+},
+{
+"id":"pocketaces",
+"c":"games",
+"t":"s",
+"n":"Pocket Aces",
+"d":"Pull a card with two A’s",
+"r":[
+[
+"pocket_aces",
 1
 ]
 ]
@@ -2635,6 +2795,188 @@
 ]
 },
 {
+"id":"wewaiting",
+"c":"riddle",
+"t":"b",
+"n":"WE’RE WAITING!",
+"d":"Somebody’s running late",
+"r":[
+[
+"were_waiting",
+1
+]
+]
+},
+{
+"id":"friendzoned",
+"c":"riddle",
+"t":"b",
+"n":"Friend-Zoned",
+"d":"It’s not you, it’s me",
+"r":[
+[
+"love0",
+1
+]
+]
+},
+{
+"id":"butterfingers",
+"c":"riddle",
+"t":"b",
+"n":"Butterfingers",
+"d":"Close, but no kupo",
+"r":[
+[
+"butterfingers",
+1
+]
+]
+},
+{
+"id":"receipts",
+"c":"riddle",
+"t":"b",
+"n":"Receipts",
+"d":"Pics or it didn’t happen",
+"r":[
+[
+"receipts",
+1
+]
+]
+},
+{
+"id":"selflove",
+"c":"riddle",
+"t":"b",
+"n":"Self-Love",
+"d":"Treat yourself",
+"r":[
+[
+"self_love",
+1
+]
+]
+},
+{
+"id":"backsoon",
+"c":"riddle",
+"t":"b",
+"n":"Back So Soon?",
+"d":"That was a short nap",
+"r":[
+[
+"back_soon",
+1
+]
+]
+},
+{
+"id":"tooslow",
+"c":"riddle",
+"t":"b",
+"n":"Too Slow!",
+"d":"A day late and a nut short",
+"r":[
+[
+"too_slow",
+1
+]
+]
+},
+{
+"id":"windowshop",
+"c":"riddle",
+"t":"b",
+"n":"Window Shopper",
+"d":"Just browsing",
+"r":[
+[
+"window_shopper",
+1
+]
+]
+},
+{
+"id":"finderskeep",
+"c":"riddle",
+"t":"b",
+"n":"Finders Keepers",
+"d":"Somebody beat you to it",
+"r":[
+[
+"finders_keepers",
+1
+]
+]
+},
+{
+"id":"remorse",
+"c":"riddle",
+"t":"b",
+"n":"Buyer’s Remorse",
+"d":"Should’ve kept the receipt",
+"r":[
+[
+"buyers_remorse",
+1
+]
+]
+},
+{
+"id":"tiptongue",
+"c":"riddle",
+"t":"b",
+"n":"On the Tip of My Tongue",
+"d":"Hum it for me",
+"r":[
+[
+"tip_tongue",
+1
+]
+]
+},
+{
+"id":"nosaddle",
+"c":"riddle",
+"t":"b",
+"n":"All Saddle, No Chocobo",
+"d":"You forgot something, kupo",
+"r":[
+[
+"no_saddle",
+1
+]
+]
+},
+{
+"id":"hypeman",
+"c":"riddle",
+"t":"b",
+"n":"Hype Man",
+"d":"Talk up your friends",
+"r":[
+[
+"hype_man",
+1
+]
+]
+},
+{
+"id":"notnow",
+"c":"riddle",
+"t":"b",
+"n":"Not Now, Kupo",
+"d":"Read the room",
+"r":[
+[
+"not_now",
+1
+]
+]
+},
+{
 "id":"palindrome",
 "c":"riddle",
 "t":"s",
@@ -2713,6 +3055,71 @@
 ]
 },
 {
+"id":"partners",
+"c":"riddle",
+"t":"s",
+"n":"Partners in Crime",
+"d":"Two minds, one scheme",
+"r":[
+[
+"partners",
+1
+]
+]
+},
+{
+"id":"soulmates",
+"c":"riddle",
+"t":"s",
+"n":"Soulmates",
+"d":"It’s meant to be",
+"r":[
+[
+"love100",
+1
+]
+]
+},
+{
+"id":"sandhog",
+"c":"riddle",
+"t":"s",
+"n":"Sandhog Pie",
+"d":"Who ordered the pie?",
+"r":[
+[
+"qb_sandhog",
+1
+]
+]
+},
+{
+"id":"dropsenabled",
+"c":"riddle",
+"t":"s",
+"n":"Drops Enabled",
+"d":"Teamwork makes the nuts drop",
+"r":[
+[
+"drops_enabled",
+1
+]
+]
+},
+{
+"id":"isaidiheal",
+"c":"riddle",
+"t":"s",
+"n":"I SAID I HEAL",
+"d":"Healers gonna heal",
+"r":[
+[
+"i_heal",
+1
+]
+]
+},
+{
 "id":"thread",
 "c":"riddle",
 "t":"g",
@@ -2739,6 +3146,19 @@
 ]
 },
 {
+"id":"pregamehype",
+"c":"riddle",
+"t":"g",
+"n":"Pre-Game Hype",
+"d":"Get the party started before the party starts",
+"r":[
+[
+"pregame_hype",
+1
+]
+]
+},
+{
 "id":"santa",
 "c":"season",
 "t":"p",
@@ -2756,5 +3176,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1313
+"max":1434
 }
