@@ -98,7 +98,7 @@
 "Lifestream Legend"
 ],
 [
-1370,
+1460,
 "Moogle Monarch"
 ]
 ],
@@ -1114,6 +1114,34 @@
 ]
 },
 {
+"id":"giftmog",
+"c":"loyal",
+"t":"b",
+"n":"Gift of the Mog",
+"d":"Gift a sub to someone",
+"r":[
+[
+"gifts",
+1
+]
+],
+"paid":1
+},
+{
+"id":"bitbybit",
+"c":"loyal",
+"t":"b",
+"n":"Bit by Bit",
+"d":"Cheer 1,000 bits in total",
+"r":[
+[
+"bits",
+1000
+]
+],
+"paid":1
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -1248,6 +1276,61 @@
 "paid":1
 },
 {
+"id":"mogbomb",
+"c":"loyal",
+"t":"s",
+"n":"Mog Bomb",
+"d":"Gift 5 or more subs at once",
+"r":[
+[
+"gift_bomb",
+5
+]
+],
+"paid":1
+},
+{
+"id":"royaltreatment",
+"c":"loyal",
+"t":"s",
+"n":"Royal Treatment",
+"d":"Subscribe at Tier 3",
+"r":[
+[
+"sub_t3",
+1
+]
+],
+"paid":1
+},
+{
+"id":"openingact",
+"c":"loyal",
+"t":"s",
+"n":"Opening Act",
+"d":"Be the first to cheer, sub, gift or tip in a stream",
+"r":[
+[
+"opening_act",
+1
+]
+],
+"paid":1
+},
+{
+"id":"eternalwind",
+"c":"loyal",
+"t":"s",
+"n":"Eternal Wind",
+"d":"On a 4+ hour stream, be there from the first 15 minutes to the end credits",
+"r":[
+[
+"eternal_wind",
+1
+]
+]
+},
+{
 "id":"follow5",
 "c":"loyal",
 "t":"g",
@@ -1376,6 +1459,34 @@
 [
 "sub_months",
 100
+]
+],
+"paid":1
+},
+{
+"id":"philanthropy",
+"c":"loyal",
+"t":"g",
+"n":"Philanthropy Materia",
+"d":"Gift 25 subs in total",
+"r":[
+[
+"gifts",
+25
+]
+],
+"paid":1
+},
+{
+"id":"megaflare",
+"c":"loyal",
+"t":"g",
+"n":"Megaflare",
+"d":"Cheer 10,000 bits in total",
+"r":[
+[
+"bits",
+10000
 ]
 ],
 "paid":1
@@ -1880,6 +1991,19 @@
 ]
 },
 {
+"id":"hattrick",
+"c":"games",
+"t":"g",
+"n":"Hat Trick",
+"d":"Win 3 different mini-games in one stream",
+"r":[
+[
+"hat_trick",
+1
+]
+]
+},
+{
 "id":"kupo100",
 "c":"games",
 "t":"p",
@@ -2284,6 +2408,20 @@
 "ann":"🎉 RAID! The {n} raiders who just stormed in earned the BRONZE Moogle Medal: {name}! Welcome to the party, kupo!"
 },
 {
+"id":"summoncall",
+"c":"events",
+"t":"b",
+"n":"Summoner’s Call",
+"d":"Call a summon yourself",
+"r":[
+[
+"summon_calls",
+1
+]
+],
+"paid":1
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -2425,6 +2563,20 @@
 15
 ]
 ]
+},
+{
+"id":"hypeconductor",
+"c":"events",
+"t":"s",
+"n":"Hype Conductor",
+"d":"Cheer, sub, gift or tip during 3 different Hype Trains",
+"r":[
+[
+"hype_trains",
+3
+]
+],
+"paid":1
 },
 {
 "id":"mail20",
@@ -2570,6 +2722,33 @@
 ]
 },
 {
+"id":"grandsummoner",
+"c":"events",
+"t":"g",
+"n":"Grand Summoner",
+"d":"Call 4 different summons yourself",
+"r":[
+[
+"summon_kinds",
+4
+]
+],
+"paid":1
+},
+{
+"id":"breakgauge",
+"c":"events",
+"t":"g",
+"n":"Break Gauge",
+"d":"Stagger Droogle yourself",
+"r":[
+[
+"break_gauge",
+1
+]
+]
+},
+{
 "id":"ffb50",
 "c":"events",
 "t":"p",
@@ -2607,6 +2786,20 @@
 3
 ]
 ]
+},
+{
+"id":"midastouch",
+"c":"events",
+"t":"p",
+"n":"Midas Touch",
+"d":"Start a Golden Rave yourself",
+"r":[
+[
+"midas",
+1
+]
+],
+"paid":1
 },
 {
 "id":"echo",
@@ -3225,5 +3418,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1437
+"max":1530
 }
