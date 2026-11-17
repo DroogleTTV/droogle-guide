@@ -123,6 +123,18 @@
 .qbzt dt{color:#9fb0c2}
 .qbzt dd{margin:0;color:#fff;font-weight:600}
 .qbzt .hint{margin-top:16px;font-size:12.5px;color:#9fb0c2}
+.qbz{overflow-y:auto}
+.qbown{margin-top:16px;padding-top:12px;border-top:1px solid rgba(216,178,92,.25)}
+.qbownh{font-size:13px;color:#9fb0c2;margin-bottom:8px}.qbownh b{color:#f4dc95}
+.qbol{display:flex;flex-wrap:wrap;gap:6px}
+.qbol.all{max-height:34vh;overflow-y:auto;padding-right:4px}
+.qbo{font-family:inherit;font-weight:600;font-size:13px;line-height:1;color:#fff;background:rgba(255,255,255,.06);border:0;border-radius:999px;padding:7px 12px;cursor:pointer;
+  box-shadow:inset 0 0 0 1px rgba(216,178,92,.45);display:inline-flex;gap:6px;align-items:center}
+.qbo span{color:#f4dc95;font-weight:700;font-size:11.5px}
+.qbo:hover,.qbo:focus-visible{background:rgba(216,178,92,.18);outline:none;box-shadow:inset 0 0 0 1.5px #f4dc95}
+.qbomore{margin-top:10px;background:none;border:0;padding:4px 0;color:#f4dc95;font-family:inherit;font-weight:600;font-size:13px;cursor:pointer;text-decoration:underline;text-underline-offset:3px}
+.qbonote{display:block;margin-top:6px;font-size:12.5px;color:#9fb0c2}
+.qbonote:empty{display:none}
 
 @media (max-width:760px){
   .qbx>summary{padding:13px 14px;gap:12px}

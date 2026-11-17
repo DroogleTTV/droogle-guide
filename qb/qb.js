@@ -99,7 +99,15 @@
       var p = e.target.closest('.qbpill'); if (p) { view[p.getAttribute('data-g')] = p.getAttribute('data-v'); paint(); return; }
       var c = e.target.closest('.qbc'); if (c) zoom(c.getAttribute('data-k'));
     });
-    Z.addEventListener('click', function (e) { if (e.target === Z || e.target.closest('.qbx2')) closeZoom(); });
+    Z.addEventListener('click', function (e) {
+      if (e.target === Z || e.target.closest('.qbx2')) return closeZoom();
+      var o = e.target.closest('.qbo'); if (o) return openOwner(o.getAttribute('data-n'), o);
+      var mb = e.target.closest('.qbomore'); if (mb) {
+        var box = mb.closest('.qbown'), k = box.getAttribute('data-k'), all = mb.getAttribute('aria-expanded') !== 'true', w = document.createElement('div');
+        w.innerHTML = owners(k, all); box.parentNode.replaceChild(w.firstChild, box);
+        var nb = Z.querySelector('.qbomore'); if (nb) nb.focus();
+      }
+    });
     document.addEventListener('keydown', function (e) { if (e.key !== 'Escape') return; if (Z.classList.contains('on')) closeZoom(); else if (M.classList.contains('on')) closeDeck(); });
   }
   function openDeck(i, from) { var u = DATA && DATA.top[i]; if (!u) return; if (!u.qr) u.qr = i + 1; openUser(u, from); }
@@ -145,8 +153,40 @@
       '<div class="qbzt"><span class="pl"><span>Card #' + esc(c.id) + '</span><span class="qbtier"><i></i>' + t[1] + '</span></span><h3>' + esc(c.name) + '</h3><dl>' +
       '<dt>Chance per redemption</dt><dd>' + pct(c.w) + ' &nbsp;(' + oneIn(c.w) + ')</dd>' +
       '<dt>In ' + esc(cur ? cur.n : '') + '&rsquo;s collection</dt><dd>' + (n ? '&times;' + n : 'Not yet') + '</dd></dl>' +
+      owners(k) +
       '<p class="hint">Every Queen&rsquo;s Blood redemption draws one card from the same pool, so these odds are the same for everyone.</p></div></div>';
     Z.classList.add('on'); Z.querySelector('.qbx2').focus();
+  }
+  /* who else has this card (Andrew 2026-11-17): DATA.own = card -> [[name, copies], ...] from the Quest Engine, most copies first.
+     A short list first, "Show all" for the rest; each name opens that collector's page. Hidden until the data carries "own". */
+  var OWN_FIRST = 8;
+  function others(k) {
+    var l = DATA && DATA.own && DATA.own[k]; if (!Array.isArray(l)) return null;
+    var me = cur ? String(cur.n).toLowerCase() : '';
+    return l.filter(function (o) { return Array.isArray(o) && typeof o[0] === 'string' && String(o[0]).toLowerCase() !== me; });
+  }
+  function owners(k, all) {
+    var l = others(k); if (!l) return '';
+    var h = '<div class="qbown" data-k="' + esc(k) + '"><div class="qbownh">' + (l.length ? 'Also collected by <b>' + l.length + '</b> other' + (l.length === 1 ? '' : 's') : 'Nobody else has this card yet') + '</div>';
+    if (l.length) {
+      h += '<div class="qbol' + (all ? ' all' : '') + '">';
+      (all ? l : l.slice(0, OWN_FIRST)).forEach(function (o) {
+        h += '<button type="button" class="qbo" data-n="' + esc(o[0]) + '" title="Open ' + esc(o[0]) + '&rsquo;s collection">' + esc(o[0]) + (+o[1] > 1 ? '<span>&times;' + (+o[1]) + '</span>' : '') + '</button>';
+      });
+      h += '</div>';
+      if (l.length > OWN_FIRST) h += '<button type="button" class="qbomore" aria-expanded="' + (all ? 'true' : 'false') + '">' + (all ? 'Show fewer' : 'Show all ' + l.length) + '</button>';
+      h += '<span class="qbonote" role="status" aria-live="polite"></span>';
+    }
+    return h + '</div>';
+  }
+  function openOwner(name, btn) {
+    var note = Z.querySelector('.qbonote');
+    if (DATA && DATA.top) for (var i = 0; i < DATA.top.length; i++) if (String(DATA.top[i].n).toLowerCase() === name.toLowerCase()) { Z.classList.remove('on'); openDeck(i, btn); return; }
+    if (note) note.textContent = 'Opening ' + name + '\u2019s collection\u2026';
+    find(name, null).then(function (ok) {
+      if (ok) Z.classList.remove('on');
+      else if (note) note.textContent = 'Couldn\u2019t open ' + name + '\u2019s collection right now.';
+    });
   }
   function closeZoom() { Z.classList.remove('on'); var b = M && M.querySelector('.qbc[data-k="' + (window.CSS && CSS.escape ? CSS.escape(Z.dataset.k || '') : '') + '"]'); if (b) b.focus(); }
   function openFromHash() {
