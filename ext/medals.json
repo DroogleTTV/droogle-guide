@@ -1450,10 +1450,10 @@
 "c":"loyal",
 "t":"p",
 "n":"Decade of Droo",
-"d":"Keep your sub going 120 months in a row",
+"d":"Reach 120 total months subscribed",
 "r":[
 [
-"sub_streak",
+"sub_months",
 120
 ]
 ],
