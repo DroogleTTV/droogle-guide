@@ -98,7 +98,7 @@
 "Lifestream Legend"
 ],
 [
-1370,
+1380,
 "Moogle Monarch"
 ]
 ],
@@ -3361,6 +3361,19 @@
 ]
 },
 {
+"id":"sixseven",
+"c":"riddle",
+"t":"s",
+"n":"SIX SEVEN!",
+"d":"🤷🏼‍♂️",
+"r":[
+[
+"six_seven",
+1
+]
+]
+},
+{
 "id":"thread",
 "c":"riddle",
 "t":"g",
@@ -3418,5 +3431,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1532
+"max":1535
 }
