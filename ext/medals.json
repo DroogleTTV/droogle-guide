@@ -1189,7 +1189,8 @@
 "hello",
 1
 ]
-]
+],
+"paid":1
 },
 {
 "id":"lastwords",
@@ -1215,7 +1216,8 @@
 "sub_streak",
 12
 ]
-]
+],
+"paid":1
 },
 {
 "id":"substreak24",
@@ -1228,7 +1230,8 @@
 "sub_streak",
 24
 ]
-]
+],
+"paid":1
 },
 {
 "id":"prepaid",
@@ -1241,7 +1244,8 @@
 "sub_prepaid",
 6
 ]
-]
+],
+"paid":1
 },
 {
 "id":"follow5",
@@ -1345,7 +1349,8 @@
 "sub_streak",
 36
 ]
-]
+],
+"paid":1
 },
 {
 "id":"substreak60",
@@ -1358,7 +1363,8 @@
 "sub_streak",
 60
 ]
-]
+],
+"paid":1
 },
 {
 "id":"century",
@@ -1371,7 +1377,8 @@
 "sub_months",
 100
 ]
-]
+],
+"paid":1
 },
 {
 "id":"follow10",
@@ -1449,7 +1456,8 @@
 "sub_streak",
 120
 ]
-]
+],
+"paid":1
 },
 {
 "id":"kupo1",

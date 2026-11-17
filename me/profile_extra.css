@@ -94,3 +94,11 @@
 .twm .ribbon b{font:14px/1.1 Anton,Impact,sans-serif;font-weight:400;letter-spacing:.02em}
 .twm .ribbon span{font-size:10.5px;font-weight:700;opacity:.8;text-align:right}
 .twm .sharebtn{width:calc(100% - 20px);margin:10px 10px 0}
+/* $ medals: need a sub, bits or a tip. A tag after the name, and a box in the filter row that hides them (Dashboard; Andrew 2026-11-17) */
+.twm .mpd{flex:0 0 auto;display:inline-flex;align-items:center;justify-content:center;min-width:15px;height:15px;padding:0 3px;border-radius:5px;font:800 10.5px/1 inherit;color:#ffe58a;background:rgba(255,200,40,.14);border:1px solid rgba(255,205,60,.5);align-self:center}
+.twm .medal.locked .mpd{color:#d9c37a;border-color:rgba(230,190,80,.35)}
+.twm .mchips .mpaid label{display:inline-flex;align-items:center;gap:6px;height:26px;padding:0 8px 0 7px;border:1px solid #2a416c;border-radius:13px;background:#0a1529;color:var(--muted);cursor:pointer;user-select:none}
+.twm .mchips .mpaid label:hover{border-color:#3d5a8f}
+.twm .mchips .mpaid input{accent-color:var(--teal);width:13px;height:13px;margin:0;cursor:pointer}
+.twm .mchips .mpaid input:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+.twm .mchips .mpaid label.off .mpd{opacity:.45}

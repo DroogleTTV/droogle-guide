@@ -50,6 +50,11 @@
     function catOk(m) { return (!MCAT || m.c === MCAT) && qOk(m); }
     var MJUMP = null;   /* a medal to scroll to once the Medals view is drawn (cfg.medalJump; Andrew 2026-11-15) */
     function tierOk(m) { return !cfg.tierFilter || !!MTIER[m.t]; }
+    /* Dashboard: the $ box hides medals that need a sub, bits or a tip (m.paid) and the counts follow; rank and score don't change.
+       Remembered in this browser (Andrew 2026-11-17 08:41); $ tag on those medals (08:43) */
+    var MPAID = true; try { if (localStorage.getItem('droogleMedalsPaid') === '0') MPAID = false; } catch (e) {}
+    function paidOk(m) { return !cfg.tierFilter || MPAID || !m.paid; }
+    var FREE = cfg.tierFilter ? 'Most medals are free to earn' : 'Every medal is free to earn';
     function tiersOn() { return ['b', 's', 'g', 'p'].filter(function (t) { return MTIER[t]; }); }
     try { if (sessionStorage.getItem('droogleMeView') === 'medals') MEVIEW = 'medals'; } catch (e) {}
 
@@ -89,7 +94,7 @@
       if (!d || !Array.isArray(d.medals) || !Array.isArray(d.cats)) return null;
       var cats = d.cats.filter(function (c) { return c && typeof c.id === 'string' && typeof c.n === 'string'; }).map(function (c) { return { id: str(c.id, 20), n: str(c.n, 40) }; });
       var ms = d.medals.filter(function (m) { return m && TIER[m.t] && typeof m.id === 'string' && typeof m.n === 'string' && Array.isArray(m.r) && m.r.length; }).slice(0, 400).map(function (m) {
-        return { id: str(m.id, 30), c: str(m.c, 20), t: m.t, n: str(m.n, 60), d: str(m.d, 120), from: isoDay(m.from), until: isoDay(m.until), s: m.s === 1,
+        return { id: str(m.id, 30), c: str(m.c, 20), t: m.t, n: str(m.n, 60), d: str(m.d, 120), from: isoDay(m.from), until: isoDay(m.until), s: m.s === 1, paid: m.paid === 1,
           r: m.r.filter(function (x) { return Array.isArray(x) && typeof x[0] === 'string' && /^[a-z0-9_]{1,30}$/.test(x[0]) && num(x[1]) > 0; }).map(function (x) { return [x[0], num(x[1])]; }) };
       }).filter(function (m) { return m.r.length; });
       var pts = {}; ['b', 's', 'g', 'p'].forEach(function (t) { pts[t] = d.pts && num(d.pts[t]) > 0 ? num(d.pts[t]) : DEF_PTS[t]; });
@@ -187,7 +192,7 @@
       box.appendChild(sw);
     }
     function jumpToMedal(m) {   /* a Recent Medal: open the Medals view on All (its tier shown) and land on that medal (Andrew 2026-11-15) */
-      MFILTER = 'all'; MOPEN = ''; MQ = ''; if (MCAT && MCAT !== m.c) MCAT = ''; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1;
+      MFILTER = 'all'; MOPEN = ''; MQ = ''; if (MCAT && MCAT !== m.c) MCAT = ''; if (cfg.tierFilter && !MTIER[m.t]) MTIER[m.t] = 1; if (m.paid) MPAID = true;   /* shown for the jump, not saved */
       MJUMP = m.id; setView('medals');
     }
     function setView(v, filter) {
@@ -464,7 +469,7 @@
     function drawMedals(box, P, states) {
       if (!MEDALS) { box.appendChild(h('p', 'mnone', 'Loading the Moogle Medals…')); return; }
       if (MEDALS.failed || !MEDALS.medals.length) { box.appendChild(h('p', 'mnone', 'The Moogle Medals couldn’t be loaded. Close and reopen this to try again.')); return; }
-      var all = MEDALS.medals, per = { b: [0, 0], s: [0, 0], g: [0, 0], p: [0, 0] };
+      var all = MEDALS.medals.filter(paidOk), per = { b: [0, 0], s: [0, 0], g: [0, 0], p: [0, 0] };
       all.forEach(function (m) { if (m.s) return; per[m.t][1]++; if (states[m.id].earned) per[m.t][0]++; });
       var tiers = h('div', 'mtiers');
       ['b', 's', 'g', 'p'].forEach(function (t) {
@@ -498,6 +503,11 @@
         }));
         ch.appendChild(pickDrop('cat', 'Category', MCAT, copts, !MCAT, function (v) { MCAT = v; }));
         ch.appendChild(tierDrop());
+        var pw = h('div', 'mdd mpaid'), pl = h('label', MPAID ? '' : 'off'), pc = h('input'); pc.type = 'checkbox'; pc.checked = MPAID;
+        pl.title = MPAID ? 'Showing $ medals (they need a sub, bits or a tip). Untick to hide them.' : 'Hiding $ medals (they need a sub, bits or a tip). Tick to show them.';
+        pc.setAttribute('aria-label', 'Show $ medals, the ones that need a sub, bits or a tip');
+        pc.addEventListener('change', function () { MPAID = pc.checked; try { localStorage.setItem('droogleMedalsPaid', MPAID ? '1' : '0'); } catch (e) {} redraw(); var n = document.querySelector('.mpaid input'); if (n) n.focus(); });
+        add(pl, pc, h('span', 'mpd', '$')); pw.appendChild(pl); ch.appendChild(pw);
       } else {
         VIEWS.forEach(function (x) {
           var b = h('button', MFILTER === x[0] ? 'on' : '', x[1]); b.type = 'button'; b.setAttribute('aria-pressed', MFILTER === x[0] ? 'true' : 'false');
@@ -510,6 +520,7 @@
         var s = states[m.id], rr = rarity(m), r = h('div', 'medal ' + (s.earned ? 'got ' : 'locked ') + TIER[m.t][0] + (s.lim ? ' lim' : '')); r.setAttribute('data-mid', m.id);
         r.appendChild(medalImg(m.t, 'mimg'));
         var b = h('div', 'mb'), top = h('div', 'mn'); add(top, h('b', null, m.n), h('span', 'mt', TIER[m.t][1]));
+        if (m.paid && cfg.tierFilter) { var pt = h('span', 'mpd', '$'); pt.title = 'Needs a sub, bits or a tip'; top.insertBefore(pt, top.children[1]); }
         add(b, top, h('div', 'md', m.d));
         if (!s.earned && s.txt) { var bar = h('div', 'mbar'), f = h('i'); f.style.width = (s.p * 100).toFixed(1) + '%'; bar.appendChild(f); add(b, bar, h('div', 'mpt', s.txt)); }
         var meta = h('div', 'mmeta');
@@ -520,7 +531,7 @@
         if (s.lim) meta.appendChild(h('span', 'ltag', s.lim));
         if (meta.firstChild) b.appendChild(meta);
         r.appendChild(b);
-        r.setAttribute('aria-label', m.n + ', ' + TIER[m.t][1] + (s.earned ? ', earned' + (s.day != null ? ' ' + dayText(s.day, true) : '') : ', not earned yet') + '. ' + m.d +
+        r.setAttribute('aria-label', m.n + ', ' + TIER[m.t][1] + (m.paid && cfg.tierFilter ? ', needs a sub, bits or a tip' : '') + (s.earned ? ', earned' + (s.day != null ? ' ' + dayText(s.day, true) : '') : ', not earned yet') + '. ' + m.d +
           (s.txt ? '. Progress ' + s.txt : '') + (rr ? '. ' + rr.label + ': ' + rr.text : '') + (s.lim ? '. ' + s.lim : ''));
         return r;
       };
@@ -542,7 +553,7 @@
             .sort(function (a, b) { return TORD[a.t] - TORD[b.t]; });
           if (!list.length) return;
           if (c.id === 'season' || full.every(function (m) { return m.s; })) {      // seasonal: extra to the 100, no completion bar
-            var ss = section(c.n, 'extra to the ' + MEDALS.medals.filter(function (m) { return !m.s; }).length, 'mseason');
+            var ss = section(c.n, 'extra to the ' + all.filter(function (m) { return !m.s; }).length, 'mseason');
             list.forEach(function (m) { ss.appendChild(row(m)); }); shown += list.length; box.appendChild(ss); return;
           }
           var complete = full.length && got === full.length;
@@ -554,11 +565,11 @@
         });
         var cname = MCAT ? (MEDALS.cats.filter(function (c) { return c.id === MCAT; })[0] || { n: '' }).n : '';
         if (!shown && MQ) box.appendChild(h('p', 'mnone', 'No medals match “' + MQ + '”' + (MCAT || MFILTER !== 'all' || tiersOn().length < 4 ? ' with these filters.' : '.')));
-        else if (!shown && cname) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No ' + cname + ' medals earned yet' + (tiersOn().length < 4 ? ' in these tiers.' : '. Every medal is free to earn!') : MFILTER === 'locked' ? 'Every ' + cname + ' medal' + (tiersOn().length < 4 ? ' in these tiers' : '') + ' earned!' : 'No ' + cname + ' medals here.'));
+        else if (!shown && cname) box.appendChild(h('p', 'mnone', MFILTER === 'earned' ? 'No ' + cname + ' medals earned yet' + (tiersOn().length < 4 ? ' in these tiers.' : '. ' + FREE + '!') : MFILTER === 'locked' ? 'Every ' + cname + ' medal' + (tiersOn().length < 4 ? ' in these tiers' : '') + ' earned!' : 'No ' + cname + ' medals here.'));
         else if (!shown) box.appendChild(h('p', 'mnone', tiersOn().length < 4 ? (MFILTER === 'earned' ? 'No ' + tierNames() + ' medals earned yet.' : MFILTER === 'locked' ? 'Every ' + tierNames() + ' medal earned!' : 'No ' + tierNames() + ' medals here.')
-          : MFILTER === 'earned' ? 'No medals yet. Every medal is free to earn; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
+          : MFILTER === 'earned' ? 'No medals yet. ' + FREE + '; check the Locked list for ideas!' : 'You’ve earned every medal. Incredible!'));
       }
-      box.appendChild(h('p', CLS.foot || 'foot', 'Moogle Medals are free to earn and never go away once you have them. Rarity counts members who were at a stream in each of the last 3 months. Progress updates about every 20 minutes while Droogle is live.'));
+      box.appendChild(h('p', CLS.foot || 'foot', (cfg.tierFilter ? 'Most Moogle Medals are free to earn; the ones marked $ need a sub, bits or a tip (untick $ to hide them). Medals never go away once you have them.' : 'Moogle Medals are free to earn and never go away once you have them.') + ' Rarity counts members who were at a stream in each of the last 3 months. Progress updates about every 20 minutes while Droogle is live.'));
     }
 
     /* ---------- the whole thing ---------- */
@@ -570,7 +581,7 @@
       var info = null;
       if (ready) { var sc = scoreOf(P, states); info = { score: sc, rank: rankOf(sc), frame: frameOf(sc) }; }
       drawHead(box, P, info);
-      var nE = 0, nAll = 0; if (ready) MEDALS.medals.forEach(function (m) { if (m.s) return; nAll++; if (states[m.id].earned) nE++; });   // seasonal medals are extra to the 100
+      var nE = 0, nAll = 0; if (ready) MEDALS.medals.forEach(function (m) { if (m.s || !paidOk(m)) return; nAll++; if (states[m.id].earned) nE++; });   // seasonal medals are extra to the 100
       meSwitch(box, nE, nAll);
       if (MEVIEW === 'medals') { drawMedals(box, P, states); return; }
       if (!P) {
