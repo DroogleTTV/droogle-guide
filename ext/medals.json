@@ -98,7 +98,7 @@
 "Lifestream Legend"
 ],
 [
-1380,
+1400,
 "Moogle Monarch"
 ]
 ],
@@ -1544,6 +1544,19 @@
 ]
 },
 {
+"id":"words10000",
+"c":"loyal",
+"t":"p",
+"n":"ON SILVER WINGS!",
+"d":"Send 10,000 chat messages",
+"r":[
+[
+"chat_msgs",
+10000
+]
+]
+},
+{
 "id":"streak100",
 "c":"loyal",
 "t":"p",
@@ -2526,6 +2539,32 @@
 ]
 },
 {
+"id":"premature",
+"c":"events",
+"t":"s",
+"n":"Premature Extension",
+"d":"Be here when the stream timer has already earned 10+ minutes of extension before the show leaves Preshow",
+"r":[
+[
+"premature_ext",
+1
+]
+]
+},
+{
+"id":"halfchub",
+"c":"events",
+"t":"s",
+"n":"Half Chub",
+"d":"Be the one whose follow, sub, cheer or tip takes the stream timer extension to 30 minutes",
+"r":[
+[
+"half_chub",
+1
+]
+]
+},
+{
 "id":"topping",
 "c":"events",
 "t":"s",
@@ -3431,5 +3470,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1535
+"max":1566
 }
