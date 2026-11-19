@@ -98,7 +98,7 @@
 "Lifestream Legend"
 ],
 [
-1400,
+1420,
 "Moogle Monarch"
 ]
 ],
@@ -356,6 +356,19 @@
 [
 "credits_top",
 10
+]
+]
+},
+{
+"id":"tripletriad",
+"c":"rpg",
+"t":"g",
+"n":"Triple Triad",
+"d":"Finish a stream as #1 Top Chatter, Top Healer and Top Attacker",
+"r":[
+[
+"triple_triad",
+1
 ]
 ]
 },
@@ -2565,6 +2578,19 @@
 ]
 },
 {
+"id":"doomdefied",
+"c":"events",
+"t":"s",
+"n":"Doom Defied",
+"d":"Be here 10 minutes after the stream timer runs out",
+"r":[
+[
+"doom_defied",
+1
+]
+]
+},
+{
 "id":"topping",
 "c":"events",
 "t":"s",
@@ -3257,6 +3283,71 @@
 ]
 },
 {
+"id":"innsomnia",
+"c":"riddle",
+"t":"b",
+"n":"Inn-somnia",
+"d":"Talking in Droo’s sleep",
+"r":[
+[
+"inn_somnia",
+1
+]
+]
+},
+{
+"id":"eyesonme",
+"c":"riddle",
+"t":"b",
+"n":"Eyes on Me-ish",
+"d":"Close enough",
+"r":[
+[
+"ntt_close",
+1
+]
+]
+},
+{
+"id":"stopdrop",
+"c":"riddle",
+"t":"b",
+"n":"Stop, Drop and Blizzaga",
+"d":"Some fires don’t go out",
+"r":[
+[
+"burn_cure",
+1
+]
+]
+},
+{
+"id":"raiseads",
+"c":"riddle",
+"t":"b",
+"n":"Raise from the Ads",
+"d":"Greet the returning hero",
+"r":[
+[
+"raise_ads",
+1
+]
+]
+},
+{
+"id":"gifrit",
+"c":"riddle",
+"t":"b",
+"n":"GIF-rit",
+"d":"Say it with motion",
+"r":[
+[
+"gif_post",
+1
+]
+]
+},
+{
 "id":"palindrome",
 "c":"riddle",
 "t":"s",
@@ -3413,6 +3504,19 @@
 ]
 },
 {
+"id":"gambit",
+"c":"riddle",
+"t":"s",
+"n":"Gambit",
+"d":"Call the shot",
+"r":[
+[
+"gambit",
+1
+]
+]
+},
+{
 "id":"thread",
 "c":"riddle",
 "t":"g",
@@ -3470,5 +3574,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1566
+"max":1587
 }
