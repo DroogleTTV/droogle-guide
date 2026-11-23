@@ -53,7 +53,7 @@ for q in qs:
                               {'name': '⭐ Difficulty', 'value': '★' * lv + '☆' * (5 - lv), 'inline': True},
                               {'name': '⏳ When', 'value': when(q), 'inline': True}],
                    'image': {'url': SITE + 'discord/spacer.png'}})   # a wide transparent strip makes every card full width (Andrew 2026-11-23 16:04)
-if embeds: embeds[-1]['footer'] = {'text': 'New quests every Monday at 8 AM ET · Hunts reveal their monster when they appear on stream'}
+# no footer line (Andrew 2026-11-23 16:07)
 tot = sum(int(q.get('exp') or 0) for q in qs)
 content = ('@here 📜 **Droo\'s Weekly Quests are up! · %s**\n'
            '%d new quests are pinned on the world map. Clear them together on stream and **everyone in chat** earns the EXP as nuts: up to **%s nuts** this week, kupo!\n'
