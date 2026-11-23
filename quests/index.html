@@ -174,6 +174,7 @@ button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offse
 </div>
 </div>
 <script>
+var PAIDBY={white_materia:'<b>Bits (Power-Up)</b>'};   // per-quest wording for the paid note (Andrew 2026-11-23)
 (function(){
 'use strict';
 var DATA_URL='https://drooglettv.github.io/droogle-guide/data/quest_state.json';
@@ -364,7 +365,7 @@ function detail(id,quiet){
      q.stages.map(function(s,i){var now=S.live&&(S.stream||1)===i+1&&!s;return '<div class="stg '+(s||'')+(now?' now':'')+'"><b>'+(s==='done'?'Cleared':s==='fail'?'Missed':now?'Tonight':'To do')+'</b>Stream '+(i+1)+'</div>'}).join('')+'</div></div>';
   }
   if(q.emote)h+='<p class="note emonote">Emote of the week: '+emo(esc(q.emote))+' <b>'+esc(q.emote)+'</b></p>';
-  if(q.paid)h+='<p class="note">Progress on this one comes from <b>Bits, subs or tips</b>.</p>';
+  if(q.paid)h+='<p class="note">Progress on this one comes from '+(PAIDBY[q.id]||'<b>Bits, subs or tips</b>.')+'</p>';
   h+='<div class="box"><div class="reward"><span class="exp">'+fmt(q.exp)+'</span><span class="rx"><b style="color:#fff">EXP reward.</b> When chat clears this quest, everyone in chat gets '+fmt(q.exp)+' nuts.</span></div></div>';
   $('dv').innerHTML=h;$('dv').hidden=false;$('lv').hidden=true;
   $('backbtn').onclick=back;
