@@ -98,7 +98,7 @@
 "Lifestream Legend"
 ],
 [
-1420,
+1460,
 "Moogle Monarch"
 ]
 ],
@@ -2448,6 +2448,19 @@
 "paid":1
 },
 {
+"id":"sfxuniq50",
+"c":"events",
+"t":"b",
+"n":"Echo Scream",
+"d":"Play 50 different SFX commands",
+"r":[
+[
+"sfx_uniq",
+50
+]
+]
+},
+{
 "id":"taco4",
 "c":"events",
 "t":"s",
@@ -2644,6 +2657,19 @@
 "paid":1
 },
 {
+"id":"sfxuniq100",
+"c":"events",
+"t":"s",
+"n":"Hi-Fi Potion",
+"d":"Play 100 different SFX commands",
+"r":[
+[
+"sfx_uniq",
+100
+]
+]
+},
+{
 "id":"mail20",
 "c":"events",
 "t":"g",
@@ -2814,6 +2840,19 @@
 ]
 },
 {
+"id":"sfxuniq250",
+"c":"events",
+"t":"g",
+"n":"Knights of the Sound",
+"d":"Play 250 different SFX commands",
+"r":[
+[
+"sfx_uniq",
+250
+]
+]
+},
+{
 "id":"ffb50",
 "c":"events",
 "t":"p",
@@ -2865,6 +2904,19 @@
 ]
 ],
 "paid":1
+},
+{
+"id":"sfxuniq500",
+"c":"events",
+"t":"p",
+"n":"Ultima Woofer",
+"d":"Play 500 different SFX commands",
+"r":[
+[
+"sfx_uniq",
+500
+]
+]
 },
 {
 "id":"echo",
@@ -3574,5 +3626,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1587
+"max":1626
 }
