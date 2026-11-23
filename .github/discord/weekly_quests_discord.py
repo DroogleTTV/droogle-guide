@@ -51,7 +51,8 @@ for q in qs:
                    'title': 'Mark Unknown' if q['type'].startswith('hunt') else q['name'], 'description': desc(q),
                    'fields': [{'name': '🥜 Reward', 'value': reward(q), 'inline': True},
                               {'name': '⭐ Difficulty', 'value': '★' * lv + '☆' * (5 - lv), 'inline': True},
-                              {'name': '⏳ When', 'value': when(q), 'inline': True}]})
+                              {'name': '⏳ When', 'value': when(q), 'inline': True}],
+                   'image': {'url': SITE + 'discord/spacer.png'}})   # a wide transparent strip makes every card full width (Andrew 2026-11-23 16:04)
 if embeds: embeds[-1]['footer'] = {'text': 'New quests every Monday at 8 AM ET · Hunts reveal their monster when they appear on stream'}
 tot = sum(int(q.get('exp') or 0) for q in qs)
 content = ('@here 📜 **Droo\'s Weekly Quests are up! · %s**\n'
