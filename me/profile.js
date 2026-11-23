@@ -197,7 +197,7 @@
     }
     function setView(v, filter) {
       if (filter) MFILTER = filter;
-      if (MEVIEW !== v) { MEVIEW = v; try { sessionStorage.setItem('droogleMeView', v); } catch (e) {} }
+      if (MEVIEW !== v) { MEVIEW = v; if (v !== 'ranks') try { sessionStorage.setItem('droogleMeView', v); } catch (e) {} }
       redraw(); var sc = cfg.scroll && cfg.scroll(); if (sc) sc.scrollTop = 0;
       if (MJUMP) {
         var el = document.querySelector('.medal[data-mid="' + MJUMP + '"]'); MJUMP = null;
@@ -212,8 +212,12 @@
     /* ---------- profile view: Adventurer Rank, showcase, attendance, recent medals ---------- */
     function drawRankCard(box, P, info, states) {
       var c = h('section', 'arcard'), top = h('div', 'arTop');
-      var lv = h('div', 'arLv'); add(lv, h('span', null, 'Rank'), h('b', null, String(info.rank.lv)));
-      var tt = h('div', 'arT'); add(tt, h('span', 'k', 'Adventurer Rank'), h('b', null, info.rank.name));
+      var lv = h(cfg.rankList ? 'button' : 'div', 'arLv'); add(lv, h('span', null, 'Rank'), h('b', null, String(info.rank.lv)));
+      var tt = h(cfg.rankList ? 'button' : 'div', 'arT'); add(tt, h('span', 'k', 'Adventurer Rank'), h('b', null, info.rank.name));
+      if (cfg.rankList) [lv, tt].forEach(function (x) {   /* Dashboard: the badge opens every rank, your progress and when you reached each (Andrew 2026-11-23 14:22) */
+        x.type = 'button'; x.classList.add('arGo'); x.setAttribute('aria-label', 'Rank ' + info.rank.lv + ', ' + info.rank.name + '. See every Adventurer Rank');
+        x.title = 'See every Adventurer Rank'; x.addEventListener('click', function () { setView('ranks'); });
+      });
       var sc = h('div', 'arS'); add(sc, h('b', null, fmt(info.score)), h('span', null, 'medal pts'));
       add(top, lv, tt, sc); c.appendChild(top);
       var R = info.rank, bar = h('div', 'arBar'), f = h('i');
@@ -572,6 +576,71 @@
       box.appendChild(h('p', CLS.foot || 'foot', (cfg.tierFilter ? 'Most Moogle Medals are free to earn; the ones marked $ need a sub, bits or a tip (untick $ to hide them). Medals never go away once you have them.' : 'Moogle Medals are free to earn and never go away once you have them.') + ' Rarity counts members who were at a stream in each of the last 3 months. Progress updates about every 20 minutes while Droogle is live.'));
     }
 
+    /* ---------- Adventurer Ranks view (Dashboard, cfg.rankList; Andrew 2026-11-23 14:22): every rank, the points it needs, your progress
+       and the day you reached each one. Reached days come from your medals' earned dates: the first day they added up to the rank's points
+       today (ranks were rebalanced along the way, and Moogle Monarch moves with the medal list). */
+    function rankHistory(states) {
+      var days = [], at = {};
+      MEDALS.medals.forEach(function (m) { var st = states[m.id]; if (st.earned && st.day != null) days.push([st.day, MEDALS.pts[m.t] || 0, 1]); });
+      days.sort(function (a, b) { return a[0] - b[0]; });
+      var byDay = []; days.forEach(function (d) { var l = byDay[byDay.length - 1]; if (l && l[0] === d[0]) { l[1] += d[1]; l[2]++; } else byDay.push(d.slice()); });
+      MEDALS.ranks.forEach(function (r) {
+        if (r[0] <= 0) return; var c = 0, n = 0;
+        for (var k = 0; k < byDay.length; k++) { c += byDay[k][1]; n += byDay[k][2]; if (c >= r[0]) { at[r[0]] = { day: byDay[k][0], medals: n }; break; } }
+      });
+      return { at: at, first: byDay.length ? byDay[0][0] : null };
+    }
+    function daysText(n) { return n <= 0 ? 'the same day' : n === 1 ? '1 day' : fmt(n) + ' days'; }
+    function drawRanks(box, P, info, states) {
+      var R = MEDALS.ranks, sc = info.score, curI = info.rank.lv - 1, H = rankHistory(states);
+      var back = h('button', 'rkBack', '‹ Back to profile'); back.type = 'button';
+      back.addEventListener('click', function () { setView('profile'); });
+      box.appendChild(back);
+      var hd = h('section', 'arcard rkHead');
+      var top = h('div', 'arTop'), lv = h('div', 'arLv'); add(lv, h('span', null, 'Rank'), h('b', null, String(info.rank.lv)));
+      var tt = h('div', 'arT'); add(tt, h('span', 'k', 'Adventurer Ranks'), h('b', null, info.rank.name));
+      var ss = h('div', 'arS'); add(ss, h('b', null, fmt(sc)), h('span', null, 'medal pts'));
+      add(top, lv, tt, ss); hd.appendChild(top);
+      var reached = R.filter(function (r) { return sc >= r[0]; }).length;
+      var facts = h('div', 'rkFacts');
+      add(facts, h('span', null, reached + ' of ' + R.length + ' ranks reached'),
+        h('span', null, info.rank.next ? fmt(info.rank.next[0] - sc) + ' pts to ' + info.rank.next[1] : 'Highest rank reached!'),
+        P && P.msr ? h('span', null, spot(P.msr, ME.nm) + ' in medal points') : null);
+      hd.appendChild(facts); box.appendChild(hd);
+      var list = h('ol', 'rkList'); list.setAttribute('aria-label', 'Adventurer Ranks');
+      var prevDay = null, prevName = '';
+      R.forEach(function (r, i) {
+        var st = i < curI ? 'done' : i === curI ? 'cur' : 'lock', li = h('li', 'rk ' + st);
+        var b = h('div', 'rkLv'); b.appendChild(h('b', null, String(i + 1)));
+        var mid = h('div', 'rkMain'); add(mid, h('b', null, r[1]), h('span', null, r[0] > 0 ? fmt(r[0]) + ' pts' : 'Start'));
+        var info2 = h('div', 'rkInfo');
+        if (st !== 'lock') {
+          var hit = H.at[r[0]];
+          if (r[0] <= 0) add(info2, h('b', null, 'Where every adventurer starts'));
+          else if (hit) {
+            add(info2, h('b', null, 'Reached ' + dayText(hit.day, true)),
+              h('span', null, 'with ' + fmt(hit.medals) + ' medal' + (hit.medals === 1 ? '' : 's') + (prevDay != null ? ' · ' + (hit.day - prevDay <= 0 ? 'same day as ' + prevName : daysText(hit.day - prevDay) + ' after ' + prevName) : '')));
+            prevDay = hit.day; prevName = r[1];
+          }
+          else add(info2, h('b', null, 'Reached'), h('span', null, 'date not recorded'));
+          if (st === 'cur') li.setAttribute('aria-current', 'step');
+        } else add(info2, h('b', null, fmt(r[0] - sc) + ' pts to go'), h('span', null, Math.floor(sc / r[0] * 100) + '% of the way'));
+        add(li, b, mid, info2);
+        if (st === 'cur' && info.rank.next) {
+          var bar = h('div', 'arBar rkBar'), f = h('i'), nx = info.rank.next;
+          f.style.width = Math.max(2, Math.min(100, (sc - r[0]) / (nx[0] - r[0]) * 100)).toFixed(1) + '%'; bar.appendChild(f);
+          var sub = h('div', 'rkNext'); add(sub, h('span', null, 'Next: ' + nx[1]), h('span', null, fmt(sc) + ' / ' + fmt(nx[0])));
+          add(li, bar, sub);
+        }
+        if (i === R.length - 1) li.appendChild(h('p', 'rkNote', 'Always 90% of every medal point there is, so it rises as new medals arrive.'));
+        list.appendChild(li);
+      });
+      box.appendChild(list);
+      var F = MEDALS.frames || [], ft = F.map(function (x) { return TIER[x[1]][1] + ' ' + fmt(x[0]); }).join(' · ');
+      box.appendChild(h('p', CLS.foot || 'foot', 'Medal points: bronze ' + MEDALS.pts.b + ', silver ' + MEDALS.pts.s + ', gold ' + MEDALS.pts.g + ', platinum ' + MEDALS.pts.p + '. ' +
+        (ft ? 'Avatar frames: ' + ft + '. ' : '') + 'Reached dates are the first day your medals added up to each rank’s points.'));
+    }
+
     /* ---------- the whole thing ---------- */
     function redraw() {
       var box = cfg.box(); if (!box || !ME) return;
@@ -588,6 +657,7 @@
         add(box, h('p', 'mnone', 'No profile yet. Chat during one of Droogle’s streams to start earning nuts, then check back after the stream. Profiles update about every 20 minutes while he’s live.'));
         return;
       }
+      if (MEVIEW === 'ranks' && info) { drawRanks(box, P, info, states); return; }
       if (info) drawRankCard(box, P, info, states);
       drawStats(box, P);
       drawAttendance(box, P);
