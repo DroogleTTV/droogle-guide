@@ -102,13 +102,13 @@
 "Crystal Guardian"
 ],
 [
-1560,
+1570,
 "Moogle Monarch"
 ]
 ],
 "frames":[
 [
-150,
+200,
 "b"
 ],
 [
@@ -1159,6 +1159,19 @@
 "paid":1
 },
 {
+"id":"vanish",
+"c":"loyal",
+"t":"b",
+"n":"Vanish",
+"d":"Lurk for an hour straight without saying a word",
+"r":[
+[
+"lurk_1h",
+1
+]
+]
+},
+{
 "id":"follow3",
 "c":"loyal",
 "t":"s",
@@ -1374,6 +1387,19 @@
 ]
 },
 {
+"id":"shadow",
+"c":"loyal",
+"t":"s",
+"n":"Shadow",
+"d":"Lurk for two hours straight without saying a word",
+"r":[
+[
+"lurk_2h",
+1
+]
+]
+},
+{
 "id":"follow5",
 "c":"loyal",
 "t":"g",
@@ -1557,6 +1583,19 @@
 [
 "fanfare",
 150
+]
+]
+},
+{
+"id":"silentprot",
+"c":"loyal",
+"t":"g",
+"n":"Silent Protagonist",
+"d":"Lurk a whole stream (2+ hours) from the first 15 minutes to the end credits without saying a word",
+"r":[
+[
+"lurk_full",
+1
 ]
 ]
 },
@@ -3788,5 +3827,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1741
+"max":1755
 }
