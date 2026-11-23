@@ -98,7 +98,7 @@
 "Lifestream Legend"
 ],
 [
-1460,
+1560,
 "Moogle Monarch"
 ]
 ],
@@ -1344,6 +1344,32 @@
 ]
 },
 {
+"id":"skypirate",
+"c":"loyal",
+"t":"s",
+"n":"Sky Pirate",
+"d":"Ride along on 10 Droogle raids",
+"r":[
+[
+"raid_out",
+10
+]
+]
+},
+{
+"id":"curtaincall",
+"c":"loyal",
+"t":"s",
+"n":"Curtain Call",
+"d":"Be there when the end credits roll at 50 streams",
+"r":[
+[
+"fanfare",
+50
+]
+]
+},
+{
 "id":"follow5",
 "c":"loyal",
 "t":"g",
@@ -1505,6 +1531,32 @@
 "paid":1
 },
 {
+"id":"falconpunch",
+"c":"loyal",
+"t":"g",
+"n":"Falcon Punch",
+"d":"Ride along on 25 Droogle raids",
+"r":[
+[
+"raid_out",
+25
+]
+]
+},
+{
+"id":"ariamezzo",
+"c":"loyal",
+"t":"g",
+"n":"Aria di Mezzo Carattere",
+"d":"Be there when the end credits roll at 150 streams",
+"r":[
+[
+"fanfare",
+150
+]
+]
+},
+{
 "id":"follow10",
 "c":"loyal",
 "t":"p",
@@ -1595,6 +1647,19 @@
 ]
 ],
 "paid":1
+},
+{
+"id":"invincible",
+"c":"loyal",
+"t":"p",
+"n":"The Invincible",
+"d":"Ride along on 100 Droogle raids",
+"r":[
+[
+"raid_out",
+100
+]
+]
 },
 {
 "id":"kupo1",
@@ -2043,6 +2108,19 @@
 ]
 },
 {
+"id":"sharlayan",
+"c":"games",
+"t":"p",
+"n":"Sharlayan Scholar",
+"d":"Answer 200 trivia questions correctly",
+"r":[
+[
+"trivia",
+200
+]
+]
+},
+{
 "id":"quest1",
 "c":"quests",
 "t":"b",
@@ -2160,6 +2238,20 @@
 ]
 },
 {
+"id":"planetprotector",
+"c":"quests",
+"t":"s",
+"n":"Planet Protector",
+"d":"Pray to Holy on a stream where the city’s shield is completed",
+"r":[
+[
+"holy_protect",
+1
+]
+],
+"paid":1
+},
+{
 "id":"thunder10",
 "c":"quests",
 "t":"s",
@@ -2199,6 +2291,19 @@
 ]
 },
 {
+"id":"breathearth",
+"c":"quests",
+"t":"s",
+"n":"Breath of the Earth",
+"d":"Be watching when Holy’s finale plays",
+"r":[
+[
+"holy_witness",
+1
+]
+]
+},
+{
 "id":"quest100",
 "c":"quests",
 "t":"g",
@@ -2225,6 +2330,20 @@
 ]
 },
 {
+"id":"greatgospel",
+"c":"quests",
+"t":"g",
+"n":"Great Gospel",
+"d":"Say the final prayer that calls down Holy",
+"r":[
+[
+"holy_gospel",
+1
+]
+],
+"paid":1
+},
+{
 "id":"thunder30",
 "c":"quests",
 "t":"g",
@@ -2234,6 +2353,19 @@
 [
 "dodge",
 30
+]
+]
+},
+{
+"id":"markbill",
+"c":"quests",
+"t":"g",
+"n":"Mark Bill Collector",
+"d":"Join 50 hunts",
+"r":[
+[
+"hunt_join",
+50
 ]
 ]
 },
@@ -2670,6 +2802,19 @@
 ]
 },
 {
+"id":"commsphere",
+"c":"events",
+"t":"s",
+"n":"Commsphere Operator",
+"d":"Clip the stream 25 times (!clip or the Twitch Clip button)",
+"r":[
+[
+"clips",
+25
+]
+]
+},
+{
 "id":"mail20",
 "c":"events",
 "t":"g",
@@ -2849,6 +2994,19 @@
 [
 "sfx_uniq",
 250
+]
+]
+},
+{
+"id":"leblanc",
+"c":"events",
+"t":"g",
+"n":"Leblanc’s Rival",
+"d":"Clip the stream 100 times (!clip or the Twitch Clip button)",
+"r":[
+[
+"clips",
+100
 ]
 ]
 },
@@ -3626,5 +3784,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1626
+"max":1741
 }
