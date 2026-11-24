@@ -1,0 +1,142 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Droogle Hall of Fame</title>
+<meta name="description" content="The Droogle stream's leaderboards: Moogle Medals, bits, subs, follow anniversaries and watch streaks.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="Droogle Hall of Fame"><meta property="og:description" content="The Droogle stream's leaderboards: Moogle Medals, bits, subs, follow anniversaries and watch streaks.">
+<meta property="og:image" content="https://drooglettv.github.io/droogle-guide/img/og.png"><meta name="theme-color" content="#0b1322">
+<link rel="icon" type="image/png" href="../img/favicon.png"><link rel="apple-touch-icon" href="../img/apple-touch-icon.png">
+<style>
+@font-face{font-family:Outfit;font-weight:400;src:url(../outfit-latin-400-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:600;src:url(../outfit-latin-600-normal.woff2)}
+@font-face{font-family:Outfit;font-weight:700;src:url(../outfit-latin-700-normal.woff2)}
+@font-face{font-family:Anton;src:url(../anton-latin-400-normal.woff2)}
+@font-face{font-family:Pixel;src:url(../jersey-15-latin-400-normal.woff2);size-adjust:122%}
+:root{--bg:#0b1322;--panel:#121d33;--line:#24345a;--text:#e9eef8;--muted:#9aa8c4;--teal:#25d6c8}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg) url(../img/pagebg.jpg) center top/cover fixed;color:var(--text);font:15px/1.45 Outfit,system-ui,sans-serif}
+a{color:var(--teal)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 16px}
+header{padding:18px 0 6px;display:flex;align-items:center;gap:14px}
+header img{height:34px;display:block}
+header .back{margin-left:auto;font-family:Anton;letter-spacing:.06em;text-transform:uppercase;font-size:14px;color:#8ea0c2;text-decoration:none;
+  padding:7px 12px 6px;border:1px solid var(--line);border-radius:8px}
+header .back:hover,header .back:focus-visible{color:#081320;background:var(--teal);border-color:var(--teal)}
+h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-height:1;margin:14px 0 8px;letter-spacing:.01em;text-transform:uppercase}
+.lead{margin:0 0 16px;color:#c9d3e6;max-width:72ch}
+.lead b{color:#fff}
+.lead code{font-family:inherit;font-weight:700;color:#fff;background:rgba(255,255,255,.08);padding:1px 6px;border-radius:5px}
+.bar{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin:0 0 16px}
+.find{display:flex;align-items:center;gap:8px;background:rgba(18,29,51,.9);border:1px solid var(--line);border-radius:10px;padding:4px 6px 4px 12px;min-width:min(340px,100%)}
+.find input{flex:1;min-width:0;background:none;border:0;color:var(--text);font:inherit;font-size:15px;padding:6px 0;outline:none}
+.find button{background:var(--teal);color:#081320;border:0;border-radius:7px;font:700 13px Outfit,sans-serif;padding:7px 12px;cursor:pointer}
+.find:focus-within{border-color:var(--teal)}
+.msg{color:var(--muted);font-size:14px}
+.msg b{color:#fff}
+.upd{margin-left:auto;color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(360px,1fr));gap:16px;margin-bottom:30px;align-items:start}
+.board{--c:#25d6c8;--c2:#0f8f93;--soft:rgba(37,214,200,.14);position:relative;background:linear-gradient(160deg,rgba(18,29,51,.96),rgba(12,19,35,.96));
+  border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:0 10px 30px rgba(0,0,0,.35)}
+.board::before{content:"";position:absolute;left:0;right:0;top:0;height:4px;background:linear-gradient(90deg,var(--c2),var(--c))}
+.board header{display:block;padding:16px 18px 10px}
+.board h2{font-family:Anton;font-weight:400;font-size:26px;letter-spacing:.02em;text-transform:uppercase;margin:0;color:#fff;line-height:1.05}
+.board h2 span{color:var(--c)}
+.board p{margin:4px 0 0;color:var(--muted);font-size:13.5px}
+.rows{list-style:none;margin:0;padding:0 10px 6px}
+.rows li{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;gap:10px;padding:0 10px;height:36px;border-radius:8px}
+.rows li:nth-child(odd){background:rgba(255,255,255,.025)}
+.rows .rk{font-family:Pixel,monospace;font-size:24px;color:#8fa0bf;text-align:right}
+.rows li:nth-child(1) .rk{color:#ffd76a}.rows li:nth-child(2) .rk{color:#e3e9f5}.rows li:nth-child(3) .rk{color:#e0a274}
+.rows .nm{font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.rows .v{font-family:Pixel,monospace;font-size:24px;color:var(--c);white-space:nowrap}
+.rows .v small{font-family:Outfit,sans-serif;font-size:11px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin-left:5px;text-transform:uppercase}
+.rows li.gap{display:none}
+.rows li.me{background:linear-gradient(90deg,var(--soft),transparent);box-shadow:inset 3px 0 0 var(--c)}
+.rows li.me .nm{color:#fff}
+.rows li.more{display:none}
+.board.open .rows li.more{display:grid}
+.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 20px 14px;color:var(--muted);font-size:13px}
+.foot button{background:none;border:1px solid var(--line);color:#c9d3e6;border-radius:8px;font:600 13px Outfit,sans-serif;padding:6px 12px;cursor:pointer}
+.foot button:hover,.foot button:focus-visible{border-color:var(--c);color:#fff}
+.empty{padding:6px 20px 18px;color:var(--muted)}
+.b-medals{--c:#6ff0b0;--c2:#18b874;--soft:rgba(60,220,150,.18)}
+.b-bits{--c:#ff7ad9;--c2:#e0218a;--soft:rgba(255,60,180,.18)}
+.b-subs{--c:#c9a8ff;--c2:#8a5cff;--soft:rgba(160,110,255,.2)}
+.b-follow{--c:#ff7b6b;--c2:#b8332a;--soft:rgba(230,70,60,.2)}
+.b-streak{--c:#ffb347;--c2:#ff6a2b;--soft:rgba(255,150,60,.18)}
+.note{color:var(--muted);font-size:13px;margin:-14px 0 30px}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+@media (max-width:760px){.grid{grid-template-columns:1fr}.upd{margin-left:0;width:100%}.board h2{font-size:23px}}
+</style></head><body>
+<div class="wrap">
+<header><a href="../"><img src="../img/logo_nav.png" alt="Droogle"></a><a class="back" href="../">Back to the Dashboard</a></header>
+<h1>Hall of Fame</h1>
+<p class="lead">Everyone who keeps the Droogle stream going, all in one place. On stream, a viewer&rsquo;s board pops up when they hit a milestone. Type <code>!boards</code> in chat to see your own spot on every board.</p>
+<div class="bar">
+  <form class="find" role="search" autocomplete="off"><input type="search" name="q" maxlength="26" placeholder="Find your Twitch name" aria-label="Find a Twitch name on the boards" spellcheck="false"><button type="submit">Find</button></form>
+  <span class="msg" role="status" aria-live="polite"></span>
+  <span class="upd"></span>
+</div>
+<div class="grid" id="grid"><p class="empty">Loading the boards&hellip;</p></div>
+<p class="note">Bits come from Streamlabs&rsquo; all-time list, which shows the top 10 cheerers. Follow dates cover viewers who have chatted on stream. Viewers who asked for no public profile aren&rsquo;t listed.</p>
+</div>
+<script>
+(function () {
+  'use strict';
+  var SRC = '../data/hof.json';
+  var BOARDS = [
+    { k: 'medals', t: 'Moogle Medal', a: 'Collectors', d: 'Most Moogle Medals earned. A card pops up at every 50.', unit: 'medals', of: 'collectors' },
+    { k: 'bits', t: 'Bits', a: 'Cheered', d: 'Lifetime bits, power-ups and Sound Alerts. Cards at 5K, 10K, 25K and up.', unit: 'bits', of: 'cheerers' },
+    { k: 'subs', t: 'Sub', a: 'Months', d: 'Total months subscribed. A card at every sub anniversary.', unit: 'mo', of: 'subs' },
+    { k: 'follow', t: 'Longest', a: 'Followers', d: 'Who followed first. A card at 1, 2, 5 and 10 year anniversaries.', unit: '', of: 'followers' },
+    { k: 'streak', t: 'Watch', a: 'Streaks', d: 'Best Twitch watch streak shared in chat. A card at every 50.', unit: 'streams', of: 'streakers' }
+  ];
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  var SHOWN = 10, DATA = null, ME = '';
+  var grid = document.getElementById('grid'), form = document.querySelector('.find'), input = form.querySelector('input'), msg = document.querySelector('.msg'), upd = document.querySelector('.upd');
+  function esc(s) { return String(s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
+  function num(n) { return Number(n).toLocaleString('en-US'); }
+  function val(b, v) {
+    if (b.k === 'follow') { var m = /^(\d{4})-(\d{2})/.exec(v || ''); return m ? MON[+m[2] - 1] + ' ' + m[1] : esc(v); }
+    return num(v) + (b.unit ? '<small>' + b.unit + '</small>' : '');
+  }
+  function render() {
+    if (!DATA || !DATA.boards) { grid.innerHTML = '<p class="empty">The boards are warming up. Check back after the next stream, kupo!</p>'; return; }
+    var h = '';
+    BOARDS.forEach(function (b) {
+      var bd = DATA.boards[b.k] || { total: 0, top: [] }, rows = bd.top || [], open = rows.length > SHOWN && rows.some(function (r, i) { return i >= SHOWN && r[0].toLowerCase() === ME; });
+      h += '<section class="board b-' + b.k + (open ? ' open' : '') + '" aria-labelledby="h-' + b.k + '"><header><h2 id="h-' + b.k + '">' + esc(b.t) + ' <span>' + esc(b.a) + '</span></h2><p>' + esc(b.d) + '</p></header>';
+      if (!rows.length) h += '<p class="empty">Nobody here yet.</p>';
+      else {
+        h += '<ol class="rows">';
+        rows.forEach(function (r, i) {
+          var me = ME && r[0].toLowerCase() === ME;
+          h += '<li class="' + (i >= SHOWN ? 'more' : '') + (me ? ' me' : '') + '"><span class="rk">' + r[2] + '</span><span class="nm">' + esc(r[0]) + '</span><span class="v">' + val(b, r[1]) + '</span></li>';
+        });
+        h += '</ol>';
+      }
+      h += '<div class="foot"><span>' + (bd.total ? 'Top ' + Math.min(rows.length, bd.total) + ' of ' + num(bd.total) + ' ' + b.of : '') + '</span>' +
+        (rows.length > SHOWN ? '<button type="button" aria-expanded="' + open + '">' + (open ? 'Show top ' + SHOWN : 'Show top ' + rows.length) + '</button>' : '') + '</div></section>';
+    });
+    grid.innerHTML = h;
+    var d = new Date(DATA.t); if (!isNaN(d)) upd.textContent = 'Updated ' + d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' });
+  }
+  grid.addEventListener('click', function (e) {
+    var btn = e.target.closest('.foot button'); if (!btn) return;
+    var sec = btn.closest('.board'), on = sec.classList.toggle('open'), n = sec.querySelectorAll('.rows li').length;
+    btn.setAttribute('aria-expanded', on); btn.textContent = on ? 'Show top ' + SHOWN : 'Show top ' + n;
+  });
+  form.addEventListener('submit', function (e) {
+    e.preventDefault(); ME = input.value.trim().replace(/^@/, '').toLowerCase();
+    render(); if (!ME) { msg.textContent = ''; return; }
+    var found = [];
+    BOARDS.forEach(function (b) { var bd = DATA && DATA.boards && DATA.boards[b.k]; if (bd) bd.top.forEach(function (r) { if (r[0].toLowerCase() === ME) found.push(b.t + ' ' + b.a + ' #' + r[2]); }); });
+    msg.innerHTML = found.length ? '<b>' + esc(input.value.trim().replace(/^@/, '')) + '</b>: ' + esc(found.join(' · ')) : 'Not in a top 25 yet. Type <b>!boards</b> in chat for your exact spots.';
+    var first = grid.querySelector('li.me'); if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+  fetch(SRC + '?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw r.status; return r.json(); })
+    .then(function (d) { DATA = d; render(); }).catch(function () { render(); });
+})();
+</script>
+</body></html>
