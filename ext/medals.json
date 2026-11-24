@@ -2809,7 +2809,7 @@
 "c":"events",
 "t":"s",
 "n":"Random Encounter",
-"d":"Roll every !random sound command",
+"d":"Roll every random sound command",
 "r":[
 [
 "rnd_sfx",
