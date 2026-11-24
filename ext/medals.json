@@ -102,7 +102,7 @@
 "Crystal Guardian"
 ],
 [
-1600,
+1610,
 "Moogle Monarch"
 ]
 ],
@@ -116,7 +116,7 @@
 "s"
 ],
 [
-600,
+650,
 "g"
 ],
 [
@@ -1474,6 +1474,19 @@
 [
 "cats_n",
 8
+]
+]
+},
+{
+"id":"medals50",
+"c":"loyal",
+"t":"g",
+"n":"Gotta Mog ’Em All",
+"d":"Earn 50 Moogle Medals",
+"r":[
+[
+"medals_n",
+50
 ]
 ]
 },
@@ -3840,5 +3853,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1780
+"max":1790
 }
