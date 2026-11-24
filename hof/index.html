@@ -108,7 +108,7 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
     BOARDS.forEach(function (b) {
       var bd = DATA.boards[b.k] || { total: 0, top: [] }, rows = bd.top || [], open = rows.length > SHOWN && rows.some(function (r, i) { return i >= SHOWN && r[0].toLowerCase() === ME; });
       var far = null; if (ME) (bd.rest || []).forEach(function (r) { if (r[0].toLowerCase() === ME) far = r; });   /* a searched viewer below the top 25 */
-      h += '<section class="board b-' + b.k + (open ? ' open' : '') + '" aria-labelledby="h-' + b.k + '"><header><h2 id="h-' + b.k + '">' + esc(b.t) + ' <span>' + esc(b.a) + '</span></h2><p>' + esc(b.d) + '</p></header>';
+      h += '<section class="board b-' + b.k + (open ? ' open' : '') + '" aria-labelledby="h-' + b.k + '"><header><h2 id="h-' + b.k + '">' + esc(b.t) + ' <span>' + esc(b.a) + '</span></h2></header>';
       if (!rows.length) h += '<p class="empty">Nobody here yet.</p>';
       else {
         h += '<ol class="rows">';
