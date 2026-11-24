@@ -55,6 +55,7 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
 .rows li.me{background:linear-gradient(90deg,var(--soft),transparent);box-shadow:inset 3px 0 0 var(--c)}
 .rows li.me .nm{color:#fff}
 .rows li.more{display:none}
+.rows li.dots{display:block;height:22px;text-align:center;color:var(--muted);letter-spacing:.4em;font-size:13px;background:none}
 .board.open .rows li.more{display:grid}
 .foot{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 20px 14px;color:var(--muted);font-size:13px}
 .foot button{background:none;border:1px solid var(--line);color:#c9d3e6;border-radius:8px;font:600 13px Outfit,sans-serif;padding:6px 12px;cursor:pointer}
@@ -106,6 +107,7 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
     var h = '';
     BOARDS.forEach(function (b) {
       var bd = DATA.boards[b.k] || { total: 0, top: [] }, rows = bd.top || [], open = rows.length > SHOWN && rows.some(function (r, i) { return i >= SHOWN && r[0].toLowerCase() === ME; });
+      var far = null; if (ME) (bd.rest || []).forEach(function (r) { if (r[0].toLowerCase() === ME) far = r; });   /* a searched viewer below the top 25 */
       h += '<section class="board b-' + b.k + (open ? ' open' : '') + '" aria-labelledby="h-' + b.k + '"><header><h2 id="h-' + b.k + '">' + esc(b.t) + ' <span>' + esc(b.a) + '</span></h2><p>' + esc(b.d) + '</p></header>';
       if (!rows.length) h += '<p class="empty">Nobody here yet.</p>';
       else {
@@ -114,6 +116,7 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
           var me = ME && r[0].toLowerCase() === ME;
           h += '<li class="' + (i >= SHOWN ? 'more' : '') + (me ? ' me' : '') + '"><span class="rk">' + r[2] + '</span><span class="nm">' + esc(r[0]) + '</span><span class="v">' + val(b, r[1]) + '</span></li>';
         });
+        if (far) h += '<li class="dots" aria-hidden="true">&bull; &bull; &bull;</li><li class="me"><span class="rk">' + num(far[2]) + '</span><span class="nm">' + esc(far[0]) + '</span><span class="v">' + val(b, far[1]) + '</span></li>';
         h += '</ol>';
       }
       h += '<div class="foot"><span>' + (bd.total ? 'Top ' + Math.min(rows.length, bd.total) + ' of ' + num(bd.total) + ' ' + b.of : '') + '</span>' +
@@ -131,8 +134,8 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
     e.preventDefault(); ME = input.value.trim().replace(/^@/, '').toLowerCase();
     render(); if (!ME) { msg.textContent = ''; return; }
     var found = [];
-    BOARDS.forEach(function (b) { var bd = DATA && DATA.boards && DATA.boards[b.k]; if (bd) bd.top.forEach(function (r) { if (r[0].toLowerCase() === ME) found.push(b.t + ' ' + b.a + ' #' + r[2]); }); });
-    msg.innerHTML = found.length ? '<b>' + esc(input.value.trim().replace(/^@/, '')) + '</b>: ' + esc(found.join(' · ')) : 'Not in a top 25 yet. Type <b>!boards</b> in chat for your exact spots.';
+    BOARDS.forEach(function (b) { var bd = DATA && DATA.boards && DATA.boards[b.k]; if (bd) (bd.top || []).concat(bd.rest || []).forEach(function (r) { if (r[0].toLowerCase() === ME) found.push(b.t + ' ' + b.a + ' #' + num(r[2])); }); });
+    msg.innerHTML = found.length ? '<b>' + esc(input.value.trim().replace(/^@/, '')) + '</b>: ' + esc(found.join(' · ')) : 'Not on a board yet. Hang out on stream and type <b>!boards</b> in chat anytime.';
     var first = grid.querySelector('li.me'); if (first) first.scrollIntoView({ behavior: 'smooth', block: 'center' });
   });
   fetch(SRC + '?t=' + Math.floor(Date.now() / 60000), { cache: 'no-store' }).then(function (r) { if (!r.ok) throw r.status; return r.json(); })
