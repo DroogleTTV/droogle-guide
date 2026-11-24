@@ -100,7 +100,8 @@ h1{font-family:Anton;font-weight:400;font-size:clamp(38px,6.5vw,62px);line-heigh
   function num(n) { return Number(n).toLocaleString('en-US'); }
   function val(b, v) {
     if (b.k === 'follow') { var m = /^(\d{4})-(\d{2})/.exec(v || ''); return m ? MON[+m[2] - 1] + ' ' + m[1] : esc(v); }
-    return num(v) + (b.unit ? '<small>' + b.unit + '</small>' : '');
+    var t = typeof v === 'string' ? esc(v) : num(v);   /* "25,000+": a bits badge floor, not an exact total */
+    return t + (b.unit ? '<small>' + b.unit + '</small>' : '');
   }
   function render() {
     if (!DATA || !DATA.boards) { grid.innerHTML = '<p class="empty">The boards are warming up. Check back after the next stream, kupo!</p>'; return; }
