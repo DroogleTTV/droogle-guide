@@ -102,7 +102,7 @@
 "Crystal Guardian"
 ],
 [
-1610,
+1590,
 "Moogle Monarch"
 ]
 ],
@@ -116,7 +116,7 @@
 "s"
 ],
 [
-650,
+600,
 "g"
 ],
 [
@@ -1224,6 +1224,19 @@
 ]
 },
 {
+"id":"medals50",
+"c":"loyal",
+"t":"s",
+"n":"Gotta Mog ’Em All",
+"d":"Earn 50 Moogle Medals",
+"r":[
+[
+"medals_n",
+50
+]
+]
+},
+{
 "id":"chattop",
 "c":"loyal",
 "t":"s",
@@ -1478,15 +1491,15 @@
 ]
 },
 {
-"id":"medals50",
+"id":"medals100",
 "c":"loyal",
 "t":"g",
-"n":"Gotta Mog ’Em All",
-"d":"Earn 50 Moogle Medals",
+"n":"Mognum Opus",
+"d":"Earn 100 Moogle Medals",
 "r":[
 [
 "medals_n",
-50
+100
 ]
 ]
 },
@@ -1648,19 +1661,6 @@
 [
 "att_days",
 300
-]
-]
-},
-{
-"id":"medals100",
-"c":"loyal",
-"t":"p",
-"n":"Mognum Opus",
-"d":"Earn 100 Moogle Medals",
-"r":[
-[
-"medals_n",
-100
 ]
 ]
 },
@@ -3853,5 +3853,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1790
+"max":1768
 }
