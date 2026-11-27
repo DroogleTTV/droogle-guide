@@ -128,7 +128,6 @@
     hours: ['Hours watched', '#ffcf5a', null, function () { return 'all-time'; }],
     ffgames: ['Final Fantasy games', '#2fe0d2', null, function () { return 'watched on stream'; }],
     nuts: ['Nuts banked', '#ffcf5a', null, function () { return 'best balance, all seasons'; }],
-    gil: ['Gil', '#ffcf5a', null, function () { return 'in your pouch'; }],
     chat: ['Chat messages', '#2fe0d2', null, function (t) { return n(t[2]) ? pl(t[2], 'top-chatter finish', 'top-chatter finishes') : ''; }],
     heal: ['Healing EXP', '#6ff0b0', null, function (t) { return 'Healer Lv. ' + fmt(t[2] || 1); }],
     atk: ['Attack EXP', '#ff4fa6', null, function (t) { return 'Attacker Lv. ' + fmt(t[2] || 1); }],
