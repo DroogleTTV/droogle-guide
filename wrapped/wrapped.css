@@ -44,3 +44,34 @@ body.wr-open{overflow:hidden}
 .wr-go.twitch{background:#9146ff;color:#fff;border:0;gap:10px}
 .wr-go:focus-visible{outline:3px solid #ffcf5a;outline-offset:3px}
 .wr-go[disabled]{opacity:.7;cursor:default}
+
+/* gift 5: the sealed letter */
+@font-face{font-family:"Droo Hand";font-weight:500;src:url(caveat-latin-500-normal.woff2) format('woff2')}
+@font-face{font-family:"Droo Hand";font-weight:700;src:url(caveat-latin-700-normal.woff2) format('woff2')}
+.wr-env{position:absolute;left:28px;top:408px;width:334px;height:220px;perspective:700px;filter:drop-shadow(0 14px 22px rgba(0,0,0,.5));transition:opacity .45s .3s,transform .55s .3s}
+.wr-envb{position:absolute;inset:0;width:334px;height:220px}
+.wr-addr{position:absolute;left:0;right:0;bottom:14px;text-align:center;font:500 25px/1 "Droo Hand",cursive;color:#2b2f5e;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;padding:0 20px}
+.wr-flap{position:absolute;left:0;top:0;width:334px;height:132px;transform-origin:50% 0;transition:transform .45s .12s;filter:drop-shadow(0 3px 3px rgba(60,40,10,.25))}
+.wr-seal{position:absolute;left:119px;top:80px;width:96px;height:96px;padding:0;border:0;background:none;cursor:pointer;border-radius:50%;transition:transform .3s,opacity .3s;animation:wrPulse 2.4s ease-in-out infinite}
+.wr-seal img{width:96px;height:96px;display:block}
+.wr-seal:hover{transform:scale(1.06)}
+.wr-seal:focus-visible{outline:3px solid #ffcf5a;outline-offset:2px}
+@keyframes wrPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.wr-tapseal{position:absolute;left:0;right:0;top:640px;text-align:center;font-size:13px;color:#b9c5e3;transition:opacity .3s}
+.wr-letter{position:absolute;left:20px;right:20px;top:170px;padding:22px 24px 18px;border-radius:6px;cursor:pointer;color:#253066;font:500 21px/30px "Droo Hand",cursive;
+  background:repeating-linear-gradient(180deg,transparent 0 29px,rgba(70,100,170,.16) 29px 30px) 0 19px/100% 100% no-repeat,#fbf6ea;
+  box-shadow:0 20px 44px rgba(0,0,0,.55);opacity:0;transform:translateY(240px) scale(.55);pointer-events:none;
+  transition:opacity .4s .45s,transform .65s .45s cubic-bezier(.2,.8,.2,1)}
+.wr-letter p{margin:0}
+.wr-letter p+p{margin-top:30px}
+.wr-letter .bye{margin-top:30px}
+.wr-letter .sig{font-weight:700;font-size:30px}
+.wr-letter .ps{font-size:18px;line-height:24px;margin-top:10px;color:#4a5384}
+.wr-letter:focus{outline:none}
+.wr-slide.opened .wr-seal{animation:none;transform:scale(1.25) rotate(-10deg);opacity:0;pointer-events:none}
+.wr-slide.opened .wr-flap{transform:rotateX(180deg)}
+.wr-slide.opened .wr-env{opacity:0;transform:translateY(46px) scale(.9);pointer-events:none}
+.wr-slide.opened .wr-tapseal{opacity:0}
+.wr-slide.opened .wr-letter{opacity:1;transform:rotate(-1deg);pointer-events:auto}
+.wr-slide.still *{transition:none!important}
+@media (prefers-reduced-motion:reduce){.wr-env,.wr-flap,.wr-seal,.wr-letter,.wr-tapseal{transition:opacity .2s!important;animation:none!important}}

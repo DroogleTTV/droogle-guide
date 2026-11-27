@@ -15,6 +15,7 @@
   var NOTE = 'It’s been officially 13 years since I first started streaming. No matter how many of those 13 years you’ve been a part of, I thank you for being here in this community and on this journey. I never forget how fortunate I am to have even a single person taking time out of their day to spend it with me. Happy Holidays and thanks again!';
   var ART = 'wrapped/art/';   /* game box art from Twitch, 144 x 192, named by gameSlug */
   function gameSlug(t) { return String(t).toLowerCase().replace(/['\u2019]/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
+  var SEAL = 'wrapped/seal.png';   /* red wax pressed with the Droo Emblem (discord/droo_avatar.png) */
   var BOW = 'wrapped/bow.png', LOGO = 'wrapped/logo.png', LOGO_BIG = 'img/logo.png';   /* logo.png: 855 x 360, sharp at 80 px tall on 3x screens */
 
   var ROLES = {
@@ -239,6 +240,23 @@
       (l1 ? '<div style="font:400 26px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;margin-top:6px">' + l1 + '</div><div style="font-size:15px;color:#44507a;margin-top:2px">' + s1 + '</div>' : '') +
       '<div style="font-size:15px;font-weight:600;line-height:1.4;margin-top:' + (l1 ? 10 : 6) + 'px">' + l2 + '</div></div>';
   }
+  /* Gift 5, the note from Droo, as a sealed letter (Andrew 2026-11-27 15:09): an envelope closed with a red wax seal pressed with the
+     Droo Emblem; tapping the seal opens it to a handwritten letter, "Dear <name>," ... "Sincerely, Droogle". Tapping the letter folds it back. */
+  var LETTER_OPEN = false;
+  function letter(d) {
+    var name = esc(d.n);
+    return '<div style="position:absolute;left:28px;right:28px;top:378px;font:20px \'Jersey 15\',monospace;letter-spacing:.06em;color:#ffcf5a">GIFT 5 OF 5: A NOTE FROM DROO</div>' +
+      '<div class="wr-env" aria-hidden="false">' +
+      '<svg class="wr-envb" aria-hidden="true" viewBox="0 0 334 220"><rect width="334" height="220" rx="6" fill="#efe3c8"/><path d="M0 6 L167 128 L0 214Z" fill="#e7d8b8"/><path d="M334 6 L167 128 L334 214Z" fill="#e7d8b8"/><path d="M0 220 L167 112 L334 220Z" fill="#f4ead4"/></svg>' +
+      '<div class="wr-addr">To ' + name + '</div>' +
+      '<svg class="wr-flap" aria-hidden="true" viewBox="0 0 334 132"><path d="M3 0 H331 Q334 0 331 4 L171 128 Q167 131 163 128 L3 4 Q0 0 3 0Z" fill="#e3d1ab"/><path d="M3 0 H331 L167 126Z" fill="none" stroke="rgba(90,60,20,0.18)" stroke-width="1.2"/></svg>' +
+      '<button type="button" class="wr-seal" data-act="seal" aria-label="Break the seal and read Droo’s letter"><img src="' + SEAL + '" alt=""></button>' +
+      '</div>' +
+      '<div class="wr-tapseal">Tap the seal to open</div>' +
+      '<div class="wr-letter" data-act="fold" role="document" aria-label="A letter from Droogle">' +
+      '<p class="hi">Dear ' + name + ',</p><p>' + esc(NOTE) + '</p><p class="bye">Sincerely,<br><span class="sig">Droogle</span></p>' +
+      (n(d.fd) ? '<p class="ps">P.S. You’ve been following since ' + day(d.fd, true) + '.</p>' : '') + '</div>';
+  }
   function slides(d, t) {
     var name = esc(d.n), a = n(d.a), ns = n(t.ns), g = d.g || [], r = ROLES[d.r] ? d.r : 'ninja', out = [];
     NPAGES = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }).length >= 9 ? 6 : 5;
@@ -327,10 +345,7 @@
       head('GIFT 4 OF 5', 'What we did together') +
       '<div style="position:absolute;left:28px;right:28px;top:192px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px">' +
       stat(t.ns, '#2fe0d2', 'streams') + stat(t.ng, '#ff4fa6', 'games') + stat(t.nv, '#ffcf5a', 'of you stopped by') + stat(t.nm, '#6ff0b0', 'Moogle Medals earned') + '</div>' +
-      '<div style="position:absolute;left:28px;right:28px;top:391px;padding:20px;border-radius:16px;background:#f2f6ff;color:#0a1634;transform:rotate(-1.5deg)">' +
-      '<div style="font:22px \'Jersey 15\',monospace;color:#c2185b">GIFT 5 OF 5: A NOTE FROM DROO</div>' +
-      '<p style="margin:8px 0 0;font-size:15px;line-height:1.5">' + esc(NOTE) + '</p>' +
-      (n(d.fd) ? '<p style="margin:10px 0 0;font-size:14px;color:#44507a">You’ve been following since ' + day(d.fd, true) + '.</p>' : '') + '</div>' +
+      letter(d) +
       '<button type="button" class="wr-go gold" data-act="card" style="bottom:88px">Save my Wrapped card</button>' +
       '<button type="button" class="wr-go" data-act="again" style="bottom:34px;height:44px;background:none;border:0;color:#f2f6ff;font-weight:600;font-size:16px">Unwrap it again</button></div>');
     return out;
@@ -390,6 +405,8 @@
   function onTap(e) {
     var b = e.target.closest('[data-act]');
     if (b) { var a = b.getAttribute('data-act');
+      if (a === 'seal') { LETTER_OPEN = true; var sl = STAGE.firstChild; if (sl) sl.classList.add('opened'); var lt = sl && sl.querySelector('.wr-letter'); if (lt) { lt.setAttribute('tabindex', '-1'); setTimeout(function () { try { lt.focus({ preventScroll: true }); } catch (x) {} }, 500); } return; }
+      if (a === 'fold') { LETTER_OPEN = false; if (STAGE.firstChild) STAGE.firstChild.classList.remove('opened', 'still'); return; }
       if (a === 'next') show(AT + 1); else if (a === 'again') show(0); else if (a === 'login') login(); else if (a === 'card') saveCard(b); else if (a === 'retry') start();
       return; }
     if (PAGES.length < 2) return;
@@ -398,6 +415,7 @@
   function show(i) { if (!M || i < 0 || i >= PAGES.length || i === AT) return; AT = i; paint(); }
   function paint() {
     STAGE.innerHTML = PAGES[AT]; var s = STAGE.firstChild; if (s) s.classList.add('in');
+    if (s && LETTER_OPEN && s.querySelector('.wr-letter')) s.classList.add('opened', 'still');
     $('.wr-prev', M).disabled = AT === 0; $('.wr-next', M).disabled = AT >= PAGES.length - 1;
     var multi = PAGES.length > 1; $('.wr-prev', M).style.visibility = $('.wr-next', M).style.visibility = multi ? '' : 'hidden';
   }
