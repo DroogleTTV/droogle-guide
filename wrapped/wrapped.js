@@ -13,7 +13,7 @@
   var PREVIEW = '7aca93c5d94811b38f5d55ca3e6684f21ba90b1c70ba5c491b4e5fe35d2447a2';   // SHA-256 of the private preview link's hash
   var YEAR = 2026;
   var NOTE = 'It’s been officially 13 years since I first started streaming. No matter how many of those 13 years you’ve been a part of, I thank you for being here in this community and on this journey. I never forget how fortunate I am to have even a single person taking time out of their day to spend it with me. Happy Holidays and thanks again!';
-  var BOW = 'wrapped/bow.png', LOGO = 'img/logo_nav.png', LOGO_BIG = 'img/logo.png';
+  var BOW = 'wrapped/bow.png', LOGO = 'wrapped/logo.png', LOGO_BIG = 'img/logo.png';   /* logo.png: 855 x 360, sharp at 80 px tall on 3x screens */
 
   var ROLES = {
     white: ['The White Mage', 'Healing EXP'], black: ['The Black Mage', 'Attack EXP'], red: ['The Red Mage', 'Healing + attack EXP'],
@@ -155,13 +155,13 @@
       '<svg aria-hidden="true" width="390" height="70" viewBox="0 0 390 70" style="position:absolute;left:0;top:38px"><path d="M-10 8 Q 97 52 195 14 Q 293 -18 400 30" fill="none" stroke="#33415f" stroke-width="2"/>' +
       '<circle cx="30" cy="24" r="6" fill="#ff4fa6"/><circle cx="72" cy="34" r="6" fill="#ffcf5a"/><circle cx="114" cy="34" r="6" fill="#2fe0d2"/><circle cx="156" cy="24" r="6" fill="#ff4fa6"/><circle cx="198" cy="13" r="6" fill="#ffcf5a"/><circle cx="240" cy="7" r="6" fill="#2fe0d2"/><circle cx="282" cy="8" r="6" fill="#ff4fa6"/><circle cx="324" cy="14" r="6" fill="#ffcf5a"/><circle cx="366" cy="23" r="6" fill="#2fe0d2"/></svg>' +
       bars(0) +
-      '<div style="position:absolute;left:0;right:0;top:120px;display:flex;flex-direction:column;align-items:center;gap:10px;padding:0 28px;text-align:center">' +
-      '<img src="' + LOGO + '" alt="Droogle" style="height:40px;width:auto"><div style="font:26px \'Jersey 15\',monospace;letter-spacing:.12em;color:#ffcf5a">WRAPPED</div>' +
+      '<div style="position:absolute;left:0;right:0;top:108px;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 28px;text-align:center">' +
+      '<img src="' + LOGO + '" alt="Droogle" style="height:80px;width:auto"><div style="font:26px \'Jersey 15\',monospace;letter-spacing:.12em;color:#ffcf5a">WRAPPED</div>' +
       '<div style="font:128px/0.85 \'Jersey 15\',monospace;background:linear-gradient(90deg,#2fe0d2,#ff4fa6);-webkit-background-clip:text;background-clip:text;color:transparent">' + YEAR + '</div>' +
       '<h2 style="margin:14px 0 0;font:400 34px/1.05 Anton,Impact,sans-serif;letter-spacing:.01em;text-transform:uppercase;overflow-wrap:anywhere">' + name + ', your year on the stream is all wrapped up</h2>' +
       '<p style="margin:4px 0 0;font-size:16px;line-height:1.45;color:#b9c5e3">Five gifts inside: the streams you caught, your game of the year, your party role, and what we did together.</p></div>' +
-      '<svg role="img" aria-label="A wrapped gift" width="150" height="132" viewBox="0 0 150 132" style="position:absolute;left:120px;top:560px"><rect x="12" y="48" width="126" height="80" rx="6" fill="#e0265f"/><rect x="4" y="34" width="142" height="22" rx="5" fill="#ff4fa6"/><rect x="66" y="34" width="18" height="94" fill="#ffcf5a"/></svg>' +
-      '<img src="' + BOW + '" alt="" aria-hidden="true" style="position:absolute;left:140px;top:556px;width:110px;height:104px">' +
+      '<svg role="img" aria-label="A wrapped gift" width="150" height="132" viewBox="0 0 150 132" style="position:absolute;left:120px;top:572px"><rect x="12" y="48" width="126" height="80" rx="6" fill="#e0265f"/><rect x="4" y="34" width="142" height="22" rx="5" fill="#ff4fa6"/><rect x="66" y="34" width="18" height="94" fill="#ffcf5a"/></svg>' +
+      '<img src="' + BOW + '" alt="" aria-hidden="true" style="position:absolute;left:140px;top:568px;width:110px;height:104px">' +
       btn('gold', 'next', 'Unwrap it', null, 716) +
       '<svg aria-hidden="true" width="390" height="70" viewBox="0 0 390 70" style="position:absolute;left:0;bottom:0"><path d="M0 70 L0 40 L18 40 L32 10 L46 40 L60 40 L76 18 L92 40 L300 40 L318 6 L336 40 L352 40 L368 22 L384 40 L390 40 L390 70 Z" fill="#0b1f2c"/></svg>' +
       '<div style="position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:13px;color:#b9c5e3">Happy holidays, kupo!</div></div>');
