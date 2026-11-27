@@ -289,6 +289,7 @@
       '<svg role="img" aria-label="A wrapped gift" width="150" height="132" viewBox="0 0 150 132" style="position:absolute;left:120px;top:572px"><rect x="12" y="48" width="126" height="80" rx="6" fill="#e0265f"/><rect x="4" y="34" width="142" height="22" rx="5" fill="#ff4fa6"/><rect x="66" y="34" width="18" height="94" fill="#ffcf5a"/></svg>' +
       '<img src="' + BOW + '" alt="" aria-hidden="true" style="position:absolute;left:140px;top:568px;width:110px;height:104px">' +
       btn('gold', 'next', 'Unwrap it', null, 716) +
+      '<div aria-hidden="true" style="position:absolute;left:-600px;right:-600px;bottom:0;height:30px;background:#0b1f2c"></div>' +
       '<svg aria-hidden="true" width="390" height="70" viewBox="0 0 390 70" style="position:absolute;left:0;bottom:0"><path d="M0 70 L0 40 L18 40 L32 10 L46 40 L60 40 L76 18 L92 40 L300 40 L318 6 L336 40 L352 40 L368 22 L384 40 L390 40 L390 70 Z" fill="#0b1f2c"/></svg>' +
       '<div style="position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:13px;color:#b9c5e3">Happy holidays, kupo!</div></div>');
     /* 2. You showed up */
@@ -389,11 +390,20 @@
     M.innerHTML = '<div class="wr-stage"></div>' + arrow('wr-prev', ICON.prev, 'Previous gift') + arrow('wr-next', ICON.next, 'Next gift') +
       '<button type="button" class="wr-btn wr-x" aria-label="Close"><svg aria-hidden="true" viewBox="0 0 18 18"><path d="M4 4 L14 14 M14 4 L4 14" stroke="#f2f6ff" stroke-width="2.4" stroke-linecap="round"/></svg></button>';
     document.body.appendChild(M); document.body.classList.add('wr-open');
+    if (isPhone()) {   /* snow in the strips beside the slide too */
+      var sn = document.createElement('div'); sn.setAttribute('aria-hidden', 'true'); sn.style.cssText = 'position:absolute;inset:0;overflow:hidden;pointer-events:none';
+      sn.innerHTML = snow(60, 99, window.innerWidth, window.innerHeight, 4, 0.25, 0.5).replace(/class="wr-fl"/g, 'class="wr-fl" ');
+      M.insertBefore(sn, M.firstChild);
+    }
     STAGE = $('.wr-stage', M);
     $('.wr-prev', M).addEventListener('click', function () { show(AT - 1); });
     $('.wr-next', M).addEventListener('click', function () { show(AT + 1); });
     $('.wr-x', M).addEventListener('click', closeWrapped);
-    M.addEventListener('click', function (e) { if (e.target === M) closeWrapped(); });
+    M.addEventListener('click', function (e) {
+      if (e.target !== M) return;
+      if (!isPhone()) { closeWrapped(); return; }
+      goFull(); if (PAGES.length > 1) show(e.clientX < window.innerWidth / 3 ? AT - 1 : AT + 1);   /* phones: the strips beside the slide are part of it */
+    });
     STAGE.addEventListener('click', onTap);
     document.addEventListener('keydown', onKey); window.addEventListener('resize', layout);
     PAGES = [msgSlide('Unwrapping…', 'Finding your year on the stream.')]; AT = 0; paint(); layout();
