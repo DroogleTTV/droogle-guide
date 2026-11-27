@@ -101,9 +101,10 @@
   /* ---------- the slides ---------- */
   var BG = 'background:linear-gradient(180deg,#050a1a 0%,#0a1634 60%,#12204a 100%)', BG55 = 'background:linear-gradient(180deg,#050a1a 0%,#0a1634 55%,#12204a 100%)';
   function glow(css, color, op, blur) { return '<div aria-hidden="true" style="position:absolute;' + css + ';border-radius:50%;background:' + color + ';opacity:' + op + ';filter:blur(' + blur + 'px)"></div>'; }
+  var NPAGES = 5;
   function bars(i) {
-    var h = '<div aria-hidden="true" style="position:absolute;left:16px;right:16px;top:14px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px">';
-    for (var k = 0; k < 5; k++) h += '<div style="height:4px;border-radius:2px;background:' + (k <= i ? '#f2f6ff' : 'rgba(242,246,255,0.25)') + '"></div>';
+    var h = '<div aria-hidden="true" style="position:absolute;left:16px;right:16px;top:14px;display:grid;grid-template-columns:repeat(' + NPAGES + ',minmax(0,1fr));gap:6px">';
+    for (var k = 0; k < NPAGES; k++) h += '<div style="height:4px;border-radius:2px;background:' + (k <= i ? '#f2f6ff' : 'rgba(242,246,255,0.25)') + '"></div>';
     return h + '</div>';
   }
   function head(k, t) {
@@ -114,6 +115,84 @@
   function box(label, value, color, sub, size) {
     return '<div style="padding:16px;border-radius:14px;background:rgba(18,32,74,0.85);border:1px solid #2a3b6b;min-width:0"><div style="font-size:13px;color:#b9c5e3">' + label +
       '</div><div style="font:' + (size || 40) + 'px/1.08 \'Jersey 15\',monospace;color:' + color + ';overflow-wrap:anywhere">' + value + '</div>' + (sub ? '<div style="font-size:13px;color:#dfe6f7">' + sub + '</div>' : '') + '</div>';
+  }
+  /* Gift 3's tiles (Andrew 2026-11-27): the engine sends up to 12, best first: [id, value, extra numbers...] */
+  var MONTHS = ['', 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  var DAYS = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+  var TILE = {   /* id: [label, color, value(t, d) -> [shown, text?], sub(t, d)] */
+    reward: ['Favorite redemption', '#ff4fa6', function (t, d) { return [esc(d.rw || ''), 1]; }, function (t) { return pl(t[1], 'time', 'times') + ' this fall'; }],
+    medals: ['Moogle Medals', '#6ff0b0', null, function (t) { return n(t[2]) ? '#' + fmt(t[2]) + ' collector' : ''; }],
+    rank: ['Adventurer Rank', '#ffcf5a', function (t, d) { return [esc(d.rk || 'Onion Knight'), 1]; }, function (t) { return 'Lv. ' + fmt(t[1]); }],
+    kupo: ['Kupo Nuts caught', '#ff4fa6', null, function (t) { var p = []; if (n(t[2])) p.push(fmt(t[2]) + ' gold'); if (n(t[3])) p.push(fmt(t[3]) + ' platinum'); return p.join(', '); }],
+    qb: ['Queen’s Blood cards', '#c9a8ff', null, function (t) { return n(t[2]) ? 'LVL ' + fmt(t[2]) : ''; }],
+    hours: ['Hours watched', '#ffcf5a', null, function () { return 'all-time'; }],
+    ffgames: ['Final Fantasy games', '#2fe0d2', null, function () { return 'watched on stream'; }],
+    nuts: ['Nuts banked', '#ffcf5a', null, function () { return 'best balance, all seasons'; }],
+    gil: ['Gil', '#ffcf5a', null, function () { return 'in your pouch'; }],
+    chat: ['Chat messages', '#2fe0d2', null, function (t) { return n(t[2]) ? pl(t[2], 'top-chatter finish', 'top-chatter finishes') : ''; }],
+    heal: ['Healing EXP', '#6ff0b0', null, function (t) { return 'Healer Lv. ' + fmt(t[2] || 1); }],
+    atk: ['Attack EXP', '#ff4fa6', null, function (t) { return 'Attacker Lv. ' + fmt(t[2] || 1); }],
+    credits: ['Stayed for the credits', '#c9a8ff', null, function (t) { return n(t[1]) === 1 ? 'stream' : 'streams'; }],
+    prelude: ['There from the start', '#2fe0d2', null, function () { return 'in the first 10 minutes'; }],
+    quests: ['Quests helped clear', '#6ff0b0', null, function () { return 'weekly quests'; }],
+    rewards: ['Channel point rewards', '#ff4fa6', null, function () { return 'different ones redeemed'; }],
+    pp: ['Pom Poms spent', '#ffcf5a', null, function () { return 'on channel points'; }],
+    sfx: ['SFX played', '#2fe0d2', null, function () { return 'different sounds'; }],
+    choco: ['Chocobos', '#ffcf5a', null, function (t) { return n(t[2]) ? pl(t[2], 'race or duel won', 'races and duels won') : 'in your stable'; }],
+    hunts: ['Monster hunts joined', '#ff4fa6', null, function (t) { return n(t[2]) ? pl(t[2], 'final strike', 'final strikes') : ''; }],
+    quiz: ['Quiz wins', '#c9a8ff', null, function () { return 'across 3 quiz games'; }],
+    tonb: ['Tonberry hits', '#6ff0b0', null, function (t) { return n(t[2]) ? 'in on ' + pl(t[2], 'takedown', 'takedowns') : ''; }],
+    raids: ['Raids ridden', '#2fe0d2', null, function () { return 'out with Droo'; }],
+    hype: ['Hype Trains', '#ff4fa6', null, function () { return 'you helped fuel'; }],
+    subs: ['Months subscribed', '#c9a8ff', null, function () { return 'in total'; }],
+    bits: ['Bits cheered', '#ffcf5a', null, function () { return 'in total'; }],
+    steals: ['Successful steals', '#6ff0b0', null, function () { return 'with !steal'; }],
+    summons: ['Summons + boosts', '#c9a8ff', null, function () { return 'called'; }],
+    chaos: ['Chaos caused', '#ff4fa6', null, function (t) { return n(t[1]) === 1 ? 'moment' : 'moments'; }],
+    timer: ['Timer maxed out', '#ffcf5a', null, function (t) { return 'with you watching'; }],
+    goals: ['Daily goals met', '#6ff0b0', null, function () { return 'while you were here'; }],
+    pizza: ['It’s Pizza Time!', '#ffcf5a', null, function () { return 'all 4 goals in a night'; }],
+    doom: ['Doom defied', '#c9a8ff', null, function () { return 'stayed past the timer'; }],
+    hype5: ['Hype Train lv. 5', '#ff4fa6', null, function () { return 'cleared with you watching'; }],
+    lurk: ['Long, quiet watches', '#2fe0d2', null, function () { return 'an hour+ without a word'; }],
+    raidin: ['Raids you came in with', '#ff4fa6', null, function () { return 'party crasher'; }],
+    items: ['Item Shop finds', '#6ff0b0', null, function () { return 'different items owned'; }],
+    freenuts: ['“Free” Nuts claimed', '#ffcf5a', null, function (t) { return n(t[1]) === 1 ? 'stream' : 'streams'; }],
+    triad: ['Triple Triad score', '#c9a8ff', null, function () { return 'card score'; }],
+    snap: ['Thanos snaps survived', '#6ff0b0', null, function () { return 'perfectly balanced'; }],
+    omni: ['Omnislash hits', '#2fe0d2', null, function () { return 'damage added'; }],
+    bomb: ['!bomb blasts', '#ff4fa6', null, function (t) { var p = []; if (n(t[2])) p.push(fmt(t[2]) + ' in your hands'); if (n(t[3])) p.push(fmt(t[3]) + ' last pass'); return p.join(', '); }],
+    ffb: ['FF Battles called', '#ffcf5a', null, function () { return 'correct predictions'; }],
+    insomnia: ['Late nights', '#c9a8ff', null, function () { return 'chatting after 1 AM'; }],
+    coldopen: ['Cold opens', '#2fe0d2', null, function () { return 'here before the show'; }],
+    brb: ['BRB chats', '#6ff0b0', null, function () { return 'chatting through a break'; }],
+    mail: ['Mailbox letters', '#ff4fa6', null, function () { return 'to the Moogle Mailbox'; }],
+    credtop: ['Top of the credits', '#ffcf5a', null, function () { return '#1 healer or attacker'; }],
+    wake: ['Droogle wake-ups', '#c9a8ff', null, function () { return 'with !wake'; }],
+    hugs: ['!hugs given', '#ff4fa6', null, function () { return 'nuts shared'; }],
+    clips: ['Clips made', '#2fe0d2', null, function () { return 'of the stream'; }],
+    gifts: ['Subs gifted', '#ffcf5a', null, function () { return 'to the community'; }],
+    marathon: ['Start-to-finish marathons', '#6ff0b0', null, function () { return '4+ hour streams'; }],
+    games: ['Games watched', '#ff4fa6', null, function () { return 'this year'; }],
+    follow: ['Following since', '#2fe0d2', function (t) { return [String(new Date(n(t[1]) * 864e5).getUTCFullYear()), 0]; }, function (t) { return day(t[1]); }],
+    night: ['Your stream night', '#c9a8ff', function (t) { return [DAYS[n(t[1]) % 7], 1]; }, function (t) { return pl(t[2], 'stream', 'streams'); }],
+    month: ['Busiest month', '#6ff0b0', function (t) { return [MONTHS[n(t[1])] || '', 1]; }, function (t) { return pl(t[2], 'stream', 'streams'); }],
+    last: ['Last stream you caught', '#ffcf5a', function (t) { return [day(t[1]), 1]; }, function () { return 'see you at the next one'; }],
+    one: ['The stream you caught', '#ff4fa6', function (t) { return [day(t[1]), 1]; }, function (t, d) { return d.g && d.g[0] ? esc(d.g[0][0]) : ''; }]
+  };
+  function tile(t, d, span) {
+    var c = TILE[t[0]]; if (!c) return '';
+    var v = c[2] ? c[2](t, d) : [fmt(t[1]), 0], txt = v[1], sub = c[3] ? c[3](t, d) : '';
+    var size = txt ? (v[0].length > 16 ? 20 : v[0].length > 10 ? 24 : 28) : (v[0].length > 8 ? 28 : 34);
+    return '<div style="padding:12px 14px;border-radius:14px;background:rgba(18,32,74,0.85);border:1px solid #2a3b6b;min-width:0' + (span ? ';grid-column:span 2' : '') + '">' +
+      '<div style="font-size:12.5px;color:#b9c5e3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + c[0] + '</div>' +
+      '<div style="font:' + size + 'px/1.08 ' + (txt ? 'Anton,Impact,sans-serif;text-transform:uppercase;margin:3px 0 2px' : '\'Jersey 15\',monospace') + ';color:' + c[1] + ';overflow-wrap:anywhere">' + v[0] + '</div>' +
+      (sub ? '<div style="font-size:12px;color:#dfe6f7;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">' + sub + '</div>' : '') + '</div>';
+  }
+  function grid(list, d) {
+    var h = '<div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px">';
+    list.forEach(function (t, i) { h += tile(t, d, i === list.length - 1 && list.length % 2 === 1); });
+    return h + '</div>';
   }
   function roleLine(r, s, d) {
     s = s || {};
@@ -149,6 +228,7 @@
 
   function slides(d, t) {
     var name = esc(d.n), a = n(d.a), ns = n(t.ns), g = d.g || [], r = ROLES[d.r] ? d.r : 'ninja', out = [];
+    NPAGES = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }).length >= 9 ? 6 : 5;
     /* 1. Unwrap */
     out.push('<div class="wr-slide" style="' + BG55 + '">' + glow('left:-80px;top:-60px;width:360px;height:240px', '#2fe0d2', 0.22, 60) + glow('right:-90px;top:10px;width:340px;height:220px', '#ff4fa6', 0.22, 60) +
       snow(52, 7, 384, 800, 4, 0.35, 0.6) +
@@ -206,25 +286,26 @@
       '<div style="font:30px \'Jersey 15\',monospace;color:#c2185b;margin-top:6px">' + pl(top[1], 'stream', 'streams') + ' together</div></div>' +
       '<div style="position:absolute;left:28px;right:28px;top:486px;display:flex;flex-direction:column;gap:12px">' + list + (gline ? '<div style="font-size:14px;color:#b9c5e3;margin-top:4px">' + gline + '</div>' : '') + '</div>' +
       btn('line', 'next', 'Next gift', 34) + '</div>');
-    /* 4. Your party role */
-    var k = d.k || [0, 0, 0], q = d.q || [0, 0], kp = [];
-    if (n(k[1])) kp.push(fmt(k[1]) + ' gold'); if (n(k[2])) kp.push(fmt(k[2]) + ' platinum');
+    /* 4. Your party role, and its tiles (one slide, or two when there are enough) */
+    var xs = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }), first = xs.slice(0, 6), more = xs.length >= 9 ? xs.slice(6, 12) : [];
+    if (!xs.length) first = [['rank', n(d.lv) || 1]];
     var title = ROLES[r][0].toUpperCase();
     out.push('<div class="wr-slide" style="' + BG + '">' + glow('left:40px;top:140px;width:320px;height:260px', '#2fe0d2', 0.14, 70) + snow(52, 45, 384, 800, 4, 0.3, 0.5) + bars(3) +
       head('GIFT 3 OF 5', 'Your party role') +
-      '<div style="position:absolute;left:28px;right:28px;top:168px;display:flex;flex-direction:column;gap:4px"><div style="font-size:16px;color:#b9c5e3">This year you played</div>' +
-      '<div style="font:' + (title.length > 15 ? 62 : 74) + 'px/0.9 \'Jersey 15\',monospace;color:#2fe0d2">' + title + '</div>' +
-      '<div style="font-size:16px;line-height:1.45;color:#dfe6f7;margin-top:8px">' + roleLine(r, d.s, d) + '</div></div>' +
-      '<div style="position:absolute;left:28px;right:28px;top:418px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">' +
-      box('Moogle Medals', fmt(d.m), '#6ff0b0', n(d.mr) ? '#' + fmt(d.mr) + ' collector' : n(d.m) ? '' : 'Earn them by chatting') +
-      box('Adventurer Rank', esc(d.rk || 'Onion Knight'), '#ffcf5a', 'Lv. ' + fmt(d.lv || 1), 34) +
-      box('Kupo Nuts caught', fmt(k[0]), '#ff4fa6', kp.length ? kp.join(', ') : n(k[0]) ? '' : 'Catch one on stream') +
-      box('Queen’s Blood cards', fmt(q[0]), '#c9a8ff', n(q[1]) ? 'LVL ' + fmt(q[1]) : n(q[0]) ? '' : 'Not started yet') + '</div>' +
+      '<div style="position:absolute;left:28px;right:28px;top:164px;bottom:104px;display:flex;flex-direction:column;gap:14px">' +
+      '<div style="display:flex;flex-direction:column;gap:4px"><div style="font-size:16px;color:#b9c5e3">This year you played</div>' +
+      '<div style="font:' + (title.length > 15 ? 58 : 68) + 'px/0.9 \'Jersey 15\',monospace;color:#2fe0d2">' + title + '</div>' +
+      '<div style="font-size:15px;line-height:1.4;color:#dfe6f7;margin-top:6px">' + roleLine(r, d.s, d) + '</div></div>' +
+      grid(first, d) + '</div>' +
+      btn('line', 'next', more.length ? 'More of your year' : 'Last gift', 34) + '</div>');
+    if (more.length) out.push('<div class="wr-slide" style="' + BG + '">' + glow('right:-100px;top:200px;width:340px;height:300px', '#ff4fa6', 0.14, 70) + snow(52, 69, 384, 800, 4, 0.3, 0.5) + bars(4) +
+      head('GIFT 3 OF 5', 'More of your year') +
+      '<div style="position:absolute;left:28px;right:28px;top:172px">' + grid(more, d) + '</div>' +
       btn('line', 'next', 'Last gift', 34) + '</div>');
     /* 5. Together */
     function stat(v, c, l) { return '<div><div style="font:62px/0.9 \'Jersey 15\',monospace;color:' + c + '">' + fmt(v) + '</div><div style="font-size:15px;color:#dfe6f7">' + l + '</div></div>'; }
     out.push('<div class="wr-slide" style="' + BG55 + '">' + glow('left:-80px;top:-40px;width:360px;height:240px', '#2fe0d2', 0.2, 60) + glow('right:-90px;top:20px;width:340px;height:220px', '#ff4fa6', 0.2, 60) +
-      snow(52, 57, 384, 800, 4, 0.3, 0.55) + bars(4) +
+      snow(52, 57, 384, 800, 4, 0.3, 0.55) + bars(NPAGES - 1) +
       head('GIFT 4 OF 5', 'What we did together') +
       '<div style="position:absolute;left:28px;right:28px;top:192px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 12px">' +
       stat(t.ns, '#2fe0d2', 'streams') + stat(t.ng, '#ff4fa6', 'games') + stat(t.nv, '#ffcf5a', 'of you stopped by') + stat(t.nm, '#6ff0b0', 'Moogle Medals earned') + '</div>' +
