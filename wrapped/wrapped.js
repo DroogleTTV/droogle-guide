@@ -13,6 +13,8 @@
   var PREVIEW = '7aca93c5d94811b38f5d55ca3e6684f21ba90b1c70ba5c491b4e5fe35d2447a2';   // SHA-256 of the private preview link's hash
   var YEAR = 2026;
   var NOTE = 'It’s been officially 13 years since I first started streaming. No matter how many of those 13 years you’ve been a part of, I thank you for being here in this community and on this journey. I never forget how fortunate I am to have even a single person taking time out of their day to spend it with me. Happy Holidays and thanks again!';
+  var ART = 'wrapped/art/';   /* game box art from Twitch, 144 x 192, named by gameSlug */
+  function gameSlug(t) { return String(t).toLowerCase().replace(/['\u2019]/g, '').replace(/&/g, 'and').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''); }
   var BOW = 'wrapped/bow.png', LOGO = 'wrapped/logo.png', LOGO_BIG = 'img/logo.png';   /* logo.png: 855 x 360, sharp at 80 px tall on 3x screens */
 
   var ROLES = {
@@ -270,8 +272,11 @@
     if (g.length >= 2) {
       list = '<div style="font-size:14px;color:#b9c5e3">Your top ' + (g.length === 2 ? 'two' : 'three') + '</div>';
       g.forEach(function (x) {
-        list += '<div style="display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;gap:12px;font-weight:600"><span>' + esc(x[0]) + '</span><span style="font:22px \'Jersey 15\',monospace;color:#2fe0d2">' + fmt(x[1]) + '</span></div>' +
-          '<div style="height:10px;border-radius:5px;background:#1b2a55"><div style="width:' + Math.max(4, Math.round(100 * n(x[1]) / Math.max(1, n(g[0][1])))) + '%;height:10px;border-radius:5px;background:linear-gradient(90deg,#2fe0d2,#ff4fa6)"></div></div></div>';
+        /* Twitch box art beside each game (Andrew 2026-11-27 11:38); a game without art yet gets a plain card */
+        list += '<div style="display:flex;align-items:center;gap:12px">' +
+          '<img src="' + ART + gameSlug(x[0]) + '.jpg" alt="" aria-hidden="true" onerror="this.style.visibility=\'hidden\'" style="flex:none;width:42px;height:56px;border-radius:6px;object-fit:cover;background:#1b2a55;box-shadow:0 4px 10px rgba(0,0,0,0.4)">' +
+          '<div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:6px"><div style="display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-weight:600;line-height:1.2"><span>' + esc(x[0]) + '</span><span style="font:22px \'Jersey 15\',monospace;color:#2fe0d2">' + fmt(x[1]) + '</span></div>' +
+          '<div style="height:10px;border-radius:5px;background:#1b2a55"><div style="width:' + Math.max(4, Math.round(100 * n(x[1]) / Math.max(1, n(g[0][1])))) + '%;height:10px;border-radius:5px;background:linear-gradient(90deg,#2fe0d2,#ff4fa6)"></div></div></div></div>';
       });
     }
     var gn = n(d.gn), gline = gn > 1 ? 'You were there for ' + fmt(gn) + ' different games this year.' : gn === 1 ? 'Every stream you caught this year was ' + esc(top[0]) + '.' : '';
@@ -283,7 +288,7 @@
       '<div style="font-size:14px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#8a2d5c;overflow-wrap:anywhere">To ' + name + ', from Droo</div>' +
       '<div style="font:40px/1.02 Anton,Impact,sans-serif;margin-top:8px;text-transform:uppercase">' + esc(top[0]) + '</div>' +
       '<div style="font:30px \'Jersey 15\',monospace;color:#c2185b;margin-top:6px">' + pl(top[1], 'stream', 'streams') + ' together</div></div>' +
-      '<div style="position:absolute;left:28px;right:28px;top:486px;display:flex;flex-direction:column;gap:12px">' + list + (gline ? '<div style="font-size:14px;color:#b9c5e3;margin-top:4px">' + gline + '</div>' : '') + '</div>' +
+      '<div style="position:absolute;left:28px;right:28px;top:474px;display:flex;flex-direction:column;gap:10px">' + list + (gline ? '<div style="font-size:14px;color:#b9c5e3;margin-top:4px">' + gline + '</div>' : '') + '</div>' +
       btn('line', 'next', 'Next gift', 34) + '</div>');
     /* 4. Your party role, and its tiles (one slide, or two when there are enough) */
     var xs = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }), first = xs.slice(0, 6), more = xs.length >= 9 ? xs.slice(6, 12) : [];
