@@ -1,0 +1,46 @@
+/* Droogle Wrapped 2026 (Andrew 2026-11-27): the "Unwrap your 2026" ad (desktop: top right; phone and tablet: a banner at the top of
+   the hero) and the Wrapped window (desktop: centred over the dimmed Dashboard; phone: full screen). Design: the Droogle Wrapped canvas. */
+@font-face{font-family:"Jersey 15";font-weight:400;src:url(../jersey-15-latin-400-normal.woff2) format('woff2')}
+.wr-ad,.wr-band{font:inherit;cursor:pointer;color:#f2f6ff;font-family:Outfit,system-ui,sans-serif;text-align:left;
+  border:4px solid transparent;background:linear-gradient(160deg,#0a1634,#050a1a) padding-box,repeating-linear-gradient(135deg,#e0265f 0 8px,#ff4fa6 8px 16px) border-box;
+  box-shadow:0 0 28px rgba(255,79,166,.45),0 12px 30px rgba(0,0,0,.5);overflow:hidden;transition:transform .15s,box-shadow .15s}
+.wr-ad:hover,.wr-band:hover{transform:translateY(-2px);box-shadow:0 0 36px rgba(255,79,166,.6),0 14px 34px rgba(0,0,0,.55)}
+.wr-ad:focus-visible,.wr-band:focus-visible{outline:3px solid #ffcf5a;outline-offset:3px}
+.wr-ad{position:absolute;right:23px;top:25px;z-index:30;width:312px;height:98px;border-radius:18px;padding:0}
+.wr-band{display:none;position:relative;width:100%;max-width:440px;height:76px;margin:0 auto 22px;border-radius:16px;padding:0}
+@media (max-width:1099px){.wr-ad{display:none}.wr-band{display:block}}
+.wr-fl{position:absolute;background:#f2f6ff;pointer-events:none}
+.wr-gift{position:absolute;pointer-events:none}
+.wr-adt{position:absolute;display:flex;flex-direction:column;gap:3px;pointer-events:none}
+.wr-adt .k{font:19px/1 "Jersey 15",monospace;letter-spacing:.08em;color:#2fe0d2}
+.wr-adt .h{font:26px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;color:#ffcf5a}
+.wr-ad .wr-adt{left:94px;top:21px}
+.wr-band .wr-adt{left:84px;top:13px}.wr-band .wr-adt .h{font-size:24px}
+.wr-band .chev{position:absolute;right:16px;top:50%;width:22px;height:22px;margin-top:-11px;pointer-events:none}
+
+/* the window */
+.wr-modal{position:fixed;inset:0;z-index:120;background:rgba(3,7,15,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
+body.wr-open{overflow:hidden}
+.wr-stage{position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0;border-radius:14px;overflow:hidden;border:1px solid #2a3d63;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.wr-modal.phone{background:#050a1a}
+.wr-modal.phone .wr-stage{border:0;border-radius:0;box-shadow:none}
+.wr-slide{position:absolute;inset:0;overflow:hidden;box-sizing:border-box;font-family:Outfit,system-ui,sans-serif;color:#f2f6ff;-webkit-user-select:none;user-select:none;cursor:pointer}
+.wr-slide *{box-sizing:border-box}
+.wr-slide a,.wr-slide button{cursor:pointer}
+.wr-slide.in{animation:wrIn .35s ease-out}
+@keyframes wrIn{from{opacity:0;transform:scale(.985)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.wr-slide.in{animation:none}.wr-ad,.wr-band{transition:none}}
+.wr-btn{position:absolute;display:grid;place-items:center;width:48px;height:48px;padding:0;border-radius:50%;background:rgba(18,32,74,.92);border:1px solid #2a3b6b;box-shadow:0 8px 20px rgba(0,0,0,.45);color:#f2f6ff;cursor:pointer}
+.wr-btn:hover{background:#1b2f6b}
+.wr-btn:focus-visible{outline:3px solid #ffcf5a;outline-offset:2px}
+.wr-btn[disabled]{opacity:.35;cursor:default}
+.wr-btn svg{width:22px;height:22px}
+.wr-x{width:40px;height:40px}.wr-x svg{width:18px;height:18px}
+.wr-modal.phone .wr-prev,.wr-modal.phone .wr-next{display:none}
+.wr-modal.phone .wr-x{background:rgba(5,10,26,.7)}
+.wr-go{position:absolute;left:28px;right:28px;height:56px;display:flex;align-items:center;justify-content:center;border-radius:14px;font:700 18px Outfit,system-ui,sans-serif;text-decoration:none;cursor:pointer}
+.wr-go.gold{background:#ffcf5a;color:#1a1205;border:0}
+.wr-go.line{background:none;border:2px solid #f2f6ff;color:#f2f6ff}
+.wr-go.twitch{background:#9146ff;color:#fff;border:0;gap:10px}
+.wr-go:focus-visible{outline:3px solid #ffcf5a;outline-offset:3px}
+.wr-go[disabled]{opacity:.7;cursor:default}
