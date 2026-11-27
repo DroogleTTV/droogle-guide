@@ -166,12 +166,21 @@
       '<svg aria-hidden="true" width="390" height="70" viewBox="0 0 390 70" style="position:absolute;left:0;bottom:0"><path d="M0 70 L0 40 L18 40 L32 10 L46 40 L60 40 L76 18 L92 40 L300 40 L318 6 L336 40 L352 40 L368 22 L384 40 L390 40 L390 70 Z" fill="#0b1f2c"/></svg>' +
       '<div style="position:absolute;left:0;right:0;bottom:18px;text-align:center;font-size:13px;color:#b9c5e3">Happy holidays, kupo!</div></div>');
     /* 2. You showed up */
-    var perfect = a >= ns && ns > 0, badge = perfect ? 'Perfect attendance' : a * 2 >= ns && ns > 1 ? 'Over half the streams' : '';
+    /* attendance wording by share of the year's streams (Andrew 2026-11-27: 107 of 112 deserves more than "over half") */
+    var pc = ns > 0 ? a / ns : 0, miss = Math.max(0, ns - a), pcs = Math.floor(pc * 100) + '%', badge, sub;
+    if (ns > 0 && a >= ns) { badge = 'Perfect attendance'; sub = 'out of ' + fmt(ns) + '. You never missed one.'; }
+    else if (pc >= 0.95) { badge = 'Nearly perfect'; sub = 'out of ' + fmt(ns) + '. You only missed ' + fmt(miss) + '.'; }
+    else if (pc >= 0.9) { badge = 'Almost every stream'; sub = 'out of ' + fmt(ns) + '. You only missed ' + fmt(miss) + '.'; }
+    else if (pc >= 0.75) { badge = 'Front-row regular'; sub = 'out of ' + fmt(ns) + '. That\u2019s ' + pcs + ' of them.'; }
+    else if (pc >= 0.5) { badge = 'Over half the streams'; sub = 'out of ' + fmt(ns) + '. That\u2019s ' + pcs + ' of them.'; }
+    else if (pc >= 0.25) { badge = 'A real regular'; sub = 'out of ' + fmt(ns) + ' streams this year.'; }
+    else if (a >= 5) { badge = 'Part of the party'; sub = 'out of ' + fmt(ns) + ' streams this year.'; }
+    else { badge = ''; sub = a === 1 ? 'out of ' + fmt(ns) + '. Thanks for stopping by!' : 'out of ' + fmt(ns) + ' streams this year.'; }
     out.push('<div class="wr-slide" style="' + BG + '">' + glow('right:-120px;top:120px;width:360px;height:300px', '#2fe0d2', 0.16, 70) + snow(52, 21, 384, 800, 4, 0.3, 0.5) + bars(1) +
       head('GIFT 1 OF 5', 'You showed up') +
       '<div style="position:absolute;left:28px;right:28px;top:176px;display:flex;flex-direction:column;align-items:flex-start"><div style="font:190px/0.8 \'Jersey 15\',monospace;color:#2fe0d2">' + fmt(a) + '</div>' +
       '<div style="font-size:22px;font-weight:600;margin-top:10px">' + (a === 1 ? 'stream' : 'streams') + ' this year</div>' +
-      '<div style="font-size:16px;color:#b9c5e3;margin-top:2px">' + (perfect ? 'out of ' + fmt(ns) + '. You never missed one.' : 'out of ' + fmt(ns) + ' streams this year.') + '</div></div>' +
+      '<div style="font-size:16px;color:#b9c5e3;margin-top:2px">' + sub + '</div></div>' +
       (badge ? '<div style="position:absolute;left:28px;top:428px;display:flex;align-items:center;gap:10px;padding:10px 16px 10px 12px;border-radius:12px;background:#ffcf5a;color:#1a1205;transform:rotate(-3deg)"><svg aria-hidden="true" width="22" height="22" viewBox="0 0 22 22"><circle cx="11" cy="11" r="9" fill="none" stroke="#1a1205" stroke-width="2"/><path d="M6.5 11.5l3 3 6-7" fill="none" stroke="#1a1205" stroke-width="2.4"/></svg><span style="font-weight:700;font-size:17px">' + badge + '</span></div>' : '') +
       '<div style="position:absolute;left:28px;right:28px;top:508px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">' +
       box('First stream you caught', day(d.f), '#ff4fa6', '', 38) + box('Longest streak', n(d.b) === 1 ? '1 stream' : fmt(d.b) + ' in a row', '#ff4fa6', '', 38) +
