@@ -22,7 +22,7 @@
 .wr-modal{position:fixed;inset:0;z-index:120;background:rgba(3,7,15,.72);-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px)}
 body.wr-open{overflow:hidden}
 .wr-stage{position:absolute;left:0;top:0;width:390px;height:844px;transform-origin:0 0;border-radius:14px;overflow:hidden;border:1px solid #2a3d63;box-shadow:0 24px 60px rgba(0,0,0,.6)}
-.wr-modal.phone{background:#050a1a}
+.wr-modal.phone{background:linear-gradient(180deg,#050a1a 0%,#0a1634 55%,#12204a 100%);-webkit-backdrop-filter:none;backdrop-filter:none}   /* the slide's own colours, so the strips beside it disappear */
 .wr-modal.phone .wr-stage{border:0;border-radius:0;box-shadow:none}
 .wr-slide{position:absolute;inset:0;overflow:hidden;box-sizing:border-box;font-family:Outfit,system-ui,sans-serif;color:#f2f6ff;-webkit-user-select:none;user-select:none;cursor:pointer}
 .wr-slide *{box-sizing:border-box}

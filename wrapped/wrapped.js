@@ -82,7 +82,22 @@
       hero.insertBefore(b, hero.firstChild);
     }
   }
-  function go(from) { opener = from; if (location.hash === '#wrapped' || /^#unwrap-/.test(location.hash)) openWrapped(); else location.hash = isOpen() ? 'wrapped' : (sget('dgWrapHash') || 'wrapped'); }
+  /* Full screen on phones (Andrew 2026-11-27 15:18). Browsers only allow it from a tap, so it is asked for when the ad is tapped and again
+     on the first tap inside the window (for a viewer who arrived by link). iPhone Safari doesn't allow it for pages; there the window fills
+     the visible screen instead (wrapped.css .wr-modal.phone). */
+  var WENT_FS = false;
+  function isPhone() { return window.innerWidth <= 560; }
+  function goFull() {
+    var el = document.documentElement, f = el.requestFullscreen || el.webkitRequestFullscreen;
+    if (!isPhone() || !f || document.fullscreenElement || document.webkitFullscreenElement) return;
+    try { var r = f.call(el, { navigationUI: 'hide' }); WENT_FS = true; if (r && r.catch) r.catch(function () { WENT_FS = false; }); } catch (e) { WENT_FS = false; }
+  }
+  function leaveFull() {
+    if (!WENT_FS) return; WENT_FS = false;
+    var x = document.exitFullscreen || document.webkitExitFullscreen;
+    if (x && (document.fullscreenElement || document.webkitFullscreenElement)) { try { var r = x.call(document); if (r && r.catch) r.catch(function () {}); } catch (e) {} }
+  }
+  function go(from) { goFull(); opener = from; if (location.hash === '#wrapped' || /^#unwrap-/.test(location.hash)) openWrapped(); else location.hash = isOpen() ? 'wrapped' : (sget('dgWrapHash') || 'wrapped'); }
 
   /* ---------- who is signed in (Twitch) ---------- */
   function who() {
@@ -387,6 +402,7 @@
   }
   function closeWrapped() {
     if (!M) return;
+    leaveFull();
     M.remove(); M = null; STAGE = null; document.body.classList.remove('wr-open');
     document.removeEventListener('keydown', onKey); window.removeEventListener('resize', layout);
     if (location.hash === '#wrapped' || /^#unwrap-/.test(location.hash)) history.replaceState(null, '', location.pathname + location.search);
@@ -403,6 +419,7 @@
     }
   }
   function onTap(e) {
+    goFull();
     var b = e.target.closest('[data-act]');
     if (b) { var a = b.getAttribute('data-act');
       if (a === 'seal') { LETTER_OPEN = true; var sl = STAGE.firstChild; if (sl) sl.classList.add('opened'); var lt = sl && sl.querySelector('.wr-letter'); if (lt) { lt.setAttribute('tabindex', '-1'); setTimeout(function () { try { lt.focus({ preventScroll: true }); } catch (x) {} }, 500); } return; }
@@ -421,7 +438,7 @@
   }
   function layout() {
     if (!M) return;
-    var vw = window.innerWidth, vh = window.innerHeight, phone = vw <= 560, s, w, h, x, y;
+    var vw = window.innerWidth, vh = window.innerHeight, phone = isPhone(), s, w, h, x, y;
     M.classList.toggle('phone', phone);
     s = phone ? Math.min(vw / 390, vh / 844) : Math.min(1, (vh - 48) / 844, (vw - 190) / 390);
     w = 390 * s; h = 844 * s; x = Math.round((vw - w) / 2); y = Math.round((vh - h) / 2);
