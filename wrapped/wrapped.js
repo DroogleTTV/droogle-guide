@@ -227,6 +227,18 @@
   function roleStatLabel(r, d) { return r === 'ninja' && !n(d.h) ? 'Streams caught' : ROLES[r][1]; }
   function roleStatValue(r, d) { return r === 'ninja' && !n(d.h) ? d.a : roleStat(r, d.s, d); }
 
+  /* the gift tag under "More of your year" (Andrew 2026-11-27 11:45: "Feels empty"): hours as days, and where their stream count ranks */
+  function wrapTag(d, t) {
+    var h = n(d.h), ap = n(d.ap), days = Math.floor(h / 24), l1 = '', s1 = '';
+    if (h >= 24) { l1 = fmt(h) + ' hours with Droo'; s1 = 'That\u2019s ' + pl(days, 'full day', 'full days') + '.'; }
+    else if (h > 0) { l1 = pl(h, 'hour', 'hours') + ' with Droo'; s1 = 'Every one of them counted.'; }
+    var l2 = ap >= 50 ? 'You caught more streams than ' + ap + '% of the party.' : 'One of ' + fmt(t.nv) + ' viewers who made ' + YEAR + '.';
+    return '<div style="position:relative;margin:0 6px;padding:18px 20px 18px 44px;border-radius:14px;background:#f2f6ff;color:#0a1634;transform:rotate(-1.5deg);box-shadow:0 14px 32px rgba(0,0,0,0.45)">' +
+      '<div aria-hidden="true" style="position:absolute;left:16px;top:50%;width:12px;height:12px;margin-top:-6px;border-radius:50%;background:#0a1634"></div>' +
+      '<div style="font:20px \'Jersey 15\',monospace;letter-spacing:.06em;color:#c2185b">YOUR YEAR, WRAPPED UP</div>' +
+      (l1 ? '<div style="font:400 26px/1.05 Anton,Impact,sans-serif;text-transform:uppercase;margin-top:6px">' + l1 + '</div><div style="font-size:15px;color:#44507a;margin-top:2px">' + s1 + '</div>' : '') +
+      '<div style="font-size:15px;font-weight:600;line-height:1.4;margin-top:' + (l1 ? 10 : 6) + 'px">' + l2 + '</div></div>';
+  }
   function slides(d, t) {
     var name = esc(d.n), a = n(d.a), ns = n(t.ns), g = d.g || [], r = ROLES[d.r] ? d.r : 'ninja', out = [];
     NPAGES = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }).length >= 9 ? 6 : 5;
@@ -291,7 +303,9 @@
       '<div style="position:absolute;left:28px;right:28px;top:474px;display:flex;flex-direction:column;gap:10px">' + list + (gline ? '<div style="font-size:14px;color:#b9c5e3;margin-top:4px">' + gline + '</div>' : '') + '</div>' +
       btn('line', 'next', 'Next gift', 34) + '</div>');
     /* 4. Your party role, and its tiles (one slide, or two when there are enough) */
-    var xs = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }), first = xs.slice(0, 6), more = xs.length >= 9 ? xs.slice(6, 12) : [];
+    var xs = (d.x || []).filter(function (t) { return t && TILE[t[0]]; }), two = xs.length >= 9;   /* same test as NPAGES */
+    if (two && n(d.h) > 0) xs = xs.filter(function (t) { return t[0] !== 'hours'; });   /* the tag on "More of your year" already says the hours */
+    var first = xs.slice(0, 6), more = two ? xs.slice(6, 12) : [];
     if (!xs.length) first = [['rank', n(d.lv) || 1]];
     var title = ROLES[r][0].toUpperCase();
     out.push('<div class="wr-slide" style="' + BG + '">' + glow('left:40px;top:140px;width:320px;height:260px', '#2fe0d2', 0.14, 70) + snow(52, 45, 384, 800, 4, 0.3, 0.5) + bars(3) +
@@ -304,7 +318,7 @@
       btn('line', 'next', more.length ? 'More of your year' : 'Last gift', 34) + '</div>');
     if (more.length) out.push('<div class="wr-slide" style="' + BG + '">' + glow('right:-100px;top:200px;width:340px;height:300px', '#ff4fa6', 0.14, 70) + snow(52, 69, 384, 800, 4, 0.3, 0.5) + bars(4) +
       head('GIFT 3 OF 5', 'More of your year') +
-      '<div style="position:absolute;left:28px;right:28px;top:172px">' + grid(more, d) + '</div>' +
+      '<div style="position:absolute;left:28px;right:28px;top:172px;display:flex;flex-direction:column;gap:30px">' + grid(more, d) + wrapTag(d, t) + '</div>' +
       btn('line', 'next', 'Last gift', 34) + '</div>');
     /* 5. Together */
     function stat(v, c, l) { return '<div><div style="font:62px/0.9 \'Jersey 15\',monospace;color:' + c + '">' + fmt(v) + '</div><div style="font-size:15px;color:#dfe6f7">' + l + '</div></div>'; }
