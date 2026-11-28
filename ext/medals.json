@@ -102,7 +102,7 @@
 "Crystal Guardian"
 ],
 [
-1590,
+1600,
 "Moogle Monarch"
 ]
 ],
@@ -2439,6 +2439,19 @@
 ]
 },
 {
+"id":"masterhunter",
+"c":"quests",
+"t":"g",
+"n":"Master Hunter",
+"d":"Hunt in a Festival of the Hunt that Freya wins",
+"r":[
+[
+"fest_master",
+1
+]
+]
+},
+{
 "id":"boss10",
 "c":"quests",
 "t":"p",
@@ -3853,5 +3866,5 @@
 "ann":"🎅 HO HO HO! Santa just flew past the studio window! The {n} viewers who were here earned the seasonal PLATINUM Moogle Medal: {name}!"
 }
 ],
-"max":1768
+"max":1778
 }
