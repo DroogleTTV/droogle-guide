@@ -85,7 +85,8 @@
       });
       o.c.sort(function (a, b) { return (b.primary ? 1 : 0) - (a.primary ? 1 : 0) || a.slot - b.slot; });
       if (r.q && typeof r.q === 'object') {
-        o.q = { r: str(r.q.r, 60), s: r.q.s != null ? num(r.q.s) : null, qr: num(r.q.qr), c: [] };
+        o.q = { r: str(r.q.r, 60), s: r.q.s != null ? num(r.q.s) : null, qr: num(r.q.qr), c: [], le: [] };
+        if (r.q.le && typeof r.q.le === 'object') Object.keys(r.q.le).slice(0, 20).forEach(function (k) { if (/^\d{1,3}$/.test(k) && num(r.q.le[k]) > 0) o.q.le.push([k, num(r.q.le[k])]); });   /* Limited Edition cards (2026-11-28) */
         if (r.q.c && typeof r.q.c === 'object') Object.keys(r.q.c).slice(0, 400).forEach(function (k) { if (k.length <= 60 && num(r.q.c[k]) > 0) o.q.c.push([k, num(r.q.c[k])]); });
       }
       return o;
@@ -369,7 +370,8 @@
     function drawQB(box, P) {
       var Q = P.q;
       var qs = section('Queen’s Blood', Q && Q.qr ? spot(Q.qr, ME.nq) : '');
-      if (!Q || !Q.c.length) { qs.appendChild(h('p', 'mempty', 'No Queen’s Blood cards yet. Redeem Queen’s Blood with Pom Poms to draw your first.')); box.appendChild(qs); return; }
+      var LE = Q && Q.le ? Q.le : [];
+      if (!Q || (!Q.c.length && !LE.length)) { qs.appendChild(h('p', 'mempty', 'No Queen’s Blood cards yet. Redeem Queen’s Blood with Pom Poms to draw your first.')); box.appendChild(qs); return; }
       var copies = Q.c.reduce(function (s, x) { return s + x[1]; }, 0);
       var qh = h('div', 'qbh'); add(qh, Q.r ? h('span', 'rank', Q.r) : null, Q.s != null ? h('span', 'qpts', fmt(Q.s) + ' pts') : null); qs.appendChild(qh);
       var prog = h('div', 'qprog'), pl = h('div', 'spl'), total = QBCARDS ? QBCARDS.cards.length : 152;
@@ -378,6 +380,24 @@
       add(prog, pl, pb); qs.appendChild(prog);
       var cg = h('div', 'cgrid'); qs.appendChild(cg);
       var more = h('button', 'more2'); more.type = 'button'; qs.appendChild(more);
+      if (!Q.c.length) { qh.hidden = true; prog.hidden = true; cg.hidden = true; }
+      /* Limited Edition (Andrew 2026-11-28): its own category, the animated foil card; no Queen's Blood points or rank */
+      if (LE.length && cfg.qbUrl) {           /* the Twitch panel: no outside videos there, so a line that points to the page */
+        var lt = h('p', 'mempty qlenote', 'Limited Edition: ' + LE.map(function (x) { return '#' + x[0] + (x[1] > 1 ? ' ×' + x[1] : ''); }).join(', ') + '. See the animated foil on your Queen’s Blood page.');
+        qs.appendChild(lt);
+      } else if (LE.length) {
+        var lw = h('div', 'qle'), lh = h('div', 'qleh'); add(lh, h('b', null, 'Limited Edition'), h('span', null, 'not in the redemption pool')); lw.appendChild(lh);
+        var lg = h('div', 'cgrid qlegrid');
+        LE.forEach(function (x) {
+          var t = h('div', (CLS.card || 'card') + ' lefoil'), calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches, m;
+          if (calm) { m = h('img'); m.src = SITE + 'qb/le/' + x[0] + '_s.webp'; m.alt = 'Limited Edition card #' + x[0]; }
+          else { m = h('video'); m.src = SITE + 'qb/le/' + x[0] + '.mp4'; m.poster = SITE + 'qb/le/' + x[0] + '_s.webp'; m.muted = true; m.loop = true; m.autoplay = true; m.playsInline = true;
+            m.setAttribute('muted', ''); m.setAttribute('playsinline', ''); m.setAttribute('aria-label', 'Limited Edition card #' + x[0]); }
+          t.appendChild(m); if (x[1] > 1) t.appendChild(h('b', 'ck', '×' + x[1])); t.title = 'Limited Edition #' + x[0] + (x[1] > 1 ? ' ×' + x[1] : '');
+          lg.appendChild(t);
+        });
+        lw.appendChild(lg); qs.appendChild(lw);
+      }
       var drawCards = function () {
         cg.textContent = '';
         var byName = {}; if (QBCARDS) QBCARDS.cards.forEach(function (c) { byName[c.name] = c; });
@@ -400,7 +420,7 @@
         pl2.setAttribute('aria-label', 'Open my Queen’s Blood page (opens the Droogle Dashboard website in a new tab)'); qs.appendChild(pl2);
       } else if (cfg.qb) {                    /* the guide: open the collection page right here */
         var pb2 = h('button', 'more2 qbpage', 'Open my Queen’s Blood page'); pb2.type = 'button';
-        pb2.addEventListener('click', function () { var c = {}; Q.c.forEach(function (x) { c[x[0]] = x[1]; }); cfg.qb({ n: ME.who.name || ME.who.login, r: Q.r, s: Q.s, qr: Q.qr, c: c }, pb2); });
+        pb2.addEventListener('click', function () { var c = {}, le = {}; Q.c.forEach(function (x) { c[x[0]] = x[1]; }); LE.forEach(function (x) { le[x[0]] = x[1]; }); cfg.qb({ n: ME.who.name || ME.who.login, r: Q.r, s: Q.s, qr: Q.qr, c: c, le: le }, pb2); });
         qs.appendChild(pb2);
       }
       drawCards();

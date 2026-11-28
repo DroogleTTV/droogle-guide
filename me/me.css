@@ -107,6 +107,13 @@ body.twm-open{overflow:hidden}
 .twm .qcard.ur{border-color:#ff9be0;box-shadow:0 0 8px rgba(255,120,220,.45)}
 .twm .qcard.vr{border-color:#ffd56a}
 .twm .qcard.r{border-color:#7fc8ff}
+.twm .more2[hidden],.twm .qbh[hidden],.twm .cgrid[hidden]{display:none}
+.twm .qle{margin:12px 0 2px}
+.twm .qleh{display:flex;align-items:baseline;gap:8px;margin:0 2px 7px}
+.twm .qleh b{font-weight:800;font-size:13px;letter-spacing:.08em;text-transform:uppercase;background:linear-gradient(100deg,#c9952f,#fff3c8 45%,#d8b25c 70%,#f9e7a6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.twm .qleh span{font-size:11px;color:var(--muted)}
+.twm .qcard.lefoil{border-color:#f4dc95;background:#10101a;box-shadow:0 0 10px rgba(255,217,138,.45)}
+.twm .qcard.lefoil video,.twm .qcard.lefoil img{display:block;width:100%;height:100%;object-fit:cover}
 .twm .ck{position:absolute;right:3px;bottom:3px;padding:1px 5px;border-radius:7px;background:rgba(5,10,20,.85);color:#fff;font:13px/1 Pixel,monospace}
 .twm .cph{display:grid;place-items:center;height:100%;padding:4px;text-align:center;font-size:11px;color:var(--muted)}
 .twm .more2{display:block;width:100%;margin:8px 0 2px;height:30px;border:1px solid #2a416c;border-radius:8px;background:#0a1529;color:var(--teal);font-weight:600;font-size:12.5px}

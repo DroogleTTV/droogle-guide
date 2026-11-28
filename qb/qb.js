@@ -17,6 +17,23 @@
   function rankParts(r) { var m = /^LVL\s+(\d+)\s+(.*)$/i.exec(r || ''); return m ? ['Lv. ' + m[1], m[2]] : ['', r || 'Blood Peasant']; }
   function when(t) { var d = new Date(t); if (isNaN(d)) return ''; return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }) + ', ' + d.toLocaleTimeString('en-US', { hour: 'numeric', minute: '2-digit' }); }
   function get(url) { return fetch(url, { cache: 'no-store' }).then(function (r) { if (!r.ok) throw r.status; return r.json(); }); }
+  /* Limited Edition cards (Andrew 2026-11-28): never in the redemption pool and no Queen's Blood points or rank. Owners come from the
+     Quest Engine: qb_top.json "le" (card -> [[login, copies], ...]) and each viewer profile's q.le (card -> copies). Owned cards play
+     their animated foil. */
+  var LIMITED = [{ id: '146', name: 'Vivi', vid: 'qb/le/146.mp4', s: 'qb/le/146_s.webp', l: 'qb/le/146_l.webp' }];
+  var LEBY = {}; LIMITED.forEach(function (c) { LEBY[c.id] = c; });
+  var CALM = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function leOf(u) {                             /* card # -> copies for a collector */
+    var o = {}, k;
+    if (u && u.le) { for (k in u.le) if (LEBY[k] && +u.le[k] > 0) o[k] = Math.floor(+u.le[k]); return o; }
+    var me = u ? String(u.n).toLowerCase() : '';
+    if (DATA && DATA.le) for (k in DATA.le) if (LEBY[k] && Array.isArray(DATA.le[k])) DATA.le[k].forEach(function (x) { if (Array.isArray(x) && String(x[0]).toLowerCase() === me && +x[1] > 0) o[k] = Math.floor(+x[1]); });
+    return o;
+  }
+  function foil(c, big) {                        /* the animated foil (the still foil art while motion is reduced) */
+    return CALM ? '<img src="' + (big ? c.l : c.s) + '" alt="">' :
+      '<video src="' + c.vid + '" poster="' + (big ? c.l : c.s) + '" autoplay loop muted playsinline disablepictureinpicture preload="' + (big ? 'auto' : 'metadata') + '" aria-hidden="true"></video>';
+  }
   function owned(u) { var out = []; for (var k in u.c) if (BYKEY[k] && u.c[k] > 0) out.push({ card: BYKEY[k], n: u.c[k] }); return out; }
 
   root.className = 'qbw';
@@ -47,10 +64,11 @@
     say('Looking for ' + name + '\u2026');
     return hex16(login).then(function (k) {
       return get(PROFILES + k.charAt(0) + '.json?t=' + Math.floor(Date.now() / 6e4)).then(function (sh) {
-        var p = sh && sh.u && sh.u[k], q = p && p.q, c = {}, n = 0;
+        var p = sh && sh.u && sh.u[k], q = p && p.q, c = {}, n = 0, le = {};
         if (q && q.c && typeof q.c === 'object') for (var key in q.c) if (BYKEY[key] && +q.c[key] > 0) { c[key] = Math.floor(+q.c[key]); n++; }
+        if (q && q.le && typeof q.le === 'object') for (var lk in q.le) if (LEBY[lk] && +q.le[lk] > 0) { le[lk] = Math.floor(+q.le[lk]); n++; }
         if (!n) { say('No Queen\u2019s Blood cards on file for ' + name + '. Check the spelling of the Twitch name.'); return false; }
-        say(''); openUser({ n: name, s: +q.s || 0, r: typeof q.r === 'string' ? q.r.slice(0, 60) : '', qr: +q.qr || 0, c: c }, from); return true;
+        say(''); openUser({ n: name, s: +q.s || 0, r: typeof q.r === 'string' ? q.r.slice(0, 60) : '', qr: +q.qr || 0, c: c, le: le }, from); return true;
       });
     }).catch(function () { say('Couldn\u2019t look that up right now. Try again in a minute.'); return false; });
   }
@@ -61,7 +79,7 @@
     CARDS = r[0].cards; POOL = r[0].pool || POOL; CARDS.forEach(function (c) { BYKEY[c.k] = c; });
     DATA = r[1]; render(); place();
     var m = Math.floor(Date.now() / 60000);
-    get(LIVE + '?t=' + m).then(function (live) { if (live && live.top && live.top.length && (!DATA || new Date(live.t) > new Date(DATA.t))) { DATA = live; render(); } }).catch(function () {});
+    get(LIVE + '?t=' + m).then(function (live) { if (live && live.top && live.top.length && (!DATA || new Date(live.t) > new Date(DATA.t))) { DATA = live; render(); if (M && cur && M.classList.contains('on')) paint(); } }).catch(function () {});
     openFromHash();
   }).catch(function () { board.innerHTML = '<div class="qbempty">The leaderboard couldn&rsquo;t load right now. Try <span class="cmd">!topqb</span> in chat.</div>'; });
 
@@ -97,7 +115,7 @@
     M.addEventListener('click', function (e) {
       if (e.target === M || e.target.closest('.qbx2')) return closeDeck();
       var p = e.target.closest('.qbpill'); if (p) { view[p.getAttribute('data-g')] = p.getAttribute('data-v'); paint(); return; }
-      var c = e.target.closest('.qbc'); if (c) zoom(c.getAttribute('data-k'));
+      var c = e.target.closest('.qbc'); if (c) { if (c.hasAttribute('data-le')) zoomLe(c.getAttribute('data-le')); else zoom(c.getAttribute('data-k')); }
     });
     Z.addEventListener('click', function (e) {
       if (e.target === Z || e.target.closest('.qbx2')) return closeZoom();
@@ -118,7 +136,7 @@
     M.querySelector('.qbx2').focus();
   }
   function closeDeck() {
-    M.classList.remove('on'); document.documentElement.style.overflow = '';
+    M.classList.remove('on'); M.querySelector('.qbbody').innerHTML = ''; document.documentElement.style.overflow = '';
     try { history.replaceState(null, '', '#qbtop'); } catch (e) {}
     if (opener) opener.focus();
   }
@@ -145,7 +163,30 @@
         '<span class="im" data-n="#' + esc(c.id) + '"><img src="' + (n ? img(c.id) : 'qb/s/Card_Back.webp') + '" alt="" loading="lazy"></span>' +
         '<span class="nm">' + esc(c.name) + '</span><span class="qbtier"><i></i>' + t[1] + ' <em>' + pct(c.w) + '</em></span></button>';
     });
-    M.querySelector('.qbbody').innerHTML = h + '</div>';
+    h += '</div>';
+    /* the Limited Edition category: below the 152, apart from the points and the rank */
+    var le = leOf(u), leList = LIMITED.filter(function (c) { return view.show === 'all' || le[c.id]; }), leN = LIMITED.filter(function (c) { return le[c.id]; }).length;
+    h += '<section class="qble" aria-label="Limited Edition cards"><div class="qbleh"><h3>Limited Edition</h3><span class="qblec">' + leN + ' of ' + LIMITED.length + '</span>' +
+      '<p>Never drawn from redemptions. They don&rsquo;t count toward Queen&rsquo;s Blood points or rank.</p></div><div class="qbgrid qblegrid">';
+    if (!leList.length) h += '<div class="qbnone">None yet. Limited Edition cards are only given out as special rewards.</div>';
+    leList.forEach(function (c) {
+      var n = le[c.id] || 0;
+      h += '<button type="button" class="qbc r-le' + (n ? '' : ' miss') + '" data-le="' + esc(c.id) + '" aria-label="' + esc('#' + c.id + ' ' + c.name + ', Limited Edition, ' + (n ? n + ' owned' : 'not owned')) + '">' +
+        (n > 1 ? '<span class="qbq">&times;' + n + '</span>' : '') +
+        '<span class="im' + (n ? ' foil' : '') + '" data-n="#' + esc(c.id) + '">' + (n ? foil(c) : '<img src="qb/s/Card_Back.webp" alt="" loading="lazy">') + '</span>' +
+        '<span class="nm">' + esc(c.name) + '</span><span class="qbtier"><i></i>Limited Edition</span></button>';
+    });
+    M.querySelector('.qbbody').innerHTML = h + '</div></section>';
+  }
+  function zoomLe(id) {
+    var c = LEBY[id]; if (!c) return; var n = leOf(cur)[id] || 0; Z.dataset.k = 'le:' + id;
+    Z.innerHTML = '<div class="qbzin r-le"><button class="qbx2" type="button" aria-label="Close">&#10005;</button><span class="qbzim' + (n ? ' foil' : '') + '">' + (n ? foil(c, true) : '<img src="' + c.l + '" alt="' + esc(c.name) + '" class="dim">') + '</span>' +
+      '<div class="qbzt"><span class="pl"><span>Card #' + esc(c.id) + '</span><span class="qbtier"><i></i>Limited Edition</span></span><h3>' + esc(c.name) + '</h3><dl>' +
+      '<dt>How to get it</dt><dd>Never drawn from Queen&rsquo;s Blood redemptions. Only given out as a special reward.</dd>' +
+      '<dt>In ' + esc(cur ? cur.n : '') + '&rsquo;s collection</dt><dd>' + (n ? '&times;' + n : 'Not yet') + '</dd></dl>' +
+      owners('le:' + id) +
+      '<p class="hint">Limited Edition cards don&rsquo;t count toward Queen&rsquo;s Blood points or rank.</p></div></div>';
+    Z.classList.add('on'); Z.querySelector('.qbx2').focus();
   }
   function zoom(k) {
     var c = BYKEY[k]; if (!c) return; var n = (cur && cur.c[k]) || 0, t = tier(c.w); Z.dataset.k = k;
@@ -161,7 +202,7 @@
      A short list first, "Show all" for the rest; each name opens that collector's page. Hidden until the data carries "own". */
   var OWN_FIRST = 8;
   function others(k) {
-    var l = DATA && DATA.own && DATA.own[k]; if (!Array.isArray(l)) return null;
+    var l = k.indexOf('le:') === 0 ? (DATA && DATA.le ? DATA.le[k.slice(3)] || [] : null) : DATA && DATA.own && DATA.own[k]; if (!Array.isArray(l)) return null;
     var me = cur ? String(cur.n).toLowerCase() : '';
     return l.filter(function (o) { return Array.isArray(o) && typeof o[0] === 'string' && String(o[0]).toLowerCase() !== me; });
   }
@@ -188,7 +229,11 @@
       else if (note) note.textContent = 'Couldn\u2019t open ' + name + '\u2019s collection right now.';
     });
   }
-  function closeZoom() { Z.classList.remove('on'); var b = M && M.querySelector('.qbc[data-k="' + (window.CSS && CSS.escape ? CSS.escape(Z.dataset.k || '') : '') + '"]'); if (b) b.focus(); }
+  function closeZoom() {
+    Z.classList.remove('on'); Z.innerHTML = '';           /* stops the big foil video */
+    var k = Z.dataset.k || '', sel = k.indexOf('le:') === 0 ? '.qbc[data-le="' + k.slice(3) + '"]' : '.qbc[data-k="' + (window.CSS && CSS.escape ? CSS.escape(k) : '') + '"]';
+    var b = M && M.querySelector(sel); if (b) b.focus();
+  }
   function openFromHash() {
     var h = decodeURIComponent(location.hash.slice(1));
     if (h === 'qbtop') { document.getElementById('qbtopx').open = true; return; }
@@ -199,9 +244,11 @@
   }
   /* for the profile card: open any viewer's collection page from data it already has */
   window.DroogleQB = { find: find, open: function (u, from) {
-    if (!u || !CARDS) return false; var c = {}, n = 0;
+    if (!u || !CARDS) return false; var c = {}, n = 0, le = null;
     for (var key in (u.c || {})) if (BYKEY[key] && +u.c[key] > 0) { c[key] = Math.floor(+u.c[key]); n++; }
+    if (u.le && typeof u.le === 'object') { le = {}; for (var lk in u.le) if (LEBY[lk] && +u.le[lk] > 0) { le[lk] = Math.floor(+u.le[lk]); n++; } }
     if (!n) return false;
-    openUser({ n: String(u.n || '').slice(0, 40), s: +u.s || 0, r: String(u.r || '').slice(0, 60), qr: +u.qr || 0, c: c }, from); return true;
+    var o = { n: String(u.n || '').slice(0, 40), s: +u.s || 0, r: String(u.r || '').slice(0, 60), qr: +u.qr || 0, c: c }; if (le) o.le = le;
+    openUser(o, from); return true;
   } };
 })();
